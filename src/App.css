@@ -9,13 +9,21 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #4a90e2;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.App-name {
+  position: absolute;
+  top: 0px;
+  left: 20px;
   font-size: calc(10px + 2vmin);
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
   color: white;
 }
 
