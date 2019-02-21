@@ -49,7 +49,6 @@
       "raf/polyfill"
     ],
     "testRegex": "/__tests__/.*\\.(ts|tsx|js)$",
-    "setupTestFrameworkScriptFile": "<rootDir>src/setupTests.ts",
     "snapshotSerializers": ["enzyme-to-json"]
   }
 }
