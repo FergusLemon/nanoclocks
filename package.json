@@ -26,5 +26,30 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@types/enzyme": "^3.1.18",
+    "@types/enzyme-adapter-react-16": "^1.0.4",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "enzyme-to-json": "^3.3.5",
+    "raf": "^3.4.1",
+    "ts-jest": "^24.0.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "setupFiles": [
+      "raf/polyfill"
+    ],
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$",
+    "setupTestFrameworkScriptFile": "<rootDir>src/setupTests.ts",
+    "snapshotSerializers": ["enzyme-to-json"]
+  }
 }
