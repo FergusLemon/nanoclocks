@@ -11,6 +11,7 @@ const setup = (input = {}) => (
     value: input.value || 'value',
   }
 );
+const SEVEN = 7;
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -22,5 +23,11 @@ describe("PriceInput", () => {
     const testEnv = setup();
     const wrapper = shallow(<PriceInput {...testEnv} />);
     expect(getElement(wrapper)('label')('price-input-label').length).toBe(1);
+  });
+
+  it('passes the value prop to the value of the text input', () => {
+    const testEnv = setup({ value: 7 });
+    const wrapper = shallow(<PriceInput {...testEnv} />);
+    expect(getElement(wrapper)('input')('price-input-field').props().value).toBe(SEVEN);
   });
 });
