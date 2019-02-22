@@ -4,9 +4,11 @@ import './App.css';
 import PriceInput from './priceInput/components/priceInput'
 
 const initialState = {
-  value: undefined
+  value: undefined,
+  min: "0",
+  max: "40",
+  step: "0.05"
 };
-
 
 type State = Readonly<typeof initialState>;
 
@@ -15,7 +17,7 @@ class App extends React.Component<object, State> {
   handleInput = (event: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => {
   };
   render() {
-    const { value } = this.state;
+    const { value, min, max, step } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -28,6 +30,9 @@ class App extends React.Component<object, State> {
           <PriceInput
             id="price-input-field"
             value={value}
+            min={min}
+            max={max}
+            step={step}
             handleBlur={this.handleInput}
             handleKeyDown={this.handleInput}
           />
