@@ -3,8 +3,16 @@ import logo from './logo.svg';
 import './App.css';
 import PriceInput from './priceInput/components/priceInput'
 
-class App extends Component {
+const initialState = {
+  value: undefined
+};
+
+type State = Readonly<typeof initialState>;
+
+class App extends Component<object, State> {
+  readonly state: State= initialState;
   render() {
+    const { value } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -16,6 +24,7 @@ class App extends Component {
         <div className="price">
           <PriceInput
             id="price-input-field"
+            value={value}
           />
         </div>
       </div>
