@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { SFC } from 'react';
 
-const PriceInput = (props) => {
-  return (
-    <div>
-    </div>
-  );
+type Props = {
+  id: string
 }
+
+const PriceInput: SFC<Props> = ({ id: id, children }) => (
+  <div className="price-input-field-container">
+    <label htmlFor={id} className="price-input-label">Enter a price</label>
+  </div>
+)
 
 export default PriceInput;
