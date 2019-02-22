@@ -15,7 +15,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --config ./jest.config.js --ci",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -35,27 +35,5 @@
     "enzyme-to-json": "^3.3.5",
     "raf": "^3.4.1",
     "ts-jest": "^24.0.0"
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.ts",
-    "transform": {
-      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
-    "setupFiles": [
-      "raf/polyfill"
-    ],
-    "snapshotSerializers": ["enzyme-to-json"]
   }
 }
