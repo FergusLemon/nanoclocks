@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import PriceInput from './priceInput/components/priceInput'
 
 class App extends Component {
   render() {
@@ -12,6 +13,11 @@ class App extends Component {
             NanoClocks
           </p>
         </header>
+        <div className="price">
+          <PriceInput
+            id="price-input-field"
+          />
+        </div>
       </div>
     );
   }
