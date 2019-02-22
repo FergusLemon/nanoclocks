@@ -44,7 +44,7 @@ describe("PriceInput", () => {
     expect(testEnv.handleBlur).toHaveBeenCalled();
   });
 
-   it('should call the handleEnter callback on props when the enter key is pressed', () => {
+   it("should call the handleKeyDown callback on props when the 'Enter' key is pressed", () => {
     const testEnv = setup({
       handleKeyDown: jest.fn()
     });
@@ -54,7 +54,17 @@ describe("PriceInput", () => {
     expect(testEnv.handleKeyDown).toHaveBeenCalled();
   });
 
-   it('should not call the handleEnter callback on props when a key other than enter is pressed', () => {
+   it("should call the handleKeyDown callback on props when the minus sign '-' is pressed", () => {
+    const testEnv = setup({
+      handleKeyDown: jest.fn()
+    });
+    const wrapper = shallow(<PriceInput {...testEnv} />);
+    getElement(wrapper)('input')('price-input-field')
+       .simulate('keydown', { key: '-' });
+    expect(testEnv.handleKeyDown).toHaveBeenCalled();
+  });
+
+   it("should not call the handleKeyDown callback on props when a key other than 'Enter' or '-' is pressed", () => {
     const testEnv = setup({
       handleKeyDown: jest.fn()
     });
