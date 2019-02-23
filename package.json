@@ -40,7 +40,6 @@
     "roots": [
       "<rootDir>/src"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.ts",
     "transform": {
       "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
