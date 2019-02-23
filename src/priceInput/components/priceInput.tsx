@@ -4,9 +4,9 @@ import '../styles/priceInput.css';
 type Props = {
   id: string
   value: number | string
-  min: string
-  max: string
-  step: string
+  min: number
+  max: number
+  step: number
   handleChange(event: ChangeEvent<HTMLInputElement>): void
   handleKeyDown(event: KeyboardEvent<HTMLInputElement>): void
 }

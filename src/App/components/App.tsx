@@ -5,9 +5,9 @@ import PriceInput from '../../priceInput/components/priceInput'
 
 const initialState = {
   value: "",
-  min: "5",
-  max: "40",
-  step: "0.05"
+  min: 5,
+  max: 40,
+  step: 0.05
 };
 
 type State = Readonly<typeof initialState>;
@@ -16,7 +16,7 @@ class App extends React.Component<object, State> {
   readonly state: State= initialState;
 
   isNotValid = (value: string | number): boolean => {
-    return value === "-" || value < this.state.min || value > this.state.max
+    return(value === "-" || value < this.state.min || value > this.state.max);
   };
 
   handleInput = (event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => {
