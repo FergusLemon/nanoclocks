@@ -17,7 +17,7 @@ const DEFAULT = undefined,
     min: input.min || MIN,
     max: input.max || MAX,
     step: input.step || STEP,
-    handleBlur: input.handleBlur || jest.fn(),
+    handleChange: input.handleChange || jest.fn(),
     handleKeyDown: input.handleKeyDown || jest.fn()
   }
 );
@@ -62,13 +62,13 @@ describe('PriceInput', () => {
       .toBe(STEP);
   });
 
-    it('should call the handleBlur callback on props with the current value when the input changes', () => {
+    it('should call the handleChange callback on props with the current value when the input changes', () => {
     const testEnv = setup({
-      handleBlur: jest.fn()
+      handleChange: jest.fn()
     });
     const wrapper = shallow(<PriceInput {...testEnv} />);
-    getElement(wrapper)('input')('price-input-field').simulate('blur');
-    expect(testEnv.handleBlur).toHaveBeenCalled();
+    getElement(wrapper)('input')('price-input-field').simulate('change');
+    expect(testEnv.handleChange).toHaveBeenCalled();
   });
 
    it("should call the handleKeyDown callback on props when the 'Enter' key is pressed", () => {
