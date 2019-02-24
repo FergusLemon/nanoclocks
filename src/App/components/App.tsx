@@ -6,7 +6,7 @@ import PriceInput from '../../priceInput/components/priceInput'
 const initialState = {
   value: "",
   min: 5,
-  max: 40,
+  max: 40
 };
 
 type State = Readonly<typeof initialState>;
@@ -15,7 +15,12 @@ class App extends React.Component<object, State> {
   readonly state: State= initialState;
 
   isInvalid = (value: string): boolean => {
-    return(value === "-");
+    const regex: RegExp = /^[0-9]*$/;
+    return(
+      value.match(regex) === null ||
+      parseFloat(value) > this.state.max ||
+      parseFloat(value) < this.state.min
+    );
   };
 
   handleInput = (event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => {
@@ -27,7 +32,7 @@ class App extends React.Component<object, State> {
   };
 
   render() {
-    const { value, min, max } = this.state;
+    const { value } = this.state;
     return (
       <div className="App">
         <header className="App-header">

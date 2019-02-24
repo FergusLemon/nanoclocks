@@ -7,6 +7,9 @@ import getElement from '../../common/utils/getElement';
 
 const DEFAULT_VALUE = "",
       MINUS = "-",
+      MIN = 5,
+      MAX = 40,
+      INVALID = "Invalid",
       setup = (input = {}) => (
   {
     value: input.value || DEFAULT_VALUE
@@ -35,30 +38,40 @@ describe("App", () => {
       });
       event = {
         currentTarget: {
-          value: MIN
+          value: DEFAULT_VALUE
         }
       };
     });
 
-    xit('sets the value of state when passed a valid number from the PriceInput component', () => {
+    it('sets the value of state when passed a valid number from the PriceInput component', () => {
+      let validAmount = MIN.toString();
+      event.currentTarget.value = validAmount;
       wrapper.find("PriceInput").props().handleChange(event);
-      expect(wrapper.state().value).toBe(MIN);
+      expect(wrapper.state().value).toBe(validAmount);
     });
 
-    xit('does not set the value of state when passed a minus sign from the PriceInput component', () => {
+    it('does not set the value of state when passed a minus sign from the PriceInput component', () => {
       event.currentTarget.value = MINUS;
       wrapper.find("PriceInput").props().handleChange(event);
       expect(wrapper.state().value).toBe(DEFAULT_VALUE);
     });
 
-    xit('does not set the value of state when passed a number lower than the minimum from the PriceInput component', () => {
-      event.currentTarget.value = MIN - 1;
+    it('does not set the value of state when passed a non-numeric character from the PriceInput component', () => {
+      event.currentTarget.value = INVALID;
       wrapper.find("PriceInput").props().handleChange(event);
       expect(wrapper.state().value).toBe(DEFAULT_VALUE);
     });
 
-    xit('does not set the value of state when passed a number higher than the maximum from the PriceInput component', () => {
-      event.currentTarget.value = MAX + 1;
+    it('does not set the value of state when passed a number lower than the minimum from the PriceInput component', () => {
+      let underLimit = MIN - 1;
+      event.currentTarget.value = underLimit.toString();
+      wrapper.find("PriceInput").props().handleChange(event);
+      expect(wrapper.state().value).toBe(DEFAULT_VALUE);
+    });
+
+    it('does not set the value of state when passed a number higher than the maximum from the PriceInput component', () => {
+      let overLimit = MAX + 1;
+      event.currentTarget.value = overLimit.toString();
       wrapper.find("PriceInput").props().handleChange(event);
       expect(wrapper.state().value).toBe(DEFAULT_VALUE);
     });
