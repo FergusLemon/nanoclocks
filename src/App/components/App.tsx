@@ -7,7 +7,6 @@ const initialState = {
   value: "",
   min: 5,
   max: 40,
-  step: 0.05
 };
 
 type State = Readonly<typeof initialState>;
@@ -15,20 +14,20 @@ type State = Readonly<typeof initialState>;
 class App extends React.Component<object, State> {
   readonly state: State= initialState;
 
-  isNotValid = (value: string | number): boolean => {
-    return(value === "-" || value < this.state.min || value > this.state.max);
+  isInvalid = (value: string): boolean => {
+    return(value === "-");
   };
 
   handleInput = (event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => {
-    const eventValue: string | number = event.currentTarget.value;
-    if(this.isNotValid(eventValue)) return;
+    const eventValue: string = event.currentTarget.value;
+    if(this.isInvalid(eventValue)) return;
     this.setState({
       value: eventValue
     })
   };
 
   render() {
-    const { value, min, max, step } = this.state;
+    const { value, min, max } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -41,9 +40,6 @@ class App extends React.Component<object, State> {
           <PriceInput
             id="price-input-field"
             value={value}
-            min={min}
-            max={max}
-            step={step}
             handleChange={this.handleInput}
             handleKeyDown={this.handleInput}
           />
