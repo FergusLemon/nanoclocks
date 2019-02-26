@@ -7,10 +7,7 @@ type Props = {
 
 const Button: SFC<Props> = ({ id, handleClick, children }) => (
   <div className="button">
-    <button className="price-submit-button"
-      id={id}
-      onClick={ev => handleClick(ev)}
-    >
+    <button className="price-submit-button" type="button" id={id} onClick={ev => handleClick(ev)}>
       {children}
     </button>
   </div>

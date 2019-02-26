@@ -65,7 +65,9 @@ class App extends React.Component<object, State> {
           <Button
             id="price-submit-button"
             handleClick={this.handleClick}
-          />
+          >
+            {"Submit"}
+          </Button>
         </div>
       </div>
     );
