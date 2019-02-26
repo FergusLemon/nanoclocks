@@ -2,12 +2,15 @@ import React, { SFC, MouseEvent} from 'react';
 
 type Props = {
   id: string
-  handleClick(event: MouseEvent<HTMLElement>): void
+  doSearch(event: MouseEvent<HTMLElement>): void
 }
 
-const Button: SFC<Props> = ({ id, handleClick, children }) => (
+const Button: SFC<Props> = ({ id, doSearch, children }) => (
   <div className="button">
-    <button className="price-submit-button" type="button" id={id} onClick={ev => handleClick(ev)}>
+    <button className="price-submit-button" type="button"
+      id={id}
+      onClick={ev => doSearch(ev)}
+    >
       {children}
     </button>
   </div>

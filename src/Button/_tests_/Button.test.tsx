@@ -8,7 +8,7 @@ import getElement from '../../common/utils/getElement';
 const DEFAULT = "Submit",
       setup = (input = {}) => (
   {
-    handleClick: input.handleClick || jest.fn()
+    doSearch: input.doSearch || jest.fn()
   }
 );
 
@@ -20,10 +20,10 @@ it('renders without crashing', () => {
 describe('Button', () => {
   it('should call the handleClick callback on props when the button is clicked', () => {
     const testEnv = setup({
-      handleClick: jest.fn()
+      doSearch: jest.fn()
     });
     const wrapper = shallow(<Button {...testEnv} />);
     getElement(wrapper)('button')('price-submit-button').simulate('click');
-    expect(testEnv.handleClick).toHaveBeenCalled();
+    expect(testEnv.doSearch).toHaveBeenCalled();
   });
 });

@@ -33,7 +33,7 @@ class App extends React.Component<object, State> {
     );
   };
 
-  handleInput = (event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => {
+  handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const eventValue: string = event.currentTarget.value;
     if(this.isInvalid(eventValue)) return;
     this.setState({
@@ -41,7 +41,7 @@ class App extends React.Component<object, State> {
     })
   };
 
-  handleClick = (event: React.MouseEvent<HTMLElement>) => {};
+  doSearch = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {};
 
   render() {
     const { value } = this.state;
@@ -58,13 +58,13 @@ class App extends React.Component<object, State> {
             id="price-input-field"
             value={value}
             handleChange={this.handleInput}
-            handleKeyDown={this.handleInput}
+            doSearch={this.doSearch}
           />
         </div>
         <div className="button">
           <Button
             id="price-submit-button"
-            handleClick={this.handleClick}
+            doSearch={this.doSearch}
           >
             {"Submit"}
           </Button>

@@ -11,7 +11,7 @@ const DEFAULT = "",
     id: input.id || 'id',
     value: input.value || DEFAULT,
     handleChange: input.handleChange || jest.fn(),
-    handleKeyDown: input.handleKeyDown || jest.fn()
+    doSearch: input.doSearch || jest.fn()
   }
 );
 
@@ -43,23 +43,23 @@ describe('PriceInput', () => {
     expect(testEnv.handleChange).toHaveBeenCalled();
   });
 
-   it("should call the handleKeyDown callback on props when the 'Enter' key is pressed", () => {
+   it("should call the doSearch callback on props when the 'Enter' key is pressed", () => {
     const testEnv = setup({
-      handleKeyDown: jest.fn()
+      doSearch: jest.fn()
     });
     const wrapper = shallow(<PriceInput {...testEnv} />);
     getElement(wrapper)('input')('price-input-field')
        .simulate('keydown', { key: 'Enter' });
-    expect(testEnv.handleKeyDown).toHaveBeenCalled();
+    expect(testEnv.doSearch).toHaveBeenCalled();
   });
 
-   it("should not call the handleKeyDown callback on props when a key other than 'Enter' or '-' is pressed", () => {
+   it("should not call the doSearch callback on props when a key other than 'Enter' or '-' is pressed", () => {
     const testEnv = setup({
-      handleKeyDown: jest.fn()
+      doSearch: jest.fn()
     });
     const wrapper = shallow(<PriceInput {...testEnv} />);
     getElement(wrapper)('input')('price-input-field')
        .simulate('keydown', { key: 'Shift' });
-    expect(testEnv.handleKeyDown).not.toHaveBeenCalled();
+    expect(testEnv.doSearch).not.toHaveBeenCalled();
   });
 });
