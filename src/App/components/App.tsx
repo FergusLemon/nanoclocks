@@ -1,7 +1,8 @@
 import * as React from 'react';
 import logo from '../../logo.svg';
 import '../styles/App.css';
-import PriceInput from '../../priceInput/components/priceInput'
+import PriceInput from '../../PriceInput/components/PriceInput'
+import Button from '../../Button/components/Button'
 
 const initialState = {
   value: "",
@@ -40,6 +41,8 @@ class App extends React.Component<object, State> {
     })
   };
 
+  handleClick = (event: React.MouseEvent<HTMLElement>) => {};
+
   render() {
     const { value } = this.state;
     return (
@@ -56,6 +59,12 @@ class App extends React.Component<object, State> {
             value={value}
             handleChange={this.handleInput}
             handleKeyDown={this.handleInput}
+          />
+        </div>
+        <div className="button">
+          <Button
+            id="price-submit-button"
+            handleClick={this.handleClick}
           />
         </div>
       </div>

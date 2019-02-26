@@ -1,5 +1,5 @@
 import React, { SFC, ChangeEvent, KeyboardEvent } from 'react';
-import '../styles/priceInput.css';
+import '../styles/PriceInput.css';
 
 type Props = {
   id: string
