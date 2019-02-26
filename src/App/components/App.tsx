@@ -1,13 +1,14 @@
 import * as React from 'react';
 import logo from '../../logo.svg';
 import '../styles/App.css';
-import PriceInput from '../../PriceInput/components/PriceInput'
-import Button from '../../Button/components/Button'
+import PriceInput from '../../PriceInput/components/PriceInput';
+import Button from '../../Button/components/Button';
 
 const initialState = {
   value: "",
   min: 5,
-  max: 40
+  max: 40,
+  time: Date.now()
 };
 
 type State = Readonly<typeof initialState>;
@@ -41,7 +42,9 @@ class App extends React.Component<object, State> {
     })
   };
 
-  doSearch = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {};
+  doSearch = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
+
+  };
 
   render() {
     const { value } = this.state;

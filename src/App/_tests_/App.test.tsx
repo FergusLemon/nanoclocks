@@ -4,6 +4,7 @@ import App from '../components/App';
 import '../../setupTests';
 import { shallow } from 'enzyme';
 import getElement from '../../common/utils/getElement';
+import { getPricesMock, priceSpec } from '../../communications/_mocks_/cryptoCompareApi';
 
 const DEFAULT_VALUE = "",
       MINUS = "-",
@@ -112,6 +113,15 @@ describe("App", () => {
       event.currentTarget.value = overLimit.toString();
       wrapper.find("PriceInput").props().handleChange(event);
       expect(wrapper.state().value).toBe(DEFAULT_VALUE);
+    });
+  });
+
+  describe("Calling the CryptoCompare API", () => {
+       xit('should supply the time to the time property of state when doSearch is called by the PriceInput', async () => {
+      const wrapper = shallow(<App />);
+      getPricesMock.mockImplementationOnce(() => new Promise(resolve => resolve([priceSpec])));
+      await wrapper.find('PriceInput').props().doSearch();
+      expect(wrapper.state().time).toBe(priceSpec.time);
     });
   });
 });
