@@ -145,6 +145,9 @@ describe("App", () => {
       const prices = {
         data: [{
           "high": 0.9351,
+          "low": 0.9014,
+          "open": 0.91,
+          "close": 0.92,
           "time": 1550620800,
           }]
       };
@@ -156,8 +159,8 @@ describe("App", () => {
       await wrapper.find('PriceInput').props().doSearch();
       let priceHistoryObj = wrapper.state().priceHistory;
 
-      expect(wrapper.state().priceHistory[high]).toEqual(time);
-      expect(Object.keys(priceHistoryObj).length).toEqual(1);
+      expect(priceHistoryObj[high]).toEqual(time);
+      expect(Object.keys(priceHistoryObj).length).toEqual(4);
       expect(mockCryptoCompareApi.getPrices).toHaveBeenCalledOnce;
     });
 

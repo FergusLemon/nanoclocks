@@ -15,6 +15,9 @@ const initialState = {
 
 interface PriceData {
   high: number,
+  low: number,
+  open: number,
+  close: number,
   time: number,
 };
 
@@ -73,6 +76,9 @@ class App extends React.Component<object, State> {
     let priceHash: any = {};
     for ( let data of priceData) {
       priceHash[data["high"]] = data["time"];
+      priceHash[data["low"]] = data["time"];
+      priceHash[data["open"]] = data["time"];
+      priceHash[data["close"]] = data["time"];
     }
     return priceHash;
   };

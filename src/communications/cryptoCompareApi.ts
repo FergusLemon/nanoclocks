@@ -30,6 +30,9 @@ class CryptoCompareApi {
             let requiredData = {
               time: priceData["time"],
               high: priceData["high"],
+              low: priceData["low"],
+              open: priceData["open"],
+              close: priceData["close"],
             };
             return requiredData;
           })
