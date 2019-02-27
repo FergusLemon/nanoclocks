@@ -153,7 +153,6 @@ describe("App", () => {
           "volumeto": 1245639.76
           }]
       };
-
       mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
         new Promise(resolve => resolve(prices)));
 
@@ -170,6 +169,53 @@ describe("App", () => {
 
       expect(wrapper.find('PriceInput').props().canGetPriceInformation).toBeDefined;
       expect(wrapper.find('PriceInput').props().canGetPriceInformation).toEqual(false);
+    });
+  });
+
+  describe('Enabling and disabling calls to the Crypto Compare API', () => {
+    let wrapper, event;
+    beforeEach(() => {
+      wrapper = shallow(<App />);
+      wrapper.setState({
+        value: DEFAULT_VALUE,
+        canGetPriceInformation: true
+      });
+      event = {
+        currentTarget: {
+          value: DEFAULT_VALUE
+        }
+      };
+    });
+
+    it('sets canGetPriceInformation to false when the price input field is empty', () => {
+      const wrapper = shallow(<App />);
+
+      wrapper.find('PriceInput').props().handleChange(event);
+
+      expect(wrapper.state().canGetPriceInformation).toEqual(false);
+    });
+
+    it('sets canGetPriceInformation to true when the price input field contains a valid price', () => {
+      let validAmount = MAX.toString();
+      event.currentTarget.value = validAmount;
+
+      wrapper.find('PriceInput').props().handleChange(event);
+
+      expect(wrapper.state().canGetPriceInformation).toEqual(true);
+    });
+
+    xit('sets canGetPriceInformation to false before the doSearch Promise fires', () => {
+      const testEnv = setup({ canGetPriceInformation: true });
+      const wrapper = shallow(<App {...testEnv} />);
+      wrapper.find('PriceInput').props().doSearch();
+      expect(wrapper.state().canGetPriceInformation).toEqual(false);
+    });
+
+    xit('sets canGetPriceInformation to true after the doSearch Promise fires', async() => {
+      const testEnv = setup({ canGetPriceInformation: false });
+      const wrapper = shallow(<App {...testEnv} />);
+      await wrapper.find('PriceInput').props().doSearch();
+      expect(wrapper.state().canGetPriceInformation).toEqual(true);
     });
   });
 });
