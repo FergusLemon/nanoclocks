@@ -33,6 +33,7 @@ describe("App", () => {
   it('passes the value in state to the PriceInput component', () => {
     const testEnv = setup({ value: DEFAULT_VALUE });
     const wrapper = shallow(<App {...testEnv} />);
+
     expect(wrapper.find('PriceInput').props().value).toBe(testEnv.value);
   });
 
@@ -53,67 +54,87 @@ describe("App", () => {
     it('sets the value of state when passed a valid number from the PriceInput component', () => {
       let validAmount = MIN.toString();
       event.currentTarget.value = validAmount;
+
       wrapper.find("PriceInput").props().handleChange(event);
+
       expect(wrapper.state().value).toBe(validAmount);
     });
 
     it('sets the value of state when passed a valid two digit number where the first digit is less than the minimum from the PriceInput component', () => {
       let validAmount = (MIN + 30).toString();
       event.currentTarget.value = validAmount;
+
       wrapper.find("PriceInput").props().handleChange(event);
+
       expect(wrapper.state().value).toBe(validAmount);
     });
 
     it('sets the value of state when passed a valid number with one decimal place from the PriceInput component', () => {
       let validAmountOneDecimal = ONE_DECIMAL.toString();
       event.currentTarget.value = validAmountOneDecimal;
+
       wrapper.find("PriceInput").props().handleChange(event);
+
       expect(wrapper.state().value).toBe(validAmountOneDecimal);
     });
 
     it('sets the value of state when passed a valid number with two decimal places from the PriceInput component', () => {
       let validAmountTwoDecimal = TWO_DECIMAL.toString();
       event.currentTarget.value = validAmountTwoDecimal;
+
       wrapper.find("PriceInput").props().handleChange(event);
+
       expect(wrapper.state().value).toBe(validAmountTwoDecimal);
     });
 
     it('does not set the value of state when passed a number with more than two decimal places from the PriceInput component', () => {
       let validAmountThreeDecimal = THREE_DECIMAL.toString();
       event.currentTarget.value = validAmountThreeDecimal;
+
       wrapper.find("PriceInput").props().handleChange(event);
+
       expect(wrapper.state().value).toBe(DEFAULT_VALUE);
     });
 
     it('does not set the value of state when passed a zero followed by another number from the PriceInput component', () => {
       event.currentTarget.value = ZERO_NUMBER;
+
       wrapper.find("PriceInput").props().handleChange(event);
+
       expect(wrapper.state().value).toBe(DEFAULT_VALUE);
     });
 
     it('does not set the value of state when passed a minus sign from the PriceInput component', () => {
       event.currentTarget.value = MINUS;
+
       wrapper.find("PriceInput").props().handleChange(event);
+
       expect(wrapper.state().value).toBe(DEFAULT_VALUE);
     });
 
     it('does not set the value of state when passed a non-numeric character from the PriceInput component', () => {
       event.currentTarget.value = INVALID;
+
       wrapper.find("PriceInput").props().handleChange(event);
+
       expect(wrapper.state().value).toBe(DEFAULT_VALUE);
     });
 
     xit('does not set the value of state when passed a number lower than the minimum from the PriceInput component', () => {
       let underLimit = MIN - 1;
       event.currentTarget.value = underLimit.toString();
+
       wrapper.find("PriceInput").props().handleChange(event);
+
       expect(wrapper.state().value).toBe(DEFAULT_VALUE);
     });
 
     it('does not set the value of state when passed a number higher than the maximum from the PriceInput component', () => {
       let overLimit = MAX + 1;
       event.currentTarget.value = overLimit.toString();
+
       wrapper.find("PriceInput").props().handleChange(event);
+
       expect(wrapper.state().value).toBe(DEFAULT_VALUE);
     });
   });
@@ -121,14 +142,34 @@ describe("App", () => {
   describe("Calling the CryptoCompare API", () => {
        it('should supply the time to the time property of state when doSearch is called by the PriceInput', async () => {
       const wrapper = shallow(<App />);
-      const prices = { data: [{"close": 0.9228, "high": 0.9351, "low": 0.9093, "open": 0.9335, "time": 1550620800, "volumefrom": 1349848.03, "volumeto": 1245639.76}] };
-      mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() => new Promise(resolve => resolve(prices)));
+      const prices = {
+        data: [{
+          "close": 0.9228,
+          "high": 0.9351,
+          "low": 0.9093,
+          "open": 0.9335,
+          "time": 1550620800,
+          "volumefrom": 1349848.03,
+          "volumeto": 1245639.76
+          }]
+      };
+
+      mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
+        new Promise(resolve => resolve(prices)));
 
       await wrapper.find('PriceInput').props().doSearch();
 
       expect(wrapper.state().priceHistory).toEqual(prices.data);
       expect(wrapper.state().priceHistory.length).toEqual(1);
       expect(mockCryptoCompareApi.getPrices).toHaveBeenCalledOnce;
+    });
+
+    it('passes canGetPriceInformation off state to the PriceInput component and the Button component', () => {
+      const testEnv = setup({ canGetPriceInformation: false });
+      const wrapper = shallow(<App {...testEnv} />);
+
+      expect(wrapper.find('PriceInput').props().canGetPriceInformation).toBeDefined;
+      expect(wrapper.find('PriceInput').props().canGetPriceInformation).toEqual(false);
     });
   });
 });
