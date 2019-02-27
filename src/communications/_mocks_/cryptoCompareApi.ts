@@ -8,11 +8,11 @@ export const priceSpec: object = {
   volumeto: 1245639.76
 };
 
-export const getPricesMock = jest.fn().mockImplementation(() => new Promise((resolve, reject) => resolve([priceSpec])));
+export const getPriceInformationMock = jest.fn().mockImplementation(() => new Promise((resolve, reject) => resolve([priceSpec])));
 
 const mock = jest.fn().mockImplementation(() => {
   return {
-    getPrices: getPricesMock
+    getPriceInformation: getPriceInformationMock
   }
 });
 

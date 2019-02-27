@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 class CryptoCompareApi {
   apiKey = process.env.REACT_APP_CRYPTO_COMPARE_KEY;
 
-  getPrices = (): Promise<any> => {
+  getPriceInformation = (): Promise<any> => {
     return axios.get('https://min-api.cryptocompare.com/data/histoday',
       {
         params: {

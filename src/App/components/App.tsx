@@ -45,10 +45,10 @@ class App extends React.Component<object, State> {
 
   doSearch = async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
     await CryptoCompareApi
-      .getPrices()
-      .then(prices => {
+      .getPriceInformation()
+      .then(priceInformation => {
         this.setState({
-          priceHistory: prices.data
+          priceHistory: priceInformation.data
         });
       });
   };

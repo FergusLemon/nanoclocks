@@ -15,10 +15,11 @@ const DEFAULT_VALUE = "",
       TWO_DECIMAL = 5.15,
       THREE_DECIMAL = 5.155,
       ZERO_NUMBER = "01",
-      INVALID = "Invalid",
-      setup = (input = {}) => (
+      INVALID = "Invalid";
+const setup = (input = {}) => (
   {
-    value: input.value || DEFAULT_VALUE
+    value: input.value || DEFAULT_VALUE,
+    canGetPriceInformation: input.canGetPriceInformation || false
   }
 );
 
@@ -121,7 +122,7 @@ describe("App", () => {
        it('should supply the time to the time property of state when doSearch is called by the PriceInput', async () => {
       const wrapper = shallow(<App />);
       const prices = { data: [{"close": 0.9228, "high": 0.9351, "low": 0.9093, "open": 0.9335, "time": 1550620800, "volumefrom": 1349848.03, "volumeto": 1245639.76}] };
-      mockCryptoCompareApi.getPrices.mockImplementationOnce(() => new Promise(resolve => resolve(prices)));
+      mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() => new Promise(resolve => resolve(prices)));
 
       await wrapper.find('PriceInput').props().doSearch();
 
