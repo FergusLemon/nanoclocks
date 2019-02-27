@@ -1,8 +1,8 @@
 import * as React from 'react';
 import logo from '../../logo.svg';
 import '../styles/App.css';
-import PriceInput from '../../PriceInput/components/PriceInput';
-import Button from '../../Button/components/Button';
+import PriceInput from '../../priceInput/components/PriceInput';
+import Button from '../../button/components/Button';
 import CryptoCompareApi from '../../communications/cryptoCompareApi';
 
 const initialState = {
