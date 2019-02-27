@@ -4,7 +4,8 @@ import App from '../components/App';
 import '../../setupTests';
 import { shallow } from 'enzyme';
 import getElement from '../../common/utils/getElement';
-import { getPricesMock, priceSpec } from '../../communications/_mocks_/cryptoCompareApi';
+jest.mock('../../communications/cryptoCompareApi');
+import mockCryptoCompareApi from '../../communications/cryptoCompareApi';
 
 const DEFAULT_VALUE = "",
       MINUS = "-",
@@ -117,11 +118,16 @@ describe("App", () => {
   });
 
   describe("Calling the CryptoCompare API", () => {
-       xit('should supply the time to the time property of state when doSearch is called by the PriceInput', async () => {
+       it('should supply the time to the time property of state when doSearch is called by the PriceInput', async () => {
       const wrapper = shallow(<App />);
-      getPricesMock.mockImplementationOnce(() => new Promise(resolve => resolve([priceSpec])));
+      const prices = { data: [{"close": 0.9228, "high": 0.9351, "low": 0.9093, "open": 0.9335, "time": 1550620800, "volumefrom": 1349848.03, "volumeto": 1245639.76}] };
+      mockCryptoCompareApi.getPrices.mockImplementationOnce(() => new Promise(resolve => resolve(prices)));
+
       await wrapper.find('PriceInput').props().doSearch();
-      expect(wrapper.state().time).toBe(priceSpec.time);
+
+      expect(wrapper.state().priceHistory).toEqual(prices.data);
+      expect(wrapper.state().priceHistory.length).toEqual(1);
+      expect(mockCryptoCompareApi.getPrices).toHaveBeenCalledOnce;
     });
   });
 });

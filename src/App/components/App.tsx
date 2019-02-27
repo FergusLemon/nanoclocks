@@ -3,12 +3,13 @@ import logo from '../../logo.svg';
 import '../styles/App.css';
 import PriceInput from '../../PriceInput/components/PriceInput';
 import Button from '../../Button/components/Button';
+import CryptoCompareApi from '../../communications/cryptoCompareApi';
 
 const initialState = {
   value: "",
   min: 5,
   max: 40,
-  time: Date.now()
+  priceHistory: []
 };
 
 type State = Readonly<typeof initialState>;
@@ -42,8 +43,14 @@ class App extends React.Component<object, State> {
     })
   };
 
-  doSearch = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
-
+  doSearch = async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
+    await CryptoCompareApi
+      .getPrices()
+      .then(prices => {
+        this.setState({
+          priceHistory: prices.data
+        });
+      });
   };
 
   render() {
