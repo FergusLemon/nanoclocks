@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import '../../setupTests';
 import { shallow } from 'enzyme';
-import PriceInput from '../components/priceInput';
+import PriceInput from '../components/PriceInput';
 import getElement from '../../common/utils/getElement';
 
 const DEFAULT = "",
