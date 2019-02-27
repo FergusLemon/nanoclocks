@@ -9,8 +9,13 @@ const initialState = {
   value: "",
   min: 5,
   max: 40,
-  priceHistory: [],
+  priceHistory: {},
   canGetPriceInformation: false
+};
+
+interface PriceData {
+  high: number,
+  time: number,
 };
 
 type State = Readonly<typeof initialState>;
@@ -53,14 +58,23 @@ class App extends React.Component<object, State> {
     await CryptoCompareApi
       .getPriceInformation()
       .then(priceInformation => {
+        let highPriceHash = this.createPriceHash(priceInformation.data);
         this.setState({
-          priceHistory: priceInformation.data,
+          priceHistory: highPriceHash,
           canGetPriceInformation: true
         });
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  createPriceHash = (priceData: Array<PriceData>) => {
+    let priceHash: any = {};
+    for ( let data of priceData) {
+      priceHash[data["high"]] = data["time"];
+    }
+    return priceHash;
   };
 
   render() {
