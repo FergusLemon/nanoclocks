@@ -6,16 +6,17 @@ type Props = {
   value: string
   handleChange(event: ChangeEvent<HTMLInputElement>): void
   doSearch(event: KeyboardEvent<HTMLInputElement>): void
+  canGetPriceInformation: boolean
 }
 
-const PriceInput: SFC<Props> = ({ id, value, handleChange, doSearch, children }) => (
+const PriceInput: SFC<Props> = ({ id, value, handleChange, doSearch, canGetPriceInformation, children }) => (
   <div className="price-input-field-container">
     <label htmlFor={id} className="price-input-label">Enter a price</label>
     <input className="price-input-field" type="tel"
       id={id}
       value={value}
       onChange={ev => handleChange(ev)}
-      onKeyDown={ev => (ev.key === 'Enter') && doSearch(ev)}
+      onKeyDown={ev => (ev.key === 'Enter')  && canGetPriceInformation && doSearch(ev)}
     />
   </div>
 )
