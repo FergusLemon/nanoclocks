@@ -178,7 +178,7 @@ describe("App", () => {
       wrapper = shallow(<App />);
       wrapper.setState({
         value: DEFAULT_VALUE,
-        canGetPriceInformation: true
+        canGetPriceInformation: false
       });
       event = {
         currentTarget: {
@@ -204,17 +204,26 @@ describe("App", () => {
       expect(wrapper.state().canGetPriceInformation).toEqual(true);
     });
 
-    xit('sets canGetPriceInformation to false before the doSearch Promise fires', () => {
-      const testEnv = setup({ canGetPriceInformation: true });
-      const wrapper = shallow(<App {...testEnv} />);
+    it('sets canGetPriceInformation to false before the doSearch Promise fires', () => {
+      let validAmount = MAX.toString();
+      event.currentTarget.value = validAmount;
+
+      wrapper.find('PriceInput').props().handleChange(event);
       wrapper.find('PriceInput').props().doSearch();
+
       expect(wrapper.state().canGetPriceInformation).toEqual(false);
     });
 
-    xit('sets canGetPriceInformation to true after the doSearch Promise fires', async() => {
-      const testEnv = setup({ canGetPriceInformation: false });
-      const wrapper = shallow(<App {...testEnv} />);
+    it('sets canGetPriceInformation to true after the doSearch Promise fires', async() => {
+      let prices = { data: [] };
+      let validAmount = MAX.toString();
+      event.currentTarget.value = validAmount;
+
+      wrapper.find('PriceInput').props().handleChange(event);
+      mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
+        new Promise(resolve => resolve(prices)));
       await wrapper.find('PriceInput').props().doSearch();
+
       expect(wrapper.state().canGetPriceInformation).toEqual(true);
     });
   });
