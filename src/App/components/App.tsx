@@ -9,7 +9,8 @@ const initialState = {
   value: "",
   min: 5,
   max: 40,
-  priceHistory: []
+  priceHistory: [],
+  canGetPriceInformation: false
 };
 
 type State = Readonly<typeof initialState>;
@@ -54,7 +55,7 @@ class App extends React.Component<object, State> {
   };
 
   render() {
-    const { value } = this.state;
+    const { value, canGetPriceInformation } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -69,12 +70,14 @@ class App extends React.Component<object, State> {
             value={value}
             handleChange={this.handleInput}
             doSearch={this.doSearch}
+            canGetPriceInformation={canGetPriceInformation}
           />
         </div>
         <div className="button">
           <Button
             id="price-submit-button"
             doSearch={this.doSearch}
+            canGetPriceInformation={canGetPriceInformation}
           >
             {"Submit"}
           </Button>
