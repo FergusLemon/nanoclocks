@@ -19,7 +19,7 @@ class CryptoCompareApi {
         params: {
           fsym: "NANO",
           tsym: "USD",
-          limit: 7,
+          limit: 550,
         },
         headers: {
           authorization: "Apikey " + this.apiKey,
@@ -29,10 +29,10 @@ class CryptoCompareApi {
           return parsedData.Data.map((priceData: PriceData) => {
             let requiredData = {
               time: priceData["time"],
-              high: priceData["high"],
-              low: priceData["low"],
-              open: priceData["open"],
-              close: priceData["close"],
+              high: priceData["high"].toFixed(2),
+              low: priceData["low"].toFixed(2),
+              open: priceData["open"].toFixed(2),
+              close: priceData["close"].toFixed(2),
             };
             return requiredData;
           })
