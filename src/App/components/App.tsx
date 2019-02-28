@@ -69,7 +69,7 @@ class App extends React.Component<object, State> {
         });
       })
       .catch((error) => {
-        console.log(error);
+        throw new Error("Something went wrong" + "........" + error);
       });
   };
 
