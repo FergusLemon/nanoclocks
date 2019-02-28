@@ -62,9 +62,9 @@ class App extends React.Component<object, State> {
     await CryptoCompareApi
       .getPriceInformation()
       .then(priceInformation => {
-        let highPriceHash = this.createPriceHash(priceInformation.data);
+        let priceHash = this.createPriceHash(priceInformation);
         this.setState({
-          priceHistory: highPriceHash,
+          priceHistory: priceHash,
           canGetPriceInformation: true
         });
       })

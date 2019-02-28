@@ -140,26 +140,24 @@ describe("App", () => {
   });
 
   describe("Calling the CryptoCompare API", () => {
-    let wrapper, prices;
+    let wrapper, data;
     beforeEach(() => {
       wrapper = shallow(<App />);
-      prices = {
-        data: [{
-          "high": 0.9351,
-          "low": 0.9014,
-          "open": 0.91,
-          "close": 0.92,
-          "time": 1550620800,
-        }]
-      };
+      data = [{
+        "high": 0.9351,
+        "low": 0.9014,
+        "open": 0.91,
+        "close": 0.92,
+        "time": 1550620800,
+      }];
       mockCryptoCompareApi.getPriceInformation.mockClear();
     });
 
     it('should supply the time to the time property of state when doSearch is called by the PriceInput', async () => {
-      const high = prices.data[0].high;
-      const time = prices.data[0].time;
+      const high = data[0]["high"];
+      const time = data[0]["time"];
       mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
-        new Promise(resolve => resolve(prices)));
+        new Promise(resolve => resolve(data)));
 
       await wrapper.find('PriceInput').props().doSearch();
       let priceHistoryObj = wrapper.state().priceHistory;
@@ -171,7 +169,7 @@ describe("App", () => {
 
     it('should not be called if a user has already made a call and a promise has resolved', async () => {
       mockCryptoCompareApi.getPriceInformation.mockImplementation(() =>
-        new Promise(resolve => resolve(prices)));
+        new Promise(resolve => resolve(data)));
 
       await wrapper.find('PriceInput').props().doSearch();
       await wrapper.find('PriceInput').props().doSearch();
@@ -232,13 +230,13 @@ describe("App", () => {
     });
 
     it('sets canGetPriceInformation to true after the doSearch Promise fires', async() => {
-      let prices = { data: [] };
+      let data = [];
       let validAmount = MAX.toString();
       event.currentTarget.value = validAmount;
 
       wrapper.find('PriceInput').props().handleChange(event);
       mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
-        new Promise(resolve => resolve(prices)));
+        new Promise(resolve => resolve(data)));
       await wrapper.find('PriceInput').props().doSearch();
 
       expect(wrapper.state().canGetPriceInformation).toEqual(true);
