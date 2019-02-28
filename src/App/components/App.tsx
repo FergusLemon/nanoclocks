@@ -55,6 +55,7 @@ class App extends React.Component<object, State> {
   };
 
   doSearch = async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
+    if (Object.entries(this.state.priceHistory).length > 0) return;
     this.setState({
       canGetPriceInformation: false
     });

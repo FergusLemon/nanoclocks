@@ -140,17 +140,22 @@ describe("App", () => {
   });
 
   describe("Calling the CryptoCompare API", () => {
-       it('should supply the time to the time property of state when doSearch is called by the PriceInput', async () => {
-      const wrapper = shallow(<App />);
-      const prices = {
+    let wrapper, prices;
+    beforeEach(() => {
+      wrapper = shallow(<App />);
+      prices = {
         data: [{
           "high": 0.9351,
           "low": 0.9014,
           "open": 0.91,
           "close": 0.92,
           "time": 1550620800,
-          }]
+        }]
       };
+      mockCryptoCompareApi.getPriceInformation.mockClear();
+    });
+
+    it('should supply the time to the time property of state when doSearch is called by the PriceInput', async () => {
       const high = prices.data[0].high;
       const time = prices.data[0].time;
       mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
@@ -161,7 +166,18 @@ describe("App", () => {
 
       expect(priceHistoryObj[high]).toEqual(time);
       expect(Object.keys(priceHistoryObj).length).toEqual(4);
-      expect(mockCryptoCompareApi.getPrices).toHaveBeenCalledOnce;
+      expect(mockCryptoCompareApi.getPriceInformation).toHaveBeenCalledOnce;
+    });
+
+    it('should not be called if a user has already made a call and a promise has resolved', async () => {
+      mockCryptoCompareApi.getPriceInformation.mockImplementation(() =>
+        new Promise(resolve => resolve(prices)));
+
+      await wrapper.find('PriceInput').props().doSearch();
+      await wrapper.find('PriceInput').props().doSearch();
+
+      expect(mockCryptoCompareApi.getPriceInformation).toHaveBeenCalledTimes(1);
+      expect(mockCryptoCompareApi.getPriceInformation).not.toHaveBeenCalledTimes(2);
     });
 
     xit('passes canGetPriceInformation off state to the PriceInput component and the Button component', () => {
