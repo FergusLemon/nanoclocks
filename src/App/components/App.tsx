@@ -78,6 +78,7 @@ class App extends React.Component<object, State> {
             time: timePriceLastPaid
           }
         });
+        console.log(this.state.priceHistory);
       })
       .catch((error) => {
         throw new Error("Something went wrong" + "........" + error);
@@ -99,8 +100,9 @@ class App extends React.Component<object, State> {
     if (this.state.priceHistory.hasOwnProperty(price)) {
       return this.state.priceHistory[price];
     } else {
-      let keys = Object.keys(this.state.priceHistory);
-      let sortedKeys = keys.sort((a: string, b: string) => { return a > b ? 1 : -1 });
+      const keys = Object.keys(this.state.priceHistory);
+      const comparisonFunction = (a: any, b: any) => { return a - b };
+      let sortedKeys = keys.sort(comparisonFunction);
       let nearestIndex = nearestElementBinarySearch(sortedKeys, price);
       let nearestPrice = sortedKeys[nearestIndex];
       return this.state.priceHistory[nearestPrice];
