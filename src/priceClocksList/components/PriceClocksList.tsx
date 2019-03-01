@@ -1,7 +1,7 @@
 import React, { SFC } from 'react';
 
 type Props = {
-  clocks: Array
+  clocks: Array<string>
 };
 
 const PriceClocksList: SFC<Props> = ({ clocks, children }) => (
