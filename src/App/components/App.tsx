@@ -39,9 +39,10 @@ class App extends React.Component<object, State> {
 
   handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const eventValue: string = event.currentTarget.value;
+    const formattedEventValue: string = parseFloat(eventValue).toFixed(2);
     if(this.isInvalid(eventValue)) return;
     this.setState({
-      value: eventValue
+      value: formattedEventValue
     });
     this.updateCanGetPriceInformation(eventValue);
   };

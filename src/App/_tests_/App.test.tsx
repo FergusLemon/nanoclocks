@@ -8,10 +8,10 @@ import mockCryptoCompareApi from '../../communications/cryptoCompareApi';
 
 const DEFAULT_VALUE = "",
       MINUS = "-",
-      MIN = 5,
-      MAX = 40,
+      MIN = 5.00,
+      MAX = 40.00,
       ONE_DECIMAL = 5.1,
-      TWO_DECIMAL = 5.15,
+      TWO_DECIMAL = 5.10,
       THREE_DECIMAL = 5.155,
       ZERO_NUMBER = "01",
       INVALID = "Invalid";
@@ -50,38 +50,51 @@ describe("App", () => {
 
     it('sets the value of state when passed a valid number from the PriceInput component', () => {
       let validAmount = MIN.toString();
+      let formattedAmount = parseFloat(validAmount).toFixed(2);
       event.currentTarget.value = validAmount;
 
       wrapper.find("PriceInput").props().handleChange(event);
 
-      expect(wrapper.state().value).toBe(validAmount);
+      expect(wrapper.state().value).toBe(formattedAmount);
+    });
+
+    it('sets the value on state to two decimal places when passed a valid input', () => {
+      let validAmount = ONE_DECIMAL.toString();
+      event.currentTarget.value = validAmount;
+
+      wrapper.find("PriceInput").props().handleChange(event);
+
+      expect(wrapper.state().value).toBe(TWO_DECIMAL.toFixed(2));
     });
 
     it('sets the value of state when passed a valid two digit number where the first digit is less than the minimum from the PriceInput component', () => {
       let validAmount = (MIN + 30).toString();
+      let formattedAmount = parseFloat(validAmount).toFixed(2);
       event.currentTarget.value = validAmount;
 
       wrapper.find("PriceInput").props().handleChange(event);
 
-      expect(wrapper.state().value).toBe(validAmount);
+      expect(wrapper.state().value).toBe(formattedAmount);
     });
 
     it('sets the value of state when passed a valid number with one decimal place from the PriceInput component', () => {
       let validAmountOneDecimal = ONE_DECIMAL.toString();
+      let formattedAmount = parseFloat(validAmountOneDecimal).toFixed(2);
       event.currentTarget.value = validAmountOneDecimal;
 
       wrapper.find("PriceInput").props().handleChange(event);
 
-      expect(wrapper.state().value).toBe(validAmountOneDecimal);
+      expect(wrapper.state().value).toBe(formattedAmount);
     });
 
     it('sets the value of state when passed a valid number with two decimal places from the PriceInput component', () => {
       let validAmountTwoDecimal = TWO_DECIMAL.toString();
+      let formattedAmount = parseFloat(validAmountTwoDecimal).toFixed(2);
       event.currentTarget.value = validAmountTwoDecimal;
 
       wrapper.find("PriceInput").props().handleChange(event);
 
-      expect(wrapper.state().value).toBe(validAmountTwoDecimal);
+      expect(wrapper.state().value).toBe(formattedAmount);
     });
 
     it('does not set the value of state when passed a number with more than two decimal places from the PriceInput component', () => {
