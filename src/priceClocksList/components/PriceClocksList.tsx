@@ -1,11 +1,14 @@
 import React, { SFC } from 'react';
 
 type Props = {
-  id: string
+  clocks: Array
 };
 
-const PriceClocksList: SFC<Props> = ({ id, children }) => (
-  <div className="price-clocks-list-container">
+const PriceClocksList: SFC<Props> = ({ clocks, children }) => (
+  <div className="price-clocks-list">
+  {
+    !clocks || clocks.length === 0 && "There are no clocks on display."
+  }
   </div>
 )
 
