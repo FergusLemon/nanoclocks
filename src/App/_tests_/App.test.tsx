@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from '../components/App';
 import '../../setupTests';
 import { shallow } from 'enzyme';
@@ -24,9 +23,7 @@ const setup = (input = {}) => (
 );
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  shallow(<App />);
 });
 
 describe("App", () => {
