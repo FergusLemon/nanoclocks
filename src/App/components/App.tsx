@@ -5,12 +5,15 @@ import PriceInput from '../../priceInput/components/PriceInput';
 import Button from '../../button/components/Button';
 import CryptoCompareApi from '../../communications/cryptoCompareApi';
 
+let bareObject: any = {};
+
 const initialState = {
   value: "",
   min: 5,
   max: 40,
-  priceHistory: {},
-  canGetPriceInformation: false
+  priceHistory: bareObject,
+  canGetPriceInformation: false,
+  currentClock: { time: "" }
 };
 
 interface PriceData {
@@ -67,6 +70,12 @@ class App extends React.Component<object, State> {
           priceHistory: priceHash,
           canGetPriceInformation: true
         });
+        let timePriceLastPaid = this.getTime(this.state.value);
+        this.setState({
+          currentClock: {
+            time: timePriceLastPaid
+          }
+        });
       })
       .catch((error) => {
         throw new Error("Something went wrong" + "........" + error);
@@ -82,6 +91,12 @@ class App extends React.Component<object, State> {
       priceHash[data["close"]] = data["time"];
     }
     return priceHash;
+  };
+
+  getTime = (price: string) => {
+    if (this.state.priceHistory.hasOwnProperty(price)) {
+      return this.state.priceHistory[price];
+    }
   };
 
   render() {
