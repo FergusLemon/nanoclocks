@@ -4,6 +4,7 @@ import '../styles/App.css';
 import PriceInput from '../../priceInput/components/PriceInput';
 import Button from '../../button/components/Button';
 import CryptoCompareApi from '../../communications/cryptoCompareApi';
+import nearestElementBinarySearch from '../../common/utils/nearestElementBinarySearch';
 
 let bareObject: any = {};
 
@@ -96,6 +97,12 @@ class App extends React.Component<object, State> {
   getTime = (price: string) => {
     if (this.state.priceHistory.hasOwnProperty(price)) {
       return this.state.priceHistory[price];
+    } else {
+      let keys = Object.keys(this.state.priceHistory);
+      let sortedKeys = keys.sort((a: string, b: string) => { return a > b ? 1 : -1 });
+      let nearestIndex = nearestElementBinarySearch(sortedKeys, price);
+      let nearestPrice = sortedKeys[nearestIndex];
+      return this.state.priceHistory[nearestPrice];
     }
   };
 

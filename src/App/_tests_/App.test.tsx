@@ -241,23 +241,44 @@ describe("App", () => {
   });
 
   describe('finding the last time a price was paid', () => {
-    it('returns the unix time if the price is in the priceHistory on state', async() => {
-      const wrapper = shallow(<App />);
-      const price = "1.00";
-      const timeSincePricePaid = 1550880000;
-      let data = [{ time: timeSincePricePaid, high: price }];
-      const event = {
+    let wrapper, lowPrice, highPrice, lowTime, highTime, data, event
+    beforeEach(() => {
+      wrapper = shallow(<App />);
+      highPrice = "1.00";
+      highTime = 1550880000;
+      lowPrice = "0.50";
+      highTime = 1660770000;
+      data = [
+        { time: highTime, high: highPrice },
+        { time: lowTime, low: lowPrice }
+      ];
+      event = {
         currentTarget: {
-          value: price
+          value: highPrice
         }
       };
+    });
+
+    it('returns the unix time if the price is in the priceHistory on state', async() => {
+      wrapper.find('PriceInput').props().handleChange(event);
+      mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
+        new Promise(resolve => resolve(data)));
+      await wrapper.find('PriceInput').props().doSearch();
+
+      expect(wrapper.state().currentClock.time).toEqual(highTime);
+    });
+
+    it('returns the unix time of the nearest higher price if the price entered by the user is not in the priceHistory on state', async() => {
+      const userPrice = "0.99";
+      event.currentTarget.value = userPrice;
 
       wrapper.find('PriceInput').props().handleChange(event);
       mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
         new Promise(resolve => resolve(data)));
       await wrapper.find('PriceInput').props().doSearch();
 
-      expect(wrapper.state().currentClock.time).toEqual(timeSincePricePaid);
+      expect(wrapper.state().currentClock.time).toEqual(highTime);
+      expect(wrapper.state().currentClock.time).not.toEqual(lowTime);
     });
   });
 });
