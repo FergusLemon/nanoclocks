@@ -78,7 +78,6 @@ class App extends React.Component<object, State> {
             time: timePriceLastPaid
           }
         });
-        console.log(this.state.priceHistory);
       })
       .catch((error) => {
         throw new Error("Something went wrong" + "........" + error);
