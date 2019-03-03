@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import '../../setupTests';
 import { shallow } from 'enzyme';
 import PriceInput from '../components/PriceInput';
@@ -17,8 +16,7 @@ const setup = (input = {}) => (
 );
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<PriceInput />, div);
+  shallow(<PriceInput />);
 });
 
 describe('PriceInput', () => {
