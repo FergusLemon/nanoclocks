@@ -14,11 +14,13 @@ const DEFAULT_VALUE = "",
       TWO_DECIMAL = 5.10,
       THREE_DECIMAL = 5.155,
       ZERO_NUMBER = "01",
-      INVALID = "Invalid";
+      INVALID = "Invalid",
+      DEFAULT_TIME = 1550880000;
 const setup = (input = {}) => (
   {
     value: input.value || DEFAULT_VALUE,
-    canGetPriceInformation: input.canGetPriceInformation || false
+    canGetPriceInformation: input.canGetPriceInformation || false,
+    lastTime: input.lastTime || DEFAULT_TIME
   }
 );
 
@@ -33,6 +35,14 @@ describe("App", () => {
     const wrapper = shallow(<App {...testEnv} />);
 
     expect(wrapper.find('PriceInput').props().value).toBe(testEnv.value);
+  });
+
+  it('passes the lastTime on state to the Clock component', () => {
+    const wrapper = shallow(<App />);
+
+    wrapper.setState({lastTime: DEFAULT_TIME});
+
+    expect(wrapper.find('Clock').props().lastTime).toEqual(DEFAULT_TIME);
   });
 
   describe('Setting value property on state', () => {
@@ -263,7 +273,7 @@ describe("App", () => {
     beforeEach(() => {
       wrapper = shallow(<App />);
       highPrice = "1.00";
-      highTime = 1550880000;
+      highTime = DEFAULT_TIME;
       lowPrice = "0.50";
       lowTime = 1660770000;
       data = [
@@ -284,7 +294,7 @@ describe("App", () => {
           new Promise(resolve => resolve(data)));
         await wrapper.find('PriceInput').props().doSearch();
 
-        expect(wrapper.state().currentClock.time).toEqual(highTime);
+        expect(wrapper.state().lastTime).toEqual(highTime);
       });
     });
 
@@ -298,8 +308,8 @@ describe("App", () => {
           new Promise(resolve => resolve(data)));
         await wrapper.find('PriceInput').props().doSearch();
 
-        expect(wrapper.state().currentClock.time).toEqual(highTime);
-        expect(wrapper.state().currentClock.time).not.toEqual(lowTime);
+        expect(wrapper.state().lastTime).toEqual(highTime);
+        expect(wrapper.state().lastTime).not.toEqual(lowTime);
       });
     });
   });

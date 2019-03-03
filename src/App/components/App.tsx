@@ -3,6 +3,7 @@ import logo from '../../logo.svg';
 import '../styles/App.css';
 import PriceInput from '../../priceInput/components/PriceInput';
 import Button from '../../button/components/Button';
+import Clock from '../../clock/components/Clock';
 import CryptoCompareApi from '../../communications/cryptoCompareApi';
 import nearestElementBinarySearch from '../../common/utils/nearestElementBinarySearch';
 
@@ -14,7 +15,7 @@ const initialState = {
   max: 40,
   priceHistory: bareObject,
   canGetPriceInformation: false,
-  currentClock: { time: "" }
+  lastTime: 1000000000
 };
 
 interface PriceData {
@@ -74,9 +75,7 @@ class App extends React.Component<object, State> {
         });
         let timePriceLastPaid = this.getTime(this.state.value);
         this.setState({
-          currentClock: {
-            time: timePriceLastPaid
-          }
+          lastTime: timePriceLastPaid
         });
       })
       .catch((error) => {
@@ -109,7 +108,7 @@ class App extends React.Component<object, State> {
   };
 
   render() {
-    const { value, canGetPriceInformation } = this.state;
+    const { value, canGetPriceInformation, lastTime } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -135,6 +134,10 @@ class App extends React.Component<object, State> {
           >
             {"Submit"}
           </Button>
+        </div>
+        <div className="clock">
+          <Clock
+            lastTime={lastTime}/>
         </div>
       </div>
     );
