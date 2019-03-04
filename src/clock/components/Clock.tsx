@@ -50,9 +50,7 @@ class Clock extends React.Component<Props, State> {
 
   incrementDifference = (): void => {
     if (this.shouldIncrementSeconds()) {
-      this.setState({
-        seconds: this.state.seconds + 1
-      });
+      this.updateState("seconds", []);
     } else if (this.shouldIncrementMinutes()) {
       this.updateState("minutes", ["seconds"]);
     } else if (this.shouldIncrementHours()) {
