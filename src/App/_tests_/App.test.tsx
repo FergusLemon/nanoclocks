@@ -6,7 +6,7 @@ import getElement from '../../common/utils/getElement';
 jest.mock('../../communications/cryptoCompareApi');
 import mockCryptoCompareApi from '../../communications/cryptoCompareApi';
 
-const DEFAULT_VALUE = "",
+const defaultValue = "",
       MINUS = "-",
       MIN = 5.00,
       MAX = 40.00,
@@ -18,7 +18,7 @@ const DEFAULT_VALUE = "",
       DEFAULT_TIME = 1550880000;
 const setup = (input = {}) => (
   {
-    value: input.value || DEFAULT_VALUE,
+    value: input.value || defaultValue,
     canGetPriceInformation: input.canGetPriceInformation || false,
     lastTime: input.lastTime || DEFAULT_TIME
   }
@@ -45,7 +45,7 @@ describe("App", () => {
   });
 
   it('passes the value on state to the PriceInput component', () => {
-    const testEnv = setup({ value: DEFAULT_VALUE });
+    const testEnv = setup({ value: defaultValue });
     const wrapper = shallow(<App {...testEnv} />);
 
     expect(wrapper.find('PriceInput').props().value).toBe(testEnv.value);
@@ -64,11 +64,11 @@ describe("App", () => {
     beforeEach(() => {
       wrapper = shallow(<App />);
       wrapper.setState({
-        value: DEFAULT_VALUE
+        value: defaultValue
       });
       event = {
         currentTarget: {
-          value: DEFAULT_VALUE
+          value: defaultValue
         }
       };
     });
@@ -127,7 +127,7 @@ describe("App", () => {
 
         wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(DEFAULT_VALUE);
+        expect(wrapper.state().value).toBe(defaultValue);
       });
 
       it('does not set the value on state when the leading digit is a zero', () => {
@@ -135,7 +135,7 @@ describe("App", () => {
 
         wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(DEFAULT_VALUE);
+        expect(wrapper.state().value).toBe(defaultValue);
       });
 
       it('does not set the value on state when the leading character is a minus sign', () => {
@@ -143,7 +143,7 @@ describe("App", () => {
 
         wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(DEFAULT_VALUE);
+        expect(wrapper.state().value).toBe(defaultValue);
       });
 
       it('does not set the value on state when there is a non-numeric character', () => {
@@ -151,7 +151,7 @@ describe("App", () => {
 
         wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(DEFAULT_VALUE);
+        expect(wrapper.state().value).toBe(defaultValue);
       });
 
       xit('does not set the value on state when a number is less than the minimum', () => {
@@ -160,7 +160,7 @@ describe("App", () => {
 
         wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(DEFAULT_VALUE);
+        expect(wrapper.state().value).toBe(defaultValue);
       });
 
       it('does not set the value on state when a number is more than the maximum', () => {
@@ -169,7 +169,7 @@ describe("App", () => {
 
         wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(DEFAULT_VALUE);
+        expect(wrapper.state().value).toBe(defaultValue);
       });
     });
   });
@@ -213,6 +213,17 @@ describe("App", () => {
       expect(mockCryptoCompareApi.getPriceInformation).not.toHaveBeenCalledTimes(2);
     });
 
+    it(`should reset the value on state back to the default value`, async () => {
+      mockCryptoCompareApi.getPriceInformation.mockImplementation(() =>
+        new Promise(resolve => resolve(data)));
+
+      let value = MIN.toString();
+      wrapper.setState({ value: value });
+      await wrapper.find('PriceInput').props().doSearch();
+
+      expect(wrapper.state().value).toEqual(defaultValue);
+    });
+
     xit('passes canGetPriceInformation off state to the PriceInput component and the Button component', () => {
       const testEnv = setup({ canGetPriceInformation: false });
       const wrapper = shallow(<App {...testEnv} />);
@@ -227,12 +238,12 @@ describe("App", () => {
     beforeEach(() => {
       wrapper = shallow(<App />);
       wrapper.setState({
-        value: DEFAULT_VALUE,
+        value: defaultValue,
         canGetPriceInformation: false
       });
       event = {
         currentTarget: {
-          value: DEFAULT_VALUE
+          value: defaultValue
         }
       };
     });

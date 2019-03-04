@@ -8,9 +8,10 @@ import CryptoCompareApi from '../../communications/cryptoCompareApi';
 import nearestElementBinarySearch from '../../common/utils/nearestElementBinarySearch';
 
 let bareObject: any = {};
+const defaultValue: string = '';
 
 const initialState = {
-  value: "",
+  value: defaultValue,
   min: 5,
   max: 40,
   priceHistory: bareObject,
@@ -76,7 +77,8 @@ class App extends React.Component<object, State> {
         let formattedValue: string = parseFloat(this.state.value).toFixed(2);
         let timePriceLastPaid = this.getTime(formattedValue);
         this.setState({
-          lastTime: timePriceLastPaid
+          lastTime: timePriceLastPaid,
+          value: defaultValue
         });
       })
       .catch((error) => {
