@@ -102,7 +102,7 @@ class App extends React.Component<object, State> {
       const keys = Object.keys(this.state.priceHistory);
       const comparisonFunction = (a: any, b: any) => { return a - b };
       let sortedKeys = keys.sort(comparisonFunction);
-      let nearestIndex = nearestElementBinarySearch(sortedKeys, price);
+      let nearestIndex = nearestElementBinarySearch(sortedKeys, parseFloat(price));
       let nearestPrice = sortedKeys[nearestIndex];
       return this.state.priceHistory[nearestPrice];
     }

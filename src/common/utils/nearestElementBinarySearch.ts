@@ -1,10 +1,10 @@
-function binarySearch (list: Array<string>, item: string) {
+function binarySearch (list: Array<string>, item: number) {
   let low: number = 0;
   let high: number = (list.length - 1);
 
   while (low <= high) {
     let mid: number = Math.floor((low + high) / 2);
-    let guess: string = list[mid];
+    let guess: number = parseFloat(list[mid]);
     if (guess === item) {
       return mid;
     } else if (guess > item) {
