@@ -12,7 +12,8 @@ const defaultTime = 1550000000,
       maxHours = 23,
       maxDays = 30,
       maxMonths = 11,
-      withinRange = 5;
+      withinRange = 5,
+      oneYear = `01-00-00-00:00:00`;
 const setup = (input = {}) => (
   {
     lastTime: input.lastTime || defaultTime,
@@ -183,6 +184,23 @@ describe('Clock', () => {
         expect(wrapper.state().hours).toEqual(defaultValue);
         expect(wrapper.state().minutes).toEqual(defaultValue);
         expect(wrapper.state().seconds).toEqual(defaultValue);
+      });
+    });
+
+    describe('displaying a clock to the user', () => {
+      it(`should show all timeframes from years to seconds`, () => {
+        wrapper.setState({
+          years: defaultValue,
+          months: maxMonths,
+          days: maxDays,
+          hours: maxHours,
+          minutes: maxMinutes,
+          seconds: maxSeconds
+        });
+
+        jest.advanceTimersByTime(timer);
+
+        expect(getElement(wrapper)('div')('clock').text()).toEqual(oneYear);
       });
     });
   });
