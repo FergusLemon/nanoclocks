@@ -16,6 +16,14 @@ describe('Clock', () => {
     shallow(<Clock />);
   });
 
+  it('does not render if lastTime passed in on props is zero', () => {
+    const testEnv = setup({});
+    const wrapper = shallow(<Clock {...testEnv} />);
+
+    wrapper.setProps({lastTime: 0});
+    expect(wrapper.exists('.clock')).toEqual(false);
+  });
+
   it('calls the calculateDifference function on mounting', () => {
     const testEnv = setup({});
     const wrapper = shallow(<Clock {...testEnv} />);
@@ -24,5 +32,12 @@ describe('Clock', () => {
     expect(spy).toHaveBeenCalledOnce;
 
     spy.mockRestore();
+  });
+
+  it('sets the value of timeSince on state when mounting', () => {
+    const testEnv = setup({});
+    const wrapper = shallow(<Clock {...testEnv} />);
+
+    expect(wrapper.state().timeSince).not.toEqual(0);
   });
 });

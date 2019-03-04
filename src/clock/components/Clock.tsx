@@ -25,9 +25,13 @@ class Clock extends React.Component<Props, State> {
   };
 
   render() {
-    const { lastTime } = this.props;
+    const { lastTime, children } = this.props;
     return (
-      <div className="clock">{this.state.timeSince}</div>
+      <div className="clock-container">
+        { lastTime !== 0 &&
+          <div className="clock">{this.state.timeSince}</div>
+        }
+    </div>
     )
   }
 };
