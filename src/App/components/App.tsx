@@ -40,10 +40,10 @@ class App extends React.Component<object, State> {
 
   handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const eventValue: string = event.currentTarget.value;
-    const formattedEventValue: string = parseFloat(eventValue).toFixed(2);
+    //const formattedEventValue: string = parseFloat(eventValue).toFixed(2);
     if(this.isInvalid(eventValue)) return;
     this.setState({
-      value: formattedEventValue
+      value: eventValue
     });
     this.updateCanGetPriceInformation(eventValue);
   };
@@ -73,7 +73,9 @@ class App extends React.Component<object, State> {
           priceHistory: priceHash,
           canGetPriceInformation: true
         });
-        let timePriceLastPaid = this.getTime(this.state.value);
+    //const formattedEventValue: string = parseFloat(eventValue).toFixed(2);
+        let formattedValue: string = parseFloat(this.state.value).toFixed(2);
+        let timePriceLastPaid = this.getTime(formattedValue);
         this.setState({
           lastTime: timePriceLastPaid
         });
