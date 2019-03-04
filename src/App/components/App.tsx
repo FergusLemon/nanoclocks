@@ -15,7 +15,7 @@ const initialState = {
   max: 40,
   priceHistory: bareObject,
   canGetPriceInformation: false,
-  lastTime: 1000000000
+  lastTime: 0
 };
 
 interface PriceData {
