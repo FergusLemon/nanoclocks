@@ -30,6 +30,20 @@ describe("App", () => {
     shallow(<App />);
   });
 
+  it('does not render the Clock component if the value of lastTime on state is zero', () => {
+    const wrapper = shallow(<App />);
+
+    expect(wrapper.exists('.clock')).toEqual(false);
+  });
+
+  it('renders the Clock component if the value of lastTime on state is not zero', () => {
+    const wrapper = shallow(<App />);
+
+    wrapper.setState({ lastTime: DEFAULT_TIME });
+
+    expect(wrapper.exists('.clock')).toEqual(true);
+  });
+
   it('passes the value on state to the PriceInput component', () => {
     const testEnv = setup({ value: DEFAULT_VALUE });
     const wrapper = shallow(<App {...testEnv} />);

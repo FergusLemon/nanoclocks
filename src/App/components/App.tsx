@@ -73,7 +73,6 @@ class App extends React.Component<object, State> {
           priceHistory: priceHash,
           canGetPriceInformation: true
         });
-    //const formattedEventValue: string = parseFloat(eventValue).toFixed(2);
         let formattedValue: string = parseFloat(this.state.value).toFixed(2);
         let timePriceLastPaid = this.getTime(formattedValue);
         this.setState({
@@ -137,10 +136,12 @@ class App extends React.Component<object, State> {
             {"Submit"}
           </Button>
         </div>
-        <div className="clock">
-          <Clock
-            lastTime={lastTime}/>
-        </div>
+        { lastTime !== 0 &&
+          <div className="clock">
+            <Clock
+              lastTime={lastTime}/>
+          </div>
+        }
       </div>
     );
   }
