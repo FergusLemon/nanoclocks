@@ -1,17 +1,14 @@
 import * as React from 'react';
 import moment from 'moment';
+import '../styles/clock.css';
 
 const defaultValue: number = 0,
       doubleDigits: number = 10,
-      maxMonths: number = 11,
-      maxDays: number = 30,
       maxHours: number = 23,
       maxMinutes: number = 59,
       maxSeconds: number = 59;
 
 const initialState: any = {
-  years: defaultValue,
-  months: defaultValue,
   days: defaultValue,
   hours: defaultValue,
   minutes: defaultValue,
@@ -36,12 +33,11 @@ class Clock extends React.Component<Props, State> {
   calculateDifference = () => {
     const now = this.state.currentTime;
     const then = this.props.lastTime * 1000;
+    const days = moment(now).diff(moment(then), 'd');
     const duration: any = moment.duration(moment(now).diff(moment(then)));
     const durationHash = duration._data;
     this.setState({
-      years: durationHash['years'],
-      months: durationHash['months'],
-      days: durationHash['days'],
+      days: days,
       hours: durationHash['hours'],
       minutes: durationHash['minutes'],
       seconds: durationHash['seconds'],
@@ -55,12 +51,8 @@ class Clock extends React.Component<Props, State> {
       this.updateState("minutes", ["seconds"]);
     } else if (this.shouldIncrementHours()) {
       this.updateState("hours", ["seconds", "minutes"]);
-    } else if (this.shouldIncrementDays()) {
-      this.updateState("days", ["seconds", "minutes", "hours"]);
-    } else if (this.shouldIncrementMonths()) {
-      this.updateState("months", ["seconds", "minutes", "hours", "days"]);
     } else {
-      this.updateState("years", ["seconds", "minutes", "hours", "days", "months"]);
+      this.updateState("days", ["seconds", "minutes", "hours"]);
     };
   };
 
@@ -76,14 +68,6 @@ class Clock extends React.Component<Props, State> {
     return this.state.minutes === maxMinutes && this.state.hours < maxHours;
   };
 
-  shouldIncrementDays = (): boolean => {
-    return this.state.hours === maxHours && this.state.days < maxDays;
-  };
-
-  shouldIncrementMonths = (): boolean => {
-    return this.state.days === maxDays && this.state.months < maxMonths;
-  };
-
   updateState = (toIncrement: string, toReset: Array<string>): void => {
     this.setState({
       [toIncrement]: this.state[toIncrement] + 1
@@ -97,13 +81,11 @@ class Clock extends React.Component<Props, State> {
 
   render() {
     const { lastTime, children } = this.props;
-    let { years, months, days, hours, minutes, seconds } = this.state;
+    let { days, hours, minutes, seconds } = this.state;
     return (
       <div className="clock-container">
         { lastTime !== 0 &&
           <div className="clock">
-            {years < doubleDigits ? 0 : ''}{years}-
-            {months < doubleDigits ? 0 : ''}{months}-
             {days < doubleDigits ? 0 : ''}{days}-
             {hours < doubleDigits ? 0 : ''}{hours}:
             {minutes < doubleDigits ? 0 : ''}{minutes}:

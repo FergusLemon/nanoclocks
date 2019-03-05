@@ -10,10 +10,8 @@ const defaultTime = 1550000000,
       maxSeconds = 59,
       maxMinutes = maxSeconds,
       maxHours = 23,
-      maxDays = 30,
-      maxMonths = 11,
       withinRange = 5,
-      oneYear = `01-00-00-00:00:00`;
+      oneDay = `01-00:00:00`;
 const setup = (input = {}) => (
   {
     lastTime: input.lastTime || defaultTime,
@@ -43,7 +41,7 @@ describe('Clock', () => {
     spy.mockRestore();
   });
 
-  it(`sets the value of year, month, day, hour, minute and second on state when
+  it(`sets the value of day, hour, minute and second on state when
     mounting`, () => {
     const testEnv = setup({});
     const wrapper = shallow(<Clock {...testEnv} />);
@@ -142,57 +140,10 @@ describe('Clock', () => {
       });
     });
 
-    describe(`when the value of days on state is at the maximum but months is
-      not`, () => {
-        it(`increments the value of months on state by one and resets the value
-          of lower timframes to zero`, () => {
-          wrapper.setState({
-            months: withinRange,
-            days: maxDays,
-            hours: maxHours,
-            minutes: maxMinutes,
-            seconds: maxSeconds
-          });
-
-          jest.advanceTimersByTime(timer);
-
-          expect(wrapper.state().months).toEqual(withinRange + 1);
-          expect(wrapper.state().days).toEqual(defaultValue);
-          expect(wrapper.state().hours).toEqual(defaultValue);
-          expect(wrapper.state().minutes).toEqual(defaultValue);
-          expect(wrapper.state().seconds).toEqual(defaultValue);
-      });
-    });
-
-    describe('when the value of months on state is at the maximum', () => {
-      it(`increments the value of years on state by one and resets the value of
-        lower timframes to zero`, () => {
-        wrapper.setState({
-          years: defaultValue,
-          months: maxMonths,
-          days: maxDays,
-          hours: maxHours,
-          minutes: maxMinutes,
-          seconds: maxSeconds
-        });
-
-        jest.advanceTimersByTime(timer);
-
-        expect(wrapper.state().years).toEqual(defaultValue + 1);
-        expect(wrapper.state().months).toEqual(defaultValue);
-        expect(wrapper.state().days).toEqual(defaultValue);
-        expect(wrapper.state().hours).toEqual(defaultValue);
-        expect(wrapper.state().minutes).toEqual(defaultValue);
-        expect(wrapper.state().seconds).toEqual(defaultValue);
-      });
-    });
-
     describe('displaying a clock to the user', () => {
-      it(`should show all timeframes from years to seconds`, () => {
+      it(`should show all timeframes from days to seconds`, () => {
         wrapper.setState({
-          years: defaultValue,
-          months: maxMonths,
-          days: maxDays,
+          days: defaultValue,
           hours: maxHours,
           minutes: maxMinutes,
           seconds: maxSeconds
@@ -200,7 +151,7 @@ describe('Clock', () => {
 
         jest.advanceTimersByTime(timer);
 
-        expect(getElement(wrapper)('div')('clock').text()).toEqual(oneYear);
+        expect(getElement(wrapper)('div')('clock').text()).toEqual(oneDay);
       });
     });
   });
