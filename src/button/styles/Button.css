@@ -1,0 +1,20 @@
+.button {
+  position: absolute;
+  top: 42%;
+  left: 10%;
+}
+
+.price-submit-button {
+  background-color: #ffffff;
+  color: #4a90e2;
+  border: 2px solid #4a90e2;
+  border-radius: 5px;
+  outline: none;
+}
+
+button:active {
+  background-color: #ffffff;
+  color: #000034;
+  border: 2px solid #000034;
+  padding: 4px 8px 4px;
+}
