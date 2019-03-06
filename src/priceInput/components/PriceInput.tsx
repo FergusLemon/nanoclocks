@@ -11,7 +11,7 @@ type Props = {
 
 const PriceInput: SFC<Props> = ({ id, value, handleChange, doSearch, canGetPriceInformation, children }) => (
   <div className="price-input-field-container">
-    <label htmlFor={id} className="price-input-label">Enter a price</label>
+    <label htmlFor={id} className="price-input-label">Enter a price in $USD</label>
     <input className="price-input-field" type="tel"
       id={id}
       value={value}
