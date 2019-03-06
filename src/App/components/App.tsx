@@ -120,30 +120,32 @@ class App extends React.Component<object, State> {
             NanoClocks
           </p>
         </header>
-        <div className="price">
-          <PriceInput
-            id="price-input-field"
-            value={value}
-            handleChange={this.handleInput}
-            doSearch={this.doSearch}
-            canGetPriceInformation={canGetPriceInformation}
-          />
-        </div>
-        <div className="button">
-          <Button
-            id="price-submit-button"
-            doSearch={this.doSearch}
-            canGetPriceInformation={canGetPriceInformation}
-          >
-            {"Submit"}
-          </Button>
-        </div>
-        { lastTime !== 0 &&
-          <div className="clock">
-            <Clock
-              lastTime={lastTime}/>
+        <div className="main-container">
+          <div className="price">
+              <PriceInput
+                id="price-input-field"
+                value={value}
+                handleChange={this.handleInput}
+                doSearch={this.doSearch}
+                canGetPriceInformation={canGetPriceInformation}
+              />
+            </div>
+            <div className="button">
+              <Button
+                id="price-submit-button"
+                doSearch={this.doSearch}
+                canGetPriceInformation={canGetPriceInformation}
+              >
+                {"Submit"}
+              </Button>
+            </div>
+            { lastTime !== 0 &&
+              <div className="clock">
+                <Clock
+                  lastTime={lastTime}/>
+              </div>
+            }
           </div>
-        }
       </div>
     );
   }
