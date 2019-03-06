@@ -3,3 +3,26 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.price-input-field-container {
+  position: absolute;
+  top: 35%;
+  left: 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+input, label {
+  display: block;
+  margin: 2px;
+}
+
+input {
+  background-color: #4a90e2;
+  color: #ffffff;
+  border: 1px #4a90e2;
+}
+
+input:focus {
+  outline: none;
+}
