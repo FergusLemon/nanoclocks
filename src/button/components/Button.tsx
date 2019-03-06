@@ -1,4 +1,5 @@
 import React, { SFC, MouseEvent} from 'react';
+import '../styles/Button.css';
 
 type Props = {
   id: string
