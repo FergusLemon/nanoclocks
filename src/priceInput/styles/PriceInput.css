@@ -21,6 +21,9 @@ input {
   background-color: #4a90e2;
   color: #ffffff;
   border: 1px #4a90e2;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 4px;
 }
 
 input:focus {
