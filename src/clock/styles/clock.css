@@ -1,11 +1,23 @@
 .clock {
-  background-color: #000034;
-  color: #ffffff;
-  text-align: center;
-  position: fixed;
-  top: 150px;
+  color: #000034;
   margin-left: 20px;
-  width: 200px;
-  height: 20px;
-  border-radius: 5px;
+  position: absolute;
+  top: 55%;
+  left: 7%;
+  display: flex;
+}
+
+.clock > p {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  margin: 2px;
+}
+
+.humanized-clock {
+  position: fixed;
+  top: 50%;
+  left: 118px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 16px;
+  margin: 4px;
 }

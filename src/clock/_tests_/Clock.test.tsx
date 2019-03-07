@@ -11,7 +11,7 @@ const defaultTime = 1550000000,
       maxMinutes = maxSeconds,
       maxHours = 23,
       withinRange = 5,
-      oneDay = `01-00:00:00`;
+      oneUnitOfTime = `01`;
 const setup = (input = {}) => (
   {
     lastTime: input.lastTime || defaultTime,
@@ -146,12 +146,13 @@ describe('Clock', () => {
           days: defaultValue,
           hours: maxHours,
           minutes: maxMinutes,
-          seconds: maxSeconds
+          seconds: maxSeconds,
         });
 
         jest.advanceTimersByTime(timer);
 
-        expect(getElement(wrapper)('div')('clock').text()).toEqual(oneDay);
+        expect(getElement(wrapper)('div')('days').text()).toEqual(oneUnitOfTime);
+        expect(getElement(wrapper)('div')('humanized-clock').text()).not.toBeEmpty;
       });
     });
   });

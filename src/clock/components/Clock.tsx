@@ -13,6 +13,7 @@ const initialState: any = {
   hours: defaultValue,
   minutes: defaultValue,
   seconds: defaultValue,
+  humanClock: '',
   currentTime: Date.now(),
 };
 
@@ -35,12 +36,14 @@ class Clock extends React.Component<Props, State> {
     const then = this.props.lastTime * 1000;
     const days = moment(now).diff(moment(then), 'd');
     const duration: any = moment.duration(moment(now).diff(moment(then)));
+    const humanizedDuration: string = duration.humanize();
     const durationHash = duration._data;
     this.setState({
       days: days,
       hours: durationHash['hours'],
       minutes: durationHash['minutes'],
       seconds: durationHash['seconds'],
+      humanClock: humanizedDuration,
     });
   };
 
@@ -81,15 +84,20 @@ class Clock extends React.Component<Props, State> {
 
   render() {
     const { lastTime, children } = this.props;
-    let { days, hours, minutes, seconds } = this.state;
+    let { days, hours, minutes, seconds, humanClock } = this.state;
     return (
       <div className="clock-container">
         { lastTime !== 0 &&
-          <div className="clock">
-            {days < doubleDigits ? 0 : ''}{days}-
-            {hours < doubleDigits ? 0 : ''}{hours}:
-            {minutes < doubleDigits ? 0 : ''}{minutes}:
-            {seconds < doubleDigits ? 0 : ''}{seconds}
+            <div className="clock">
+              <p className="days">{days < doubleDigits ? 0 : ''}{days}</p>
+              <p className="hours">{hours < doubleDigits ? 0 : ''}{hours}</p>
+              <p className="minutes">{minutes < doubleDigits ? 0 : ''}{minutes}</p>
+              <p className="seconds">{seconds < doubleDigits ? 0 : ''}{seconds}</p>
+            </div>
+        }
+        { lastTime !== 0 &&
+          <div className="humanized-clock">
+            It has been approximately {humanClock} since NANO traded at xx USD.
           </div>
         }
     </div>
