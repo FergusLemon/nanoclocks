@@ -15,12 +15,13 @@ const defaultValue = "",
       THREE_DECIMAL = 5.155,
       ZERO_NUMBER = "01",
       INVALID = "Invalid",
-      DEFAULT_TIME = 1550880000;
+      defaultTime = 1550880000;
 const setup = (input = {}) => (
   {
     value: input.value || defaultValue,
     canGetPriceInformation: input.canGetPriceInformation || false,
-    lastTime: input.lastTime || DEFAULT_TIME
+    lastTime: input.lastTime || defaultTime,
+    nearestPrice: input.nearestPrice || defaultValue
   }
 );
 
@@ -39,7 +40,7 @@ describe("App", () => {
   it('renders the Clock component if the value of lastTime on state is not zero', () => {
     const wrapper = shallow(<App />);
 
-    wrapper.setState({ lastTime: DEFAULT_TIME });
+    wrapper.setState({ lastTime: defaultTime });
 
     expect(wrapper.exists('.clock')).toEqual(true);
   });
@@ -51,12 +52,28 @@ describe("App", () => {
     expect(wrapper.find('PriceInput').props().value).toBe(testEnv.value);
   });
 
+  it('passes the value on state to the Clock component', () => {
+    const testEnv = setup({ value: defaultValue });
+    const wrapper = shallow(<App {...testEnv} />);
+    wrapper.setState({ lastTime: defaultTime });
+
+    expect(wrapper.find('Clock').props().value).toBe(testEnv.value);
+  });
+
+  it('passes the nearestPrice on state to the Clock component', () => {
+    const testEnv = setup({ nearestPrice: MIN.toString() });
+    const wrapper = shallow(<App {...testEnv} />);
+    wrapper.setState({ lastTime: defaultTime, nearestPrice: MIN.toString() });
+
+    expect(wrapper.find('Clock').props().nearestPrice).toBe(testEnv.nearestPrice);
+  });
+
   it('passes the lastTime on state to the Clock component', () => {
     const wrapper = shallow(<App />);
 
-    wrapper.setState({lastTime: DEFAULT_TIME});
+    wrapper.setState({lastTime: defaultTime});
 
-    expect(wrapper.find('Clock').props().lastTime).toEqual(DEFAULT_TIME);
+    expect(wrapper.find('Clock').props().lastTime).toEqual(defaultTime);
   });
 
   describe('Setting value property on state', () => {
@@ -294,7 +311,7 @@ describe("App", () => {
     beforeEach(() => {
       wrapper = shallow(<App />);
       highPrice = "1.00";
-      highTime = DEFAULT_TIME;
+      highTime = defaultTime;
       lowPrice = "0.50";
       lowTime = 1660770000;
       data = [
@@ -316,6 +333,7 @@ describe("App", () => {
         await wrapper.find('PriceInput').props().doSearch();
 
         expect(wrapper.state().lastTime).toEqual(highTime);
+        expect(wrapper.state().nearestPrice).toEqual(defaultValue);
       });
     });
 
@@ -331,6 +349,7 @@ describe("App", () => {
 
         expect(wrapper.state().lastTime).toEqual(highTime);
         expect(wrapper.state().lastTime).not.toEqual(lowTime);
+        expect(wrapper.state().nearestPrice).toEqual(highPrice);
       });
     });
   });

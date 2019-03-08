@@ -9,6 +9,7 @@ import nearestElementBinarySearch from '../../common/utils/nearestElementBinaryS
 
 let bareObject: any = {};
 const defaultValue: string = '';
+const defaultTime: number = 0;
 
 const initialState = {
   value: defaultValue,
@@ -16,7 +17,8 @@ const initialState = {
   max: 40,
   priceHistory: bareObject,
   canGetPriceInformation: false,
-  lastTime: 0
+  nearestPrice: defaultValue,
+  lastTime: defaultTime
 };
 
 interface PriceData {
@@ -106,12 +108,19 @@ class App extends React.Component<object, State> {
       let sortedKeys = keys.sort(comparisonFunction);
       let nearestIndex = nearestElementBinarySearch(sortedKeys, parseFloat(price));
       let nearestPrice = sortedKeys[nearestIndex];
+      this.updateNearestPrice(nearestPrice);
       return this.state.priceHistory[nearestPrice];
     }
   };
 
+  updateNearestPrice = (nearestPrice: string) => {
+    this.setState({
+      nearestPrice: nearestPrice
+    });
+  };
+
   render() {
-    const { value, canGetPriceInformation, lastTime } = this.state;
+    const { value, canGetPriceInformation, lastTime, nearestPrice } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -142,7 +151,10 @@ class App extends React.Component<object, State> {
             { lastTime !== 0 &&
               <div className="clock">
                 <Clock
-                  lastTime={lastTime}/>
+                  lastTime={lastTime}
+                  value={value}
+                  nearestPrice={nearestPrice}
+                />
               </div>
             }
           </div>
