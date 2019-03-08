@@ -11,10 +11,13 @@ const defaultTime = 1550000000,
       maxMinutes = maxSeconds,
       maxHours = 23,
       withinRange = 5,
-      oneUnitOfTime = `01`;
+      oneUnitOfTime = `01`,
+      defaultPrice = '';
 const setup = (input = {}) => (
   {
     lastTime: input.lastTime || defaultTime,
+    value: input.value || defaultPrice,
+    nearestPrice: input.nearestPrice || defaultPrice
   }
 );
 
@@ -151,8 +154,21 @@ describe('Clock', () => {
 
         jest.advanceTimersByTime(timer);
 
-        expect(getElement(wrapper)('div')('days').text()).toEqual(oneUnitOfTime);
+        expect(getElement(wrapper)('p')('days').text()).toEqual(oneUnitOfTime);
         expect(getElement(wrapper)('div')('humanized-clock').text()).not.toBeEmpty;
+      });
+
+      it(`should include the price entered by the user if no nearestPrice was passed in on props`, () => {
+        testEnv = setup({ value: '2' });
+        wrapper = shallow(<Clock{...testEnv}/>)
+
+        expect(getElement(wrapper)('div')('humanized-clock').text()).toContain(testEnv.value + ' USD');
+      });
+      it(`should include the nearest price if nearestPrice was passed in on props`, () => {
+        testEnv = setup({ nearestPrice: '1' });
+        wrapper = shallow(<Clock{...testEnv}/>)
+
+        expect(getElement(wrapper)('div')('humanized-clock').text()).toContain(testEnv.nearestPrice);
       });
     });
   });
