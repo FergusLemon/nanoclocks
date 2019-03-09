@@ -46,10 +46,9 @@ describe("App", () => {
   });
 
   it('passes the value on state to the PriceInput component', () => {
-    const testEnv = setup({ value: defaultValue });
-    const wrapper = shallow(<App {...testEnv} />);
+    const wrapper = shallow(<App/>);
 
-    expect(wrapper.find('PriceInput').props().value).toBe(testEnv.value);
+    expect(wrapper.find('PriceInput').props().value).toBe(defaultValue);
   });
 
   it('passes the userPrice on state to the Clock component', () => {
@@ -60,11 +59,10 @@ describe("App", () => {
   });
 
   it('passes the nearestPrice on state to the Clock component', () => {
-    const testEnv = setup({ nearestPrice: MIN.toString() });
-    const wrapper = shallow(<App {...testEnv} />);
+    const wrapper = shallow(<App/>);
     wrapper.setState({ lastTime: defaultTime, nearestPrice: MIN.toString() });
 
-    expect(wrapper.find('Clock').props().nearestPrice).toBe(testEnv.nearestPrice);
+    expect(wrapper.find('Clock').props().nearestPrice).toBe(wrapper.state().nearestPrice);
   });
 
   it('passes the lastTime on state to the Clock component', () => {
@@ -75,7 +73,7 @@ describe("App", () => {
     expect(wrapper.find('Clock').props().lastTime).toEqual(defaultTime);
   });
 
-  describe('Setting value property on state', () => {
+  describe('Setting the value property on state', () => {
     let wrapper, event;
     beforeEach(() => {
       wrapper = shallow(<App />);
@@ -260,58 +258,69 @@ describe("App", () => {
   });
 
   describe('Enabling and disabling calls to the Crypto Compare API', () => {
-    let wrapper, event;
+    let wrapper, event, validAmount;
     beforeEach(() => {
       wrapper = shallow(<App />);
-      wrapper.setState({
-        value: defaultValue,
-        canGetPriceInformation: false
-      });
       event = {
         currentTarget: {
           value: defaultValue
         }
       };
+      validAmount = MAX.toString();
     });
 
-    it('sets canGetPriceInformation to false when the price input field is empty', () => {
-      const wrapper = shallow(<App />);
+    it(`sets canGetPriceInformation to false when the price input field is
+      empty`, () => {
+        wrapper.find('PriceInput').props().handleChange(event);
 
-      wrapper.find('PriceInput').props().handleChange(event);
-
-      expect(wrapper.state().canGetPriceInformation).toEqual(false);
+        expect(wrapper.state().canGetPriceInformation).toEqual(false);
     });
 
-    it('sets canGetPriceInformation to true when the price input field contains a valid price', () => {
-      let validAmount = MAX.toString();
+    it(`sets canGetPriceInformation to true when the price input field contains
+      a valid price`, () => {
+        event.currentTarget.value = validAmount;
+
+        wrapper.find('PriceInput').props().handleChange(event);
+
+        expect(wrapper.state().canGetPriceInformation).toEqual(true);
+    });
+
+    it(`sets canGetPriceInformation to false before the doSearch Promise fires`,
+      () => {
+        event.currentTarget.value = validAmount;
+
+        wrapper.find('PriceInput').props().handleChange(event);
+        wrapper.find('PriceInput').props().doSearch();
+
+        expect(wrapper.state().canGetPriceInformation).toEqual(false);
+    });
+
+    it(`sets canGetPriceInformation to true after the doSearch Promise fires`,
+      async() => {
+        let data = [];
+        event.currentTarget.value = validAmount;
+
+        wrapper.find('PriceInput').props().handleChange(event);
+        mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
+          new Promise(resolve => resolve(data)));
+        await wrapper.find('PriceInput').props().doSearch();
+
+        expect(wrapper.state().canGetPriceInformation).toEqual(true);
+    });
+
+    it(`should allow a user to continue searching for new prices`, () => {
+      wrapper.setState({
+        value: defaultValue,
+        priceHistory: { "0.50": defaultTime, "2.00": defaultTime },
+        userPrice: defaultValue,
+      });
+
       event.currentTarget.value = validAmount;
-
-      wrapper.find('PriceInput').props().handleChange(event);
-
-      expect(wrapper.state().canGetPriceInformation).toEqual(true);
-    });
-
-    it('sets canGetPriceInformation to false before the doSearch Promise fires', () => {
-      let validAmount = MAX.toString();
-      event.currentTarget.value = validAmount;
-
       wrapper.find('PriceInput').props().handleChange(event);
       wrapper.find('PriceInput').props().doSearch();
 
-      expect(wrapper.state().canGetPriceInformation).toEqual(false);
-    });
-
-    it('sets canGetPriceInformation to true after the doSearch Promise fires', async() => {
-      let data = [];
-      let validAmount = MAX.toString();
-      event.currentTarget.value = validAmount;
-
-      wrapper.find('PriceInput').props().handleChange(event);
-      mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
-        new Promise(resolve => resolve(data)));
-      await wrapper.find('PriceInput').props().doSearch();
-
-      expect(wrapper.state().canGetPriceInformation).toEqual(true);
+      expect(wrapper.state().value).toEqual(validAmount);
+      expect(wrapper.state().userPrice).toEqual(validAmount);
     });
   });
 

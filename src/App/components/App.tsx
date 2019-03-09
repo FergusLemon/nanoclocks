@@ -44,7 +44,6 @@ class App extends React.Component<object, State> {
 
   handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const eventValue: string = event.currentTarget.value;
-    //const formattedEventValue: string = parseFloat(eventValue).toFixed(2);
     if(this.isInvalid(eventValue)) return;
     this.setState({
       value: eventValue
@@ -65,11 +64,11 @@ class App extends React.Component<object, State> {
   };
 
   doSearch = async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
-    if (Object.entries(this.state.priceHistory).length > 0) return;
     this.setState({
       canGetPriceInformation: false,
       userPrice: this.state.value
     });
+    if (Object.entries(this.state.priceHistory).length > 0) return;
     await CryptoCompareApi
       .getPriceInformation()
       .then(priceInformation => {
