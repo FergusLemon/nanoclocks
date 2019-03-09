@@ -20,7 +20,7 @@ const initialState: any = {
 type State = Readonly<typeof initialState>;
 type Props = {
   lastTime: number,
-  value: string,
+  userPrice: string,
   nearestPrice: string
 };
 
@@ -85,9 +85,9 @@ class Clock extends React.Component<Props, State> {
   };
 
   render() {
-    const { lastTime, value, nearestPrice, children } = this.props;
+    const { lastTime, userPrice, nearestPrice, children } = this.props;
     let { days, hours, minutes, seconds, humanClock } = this.state;
-    const price = (nearestPrice === '' ? value : nearestPrice);
+    const priceToDisplay = (nearestPrice === '' ? userPrice : nearestPrice)
     return (
       <div className="clock-container">
         { lastTime !== 0 &&
@@ -100,7 +100,7 @@ class Clock extends React.Component<Props, State> {
         }
         { lastTime !== 0 &&
           <div className="humanized-clock">
-            It has been approximately {humanClock} since NANO traded at {price} USD.
+            It has been approximately {humanClock} since NANO traded at {priceToDisplay} USD.
           </div>
         }
     </div>

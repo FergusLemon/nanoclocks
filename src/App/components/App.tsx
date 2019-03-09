@@ -17,6 +17,7 @@ const initialState = {
   max: 40,
   priceHistory: bareObject,
   canGetPriceInformation: false,
+  userPrice: defaultValue,
   nearestPrice: defaultValue,
   lastTime: defaultTime
 };
@@ -66,7 +67,8 @@ class App extends React.Component<object, State> {
   doSearch = async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
     if (Object.entries(this.state.priceHistory).length > 0) return;
     this.setState({
-      canGetPriceInformation: false
+      canGetPriceInformation: false,
+      userPrice: this.state.value
     });
     await CryptoCompareApi
       .getPriceInformation()
@@ -74,7 +76,7 @@ class App extends React.Component<object, State> {
         let priceHash = this.createPriceHash(priceInformation);
         this.setState({
           priceHistory: priceHash,
-          canGetPriceInformation: true
+          canGetPriceInformation: true,
         });
         let formattedValue: string = parseFloat(this.state.value).toFixed(2);
         let timePriceLastPaid = this.getTime(formattedValue);
@@ -120,7 +122,7 @@ class App extends React.Component<object, State> {
   };
 
   render() {
-    const { value, canGetPriceInformation, lastTime, nearestPrice } = this.state;
+    const { value, canGetPriceInformation, lastTime, userPrice, nearestPrice } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -152,7 +154,7 @@ class App extends React.Component<object, State> {
               <div className="clock">
                 <Clock
                   lastTime={lastTime}
-                  value={value}
+                  userPrice={userPrice}
                   nearestPrice={nearestPrice}
                 />
               </div>

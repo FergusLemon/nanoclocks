@@ -16,7 +16,7 @@ const defaultTime = 1550000000,
 const setup = (input = {}) => (
   {
     lastTime: input.lastTime || defaultTime,
-    value: input.value || defaultPrice,
+    userPrice: input.userPrice || defaultPrice,
     nearestPrice: input.nearestPrice || defaultPrice
   }
 );
@@ -159,10 +159,10 @@ describe('Clock', () => {
       });
 
       it(`should include the price entered by the user if no nearestPrice was passed in on props`, () => {
-        testEnv = setup({ value: '2' });
+        testEnv = setup({ userPrice: '2' });
         wrapper = shallow(<Clock{...testEnv}/>)
 
-        expect(getElement(wrapper)('div')('humanized-clock').text()).toContain(testEnv.value + ' USD');
+        expect(getElement(wrapper)('div')('humanized-clock').text()).toContain(testEnv.userPrice + ' USD');
       });
       it(`should include the nearest price if nearestPrice was passed in on props`, () => {
         testEnv = setup({ nearestPrice: '1' });

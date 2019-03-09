@@ -52,12 +52,11 @@ describe("App", () => {
     expect(wrapper.find('PriceInput').props().value).toBe(testEnv.value);
   });
 
-  it('passes the value on state to the Clock component', () => {
-    const testEnv = setup({ value: defaultValue });
-    const wrapper = shallow(<App {...testEnv} />);
-    wrapper.setState({ lastTime: defaultTime });
+  it('passes the userPrice on state to the Clock component', () => {
+    const wrapper = shallow(<App/>);
+    wrapper.setState({ lastTime: defaultTime, userPrice: defaultValue });
 
-    expect(wrapper.find('Clock').props().value).toBe(testEnv.value);
+    expect(wrapper.find('Clock').props().userPrice).toBe(defaultValue);
   });
 
   it('passes the nearestPrice on state to the Clock component', () => {
@@ -241,6 +240,16 @@ describe("App", () => {
       expect(wrapper.state().value).toEqual(defaultValue);
     });
 
+    it(`should set the userPrice on state to the value entered by the user`, async () => {
+      mockCryptoCompareApi.getPriceInformation.mockImplementation(() =>
+        new Promise(resolve => resolve(data)));
+
+      let value = MIN.toString();
+      wrapper.setState({ value: value });
+      await wrapper.find('PriceInput').props().doSearch();
+
+      expect(wrapper.state().userPrice).toEqual(value);
+    });
     xit('passes canGetPriceInformation off state to the PriceInput component and the Button component', () => {
       const testEnv = setup({ canGetPriceInformation: false });
       const wrapper = shallow(<App {...testEnv} />);
