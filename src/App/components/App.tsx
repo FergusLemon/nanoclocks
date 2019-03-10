@@ -68,25 +68,26 @@ class App extends React.Component<object, State> {
       canGetPriceInformation: false,
       userPrice: this.state.value
     });
-    if (Object.entries(this.state.priceHistory).length > 0) return;
-    await CryptoCompareApi
-      .getPriceInformation()
-      .then(priceInformation => {
-        let priceHash = this.createPriceHash(priceInformation);
-        this.setState({
-          priceHistory: priceHash,
-          canGetPriceInformation: true,
+    if (Object.entries(this.state.priceHistory).length === 0) {
+      await CryptoCompareApi
+        .getPriceInformation()
+        .then(priceInformation => {
+          let priceHash = this.createPriceHash(priceInformation);
+          this.setState({
+            priceHistory: priceHash,
+          });
+        })
+        .catch((error) => {
+          throw new Error("Something went wrong" + "........" + error);
         });
-        let formattedValue: string = parseFloat(this.state.value).toFixed(2);
-        let timePriceLastPaid = this.getTime(formattedValue);
-        this.setState({
-          lastTime: timePriceLastPaid,
-          value: defaultValue
-        });
-      })
-      .catch((error) => {
-        throw new Error("Something went wrong" + "........" + error);
-      });
+    }
+    let formattedValue: string = parseFloat(this.state.value).toFixed(2);
+    let timePriceLastPaid = this.getTime(formattedValue);
+    this.setState({
+      canGetPriceInformation: true,
+      lastTime: timePriceLastPaid,
+      value: defaultValue
+    });
   };
 
   createPriceHash = (priceData: Array<PriceData>) => {

@@ -248,6 +248,7 @@ describe("App", () => {
 
       expect(wrapper.state().userPrice).toEqual(value);
     });
+
     xit('passes canGetPriceInformation off state to the PriceInput component and the Button component', () => {
       const testEnv = setup({ canGetPriceInformation: false });
       const wrapper = shallow(<App {...testEnv} />);
@@ -319,8 +320,8 @@ describe("App", () => {
       wrapper.find('PriceInput').props().handleChange(event);
       wrapper.find('PriceInput').props().doSearch();
 
-      expect(wrapper.state().value).toEqual(validAmount);
       expect(wrapper.state().userPrice).toEqual(validAmount);
+      expect(wrapper.find('Clock').props().userPrice).toEqual(validAmount);
     });
   });
 
