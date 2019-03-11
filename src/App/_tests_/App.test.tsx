@@ -8,14 +8,17 @@ import mockCryptoCompareApi from '../../communications/cryptoCompareApi';
 
 const defaultValue = "",
       MINUS = "-",
-      MIN = 5.00,
-      MAX = 40.00,
+      MIN = 0.00,
+      MAX = 37.62,
       ONE_DECIMAL = 5.1,
       TWO_DECIMAL = 5.10,
       THREE_DECIMAL = 5.155,
       ZERO_NUMBER = "01",
       INVALID = "Invalid",
-      defaultTime = 1550880000;
+      ONE_DOLLAR = "1.00",
+      FIFTY_CENTS = "0.50",
+      defaultTime = 1550880000,
+      mockTime = 1660990000;
 const setup = (input = {}) => (
   {
     value: input.value || defaultValue,
@@ -24,8 +27,31 @@ const setup = (input = {}) => (
     nearestPrice: input.nearestPrice || defaultValue
   }
 );
+const data = [{
+        "high": ONE_DOLLAR,
+        "low": ONE_DOLLAR,
+        "open": ONE_DOLLAR,
+        "close": ONE_DOLLAR,
+        "time": defaultTime,
+      },
+      {
+        "high": FIFTY_CENTS,
+        "low": FIFTY_CENTS,
+        "open": FIFTY_CENTS,
+        "close": FIFTY_CENTS,
+        "time": mockTime,
+      }];
 
 describe("App", () => {
+
+  beforeAll(() => {
+    mockCryptoCompareApi.getPriceInformation.mockImplementation(() =>
+        new Promise(resolve => resolve(data)));
+  });
+
+  afterAll(() => {
+    mockCryptoCompareApi.getPriceInformation.mockClear();
+  });
 
   it('renders without crashing', () => {
     shallow(<App />);
@@ -49,6 +75,15 @@ describe("App", () => {
     const wrapper = shallow(<App/>);
 
     expect(wrapper.find('PriceInput').props().value).toBe(defaultValue);
+  });
+
+  it(`passes canGetPriceInformation off state to the PriceInput component and
+    the Button component`, () => {
+    const testEnv = setup({ canGetPriceInformation: false });
+    const wrapper = shallow(<App {...testEnv} />);
+
+    expect(wrapper.find('PriceInput').props().canGetPriceInformation).toEqual(false);
+    expect(wrapper.find('Button').props().canGetPriceInformation).toEqual(false);
   });
 
   it('passes the userPrice on state to the Clock component', () => {
@@ -168,7 +203,7 @@ describe("App", () => {
         expect(wrapper.state().value).toBe(defaultValue);
       });
 
-      xit('does not set the value on state when a number is less than the minimum', () => {
+      it('does not set the value on state when a number is less than the minimum', () => {
         let underLimit = MIN - 1;
         event.currentTarget.value = underLimit.toString();
 
@@ -189,76 +224,65 @@ describe("App", () => {
   });
 
   describe("Calling the CryptoCompare API", () => {
-    let wrapper, data;
+    let wrapper;
     beforeEach(() => {
       wrapper = shallow(<App />);
-      data = [{
-        "high": 0.9351,
-        "low": 0.9014,
-        "open": 0.91,
-        "close": 0.92,
-        "time": 1550620800,
-      }];
       mockCryptoCompareApi.getPriceInformation.mockClear();
     });
 
-    it('should supply the time to the time property of state when doSearch is called by the PriceInput', async () => {
-      const high = data[0]["high"];
-      const time = data[0]["time"];
-      mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
-        new Promise(resolve => resolve(data)));
-
-      await wrapper.find('PriceInput').props().doSearch();
-      let priceHistoryObj = wrapper.state().priceHistory;
-
-      expect(priceHistoryObj[high]).toEqual(time);
-      expect(Object.keys(priceHistoryObj).length).toEqual(4);
+    it(`should have been called in componentDidMount`, () => {
       expect(mockCryptoCompareApi.getPriceInformation).toHaveBeenCalledOnce;
     });
 
-    it('should not be called if a user has already made a call and a promise has resolved', async () => {
-      mockCryptoCompareApi.getPriceInformation.mockImplementation(() =>
-        new Promise(resolve => resolve(data)));
-
-      await wrapper.find('PriceInput').props().doSearch();
-      await wrapper.find('PriceInput').props().doSearch();
-
-      expect(mockCryptoCompareApi.getPriceInformation).toHaveBeenCalledTimes(1);
-      expect(mockCryptoCompareApi.getPriceInformation).not.toHaveBeenCalledTimes(2);
+    it(`should not be called when a user searches for a price`, () => {
+      wrapper.find('PriceInput').props().doSearch();
+      expect(mockCryptoCompareApi.getPriceInformation).not.toHaveBeenCalledOnce;
     });
 
-    it(`should reset the value on state back to the default value`, async () => {
-      mockCryptoCompareApi.getPriceInformation.mockImplementation(() =>
-        new Promise(resolve => resolve(data)));
 
-      let value = MIN.toString();
-      wrapper.setState({ value: value });
-      await wrapper.find('PriceInput').props().doSearch();
+
+
+  });
+
+  describe('Searching for a price', () => {
+    let wrapper, event;
+    beforeEach(() => {
+      wrapper = shallow(<App />);
+      event = {
+        currentTarget: {
+          value: defaultValue,
+        }
+      };
+    });
+
+    it(`should supply the time associated with the searched for price to the
+      lastTime property of state when doSearch is called`, () => {
+      event.currentTarget.value = FIFTY_CENTS;
+
+      wrapper.find('PriceInput').props().handleChange(event);
+      wrapper.find('PriceInput').props().doSearch();
+
+      expect(wrapper.state().lastTime).toEqual(mockTime);
+    });
+
+    it(`should set the userPrice on state to the value entered by the user`, () => {
+      wrapper.setState({ value: ONE_DOLLAR });
+
+      wrapper.find('PriceInput').props().doSearch();
+
+      expect(wrapper.state().userPrice).toEqual(ONE_DOLLAR);
+    });
+
+    it(`should reset the value on state back to the default value`, () => {
+      wrapper.setState({ value: ONE_DOLLAR });
+
+      wrapper.find('PriceInput').props().doSearch();
 
       expect(wrapper.state().value).toEqual(defaultValue);
     });
-
-    it(`should set the userPrice on state to the value entered by the user`, async () => {
-      mockCryptoCompareApi.getPriceInformation.mockImplementation(() =>
-        new Promise(resolve => resolve(data)));
-
-      let value = MIN.toString();
-      wrapper.setState({ value: value });
-      await wrapper.find('PriceInput').props().doSearch();
-
-      expect(wrapper.state().userPrice).toEqual(value);
-    });
-
-    xit('passes canGetPriceInformation off state to the PriceInput component and the Button component', () => {
-      const testEnv = setup({ canGetPriceInformation: false });
-      const wrapper = shallow(<App {...testEnv} />);
-
-      expect(wrapper.find('PriceInput').props().canGetPriceInformation).toBeDefined;
-      expect(wrapper.find('PriceInput').props().canGetPriceInformation).toEqual(false);
-    });
   });
 
-  describe('Enabling and disabling calls to the Crypto Compare API', () => {
+  describe('Enabling and disabling the search functionality', () => {
     let wrapper, event, validAmount;
     beforeEach(() => {
       wrapper = shallow(<App />);
@@ -286,7 +310,7 @@ describe("App", () => {
         expect(wrapper.state().canGetPriceInformation).toEqual(true);
     });
 
-    it(`sets canGetPriceInformation to false before the doSearch Promise fires`,
+    xit(`sets canGetPriceInformation to false before the doSearch Promise fires`,
       () => {
         event.currentTarget.value = validAmount;
 
@@ -294,19 +318,6 @@ describe("App", () => {
         wrapper.find('PriceInput').props().doSearch();
 
         expect(wrapper.state().canGetPriceInformation).toEqual(false);
-    });
-
-    it(`sets canGetPriceInformation to true after the doSearch Promise fires`,
-      async() => {
-        let data = [];
-        event.currentTarget.value = validAmount;
-
-        wrapper.find('PriceInput').props().handleChange(event);
-        mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
-          new Promise(resolve => resolve(data)));
-        await wrapper.find('PriceInput').props().doSearch();
-
-        expect(wrapper.state().canGetPriceInformation).toEqual(true);
     });
 
     it(`should allow a user to continue searching for new prices`, () => {
@@ -326,49 +337,37 @@ describe("App", () => {
   });
 
   describe('finding the last time a price was paid', () => {
-    let wrapper, lowPrice, highPrice, lowTime, highTime, data, event
+    let wrapper, event
     beforeEach(() => {
       wrapper = shallow(<App />);
-      highPrice = "1.00";
-      highTime = defaultTime;
-      lowPrice = "0.50";
-      lowTime = 1660770000;
-      data = [
-        { time: highTime, high: highPrice, low: highPrice, open: highPrice, close: highPrice },
-        { time: lowTime, high: lowPrice, low: lowPrice, open: lowPrice, close: lowPrice },
-      ];
       event = {
         currentTarget: {
-          value: highPrice
+          value: ONE_DOLLAR
         }
       };
     });
 
     describe('when the price entered by the user is in the priceHistory hash', () => {
-      it('returns the value of that price as Unix time', async() => {
+      it('returns the value of that price as Unix time', () => {
         wrapper.find('PriceInput').props().handleChange(event);
-        mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
-          new Promise(resolve => resolve(data)));
-        await wrapper.find('PriceInput').props().doSearch();
+        wrapper.find('PriceInput').props().doSearch();
 
-        expect(wrapper.state().lastTime).toEqual(highTime);
+        expect(wrapper.state().lastTime).toEqual(defaultTime);
         expect(wrapper.state().nearestPrice).toEqual(defaultValue);
       });
     });
 
     describe('when the price entered by the user is not in the priceHistory hash', () => {
-      it('returns the value of the next highest price as Unix time', async() => {
+      it('returns the value of the next highest price as Unix time', () => {
         const userPrice = "0.99";
         event.currentTarget.value = userPrice;
 
         wrapper.find('PriceInput').props().handleChange(event);
-        mockCryptoCompareApi.getPriceInformation.mockImplementationOnce(() =>
-          new Promise(resolve => resolve(data)));
-        await wrapper.find('PriceInput').props().doSearch();
+        wrapper.find('PriceInput').props().doSearch();
 
-        expect(wrapper.state().lastTime).toEqual(highTime);
-        expect(wrapper.state().lastTime).not.toEqual(lowTime);
-        expect(wrapper.state().nearestPrice).toEqual(highPrice);
+        expect(wrapper.state().lastTime).toEqual(defaultTime);
+        expect(wrapper.state().lastTime).not.toEqual(mockTime);
+        expect(wrapper.state().nearestPrice).toEqual(ONE_DOLLAR);
       });
     });
   });

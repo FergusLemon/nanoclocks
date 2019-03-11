@@ -15,7 +15,7 @@ const defaultTime: number = 0;
 const initialState = {
   value: defaultValue,
   min: 5,
-  max: 40,
+  max: 37.62,
   priceHistory: bareObject,
   canGetPriceInformation: false,
   userPrice: defaultValue,
@@ -46,7 +46,7 @@ class App extends React.Component<object, State> {
     const eventValue: string = event.currentTarget.value;
     if(this.isInvalid(eventValue)) return;
     this.setState({
-      value: eventValue
+      value: eventValue,
     });
     this.updateCanGetPriceInformation(eventValue);
   };
@@ -63,24 +63,11 @@ class App extends React.Component<object, State> {
     }
   };
 
-  doSearch = async (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
+  doSearch = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
     this.setState({
       canGetPriceInformation: false,
       userPrice: this.state.value
     });
-    if (Object.entries(this.state.priceHistory).length === 0) {
-      await CryptoCompareApi
-        .getPriceInformation()
-        .then(priceInformation => {
-          let priceHash = this.createPriceHash(priceInformation);
-          this.setState({
-            priceHistory: priceHash,
-          });
-        })
-        .catch((error) => {
-          throw new Error("Something went wrong" + "........" + error);
-        });
-    }
     let formattedValue: string = parseFloat(this.state.value).toFixed(2);
     let timePriceLastPaid = this.getTime(formattedValue);
     this.setState({
@@ -90,16 +77,6 @@ class App extends React.Component<object, State> {
     });
   };
 
-  createPriceHash = (priceData: Array<PriceData>) => {
-    let priceHash: any = {};
-    for ( let data of priceData) {
-      priceHash[data["high"]] = data["time"];
-      priceHash[data["low"]] = data["time"];
-      priceHash[data["open"]] = data["time"];
-      priceHash[data["close"]] = data["time"];
-    }
-    return priceHash;
-  };
 
   getTime = (price: string) => {
     if (this.state.priceHistory.hasOwnProperty(price)) {
@@ -119,6 +96,31 @@ class App extends React.Component<object, State> {
     this.setState({
       nearestPrice: nearestPrice
     });
+  };
+
+  async componentDidMount () {
+    await CryptoCompareApi
+      .getPriceInformation()
+      .then(priceInformation => {
+        let priceHash = this.createPriceHash(priceInformation);
+        this.setState({
+          priceHistory: priceHash,
+        });
+      })
+      .catch((error) => {
+        throw new Error("Something went wrong" + "........" + error);
+      });
+  };
+
+  createPriceHash = (priceData: Array<PriceData>) => {
+    let priceHash: any = {};
+    for ( let data of priceData) {
+      priceHash[data["high"]] = data["time"];
+      priceHash[data["low"]] = data["time"];
+      priceHash[data["open"]] = data["time"];
+      priceHash[data["close"]] = data["time"];
+    }
+    return priceHash;
   };
 
   render() {
