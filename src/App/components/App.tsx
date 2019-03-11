@@ -6,6 +6,7 @@ import Button from '../../button/components/Button';
 import Clock from '../../clock/components/Clock';
 import CryptoCompareApi from '../../communications/cryptoCompareApi';
 import nearestElementBinarySearch from '../../common/utils/nearestElementBinarySearch';
+import validNumberRegex from '../../common/utils/validNumberRegex';
 
 let bareObject: any = {};
 const defaultValue: string = '';
@@ -36,9 +37,8 @@ class App extends React.Component<object, State> {
   readonly state: State= initialState;
 
   isInvalid = (value: string): boolean => {
-    const regex: RegExp = /^$|^(?:0)$|^(?:0\.[0-9]{0,2})$|^(?:[1-9]{1}[0-9]{0,1})$|^(?:[1-9]{1}[0-9]{0,1}\.[0-9]{0,2})$/
     return(
-      value.match(regex) === null || parseFloat(value) > this.state.max
+      value.match(validNumberRegex) === null || parseFloat(value) > this.state.max
     );
   };
 
