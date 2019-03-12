@@ -92,6 +92,7 @@ class App extends React.Component<object, State> {
 
   getTime = (price: string) => {
     if (this.state.priceHistory.hasOwnProperty(price)) {
+      this.setState(this.updateNearestPrice(defaultValue));
       return this.state.priceHistory[price];
     } else {
       const keys = Object.keys(this.state.priceHistory);
