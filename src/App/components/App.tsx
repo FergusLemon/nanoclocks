@@ -45,38 +45,50 @@ class App extends React.Component<object, State> {
   handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const eventValue: string = event.currentTarget.value;
     if(this.isInvalid(eventValue)) return;
-    this.setState({
-      value: eventValue,
-    });
+    this.setState(this.updateValue(eventValue));
     this.updateCanGetPriceInformation(eventValue);
   };
 
   updateCanGetPriceInformation = (value: string): void => {
     if (value === "") {
-      this.setState({
-        canGetPriceInformation: false
-      });
+      this.setState(this.setSearchability(false));
     } else {
-      this.setState({
-        canGetPriceInformation: true
-      });
+      this.setState(this.setSearchability(true));
     }
   };
 
-  doSearch = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
-    this.setState({
-      canGetPriceInformation: false,
-      userPrice: this.state.value
-    });
-    let formattedValue: string = parseFloat(this.state.value).toFixed(2);
-    let timePriceLastPaid = this.getTime(formattedValue);
-    this.setState({
-      canGetPriceInformation: true,
-      lastTime: timePriceLastPaid,
-      value: defaultValue
-    });
+  setSearchability = (bool: boolean): object => {
+    return (previousState: State, currentProps: object) => {
+      return { ...previousState, canGetPriceInformation: bool };
+    };
   };
 
+  doSearch = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
+    this.setState(this.setSearchability(false));
+    this.setState(this.updateUserPrice());
+    let formattedValue: string = parseFloat(this.state.value).toFixed(2);
+    let timePriceLastPaid = this.getTime(formattedValue);
+    this.setState(this.updateTime(timePriceLastPaid));
+    this.setState(this.updateValue(defaultValue));
+  };
+
+  updateUserPrice = (): object => {
+    return (previousState: State, currentProps: object) => {
+      return { ...previousState, userPrice: previousState.value };
+    };
+  };
+
+  updateTime = (time: number): object => {
+    return (previousState: State, currentProps: object) => {
+      return { ...previousState, lastTime: time };
+    };
+  };
+
+  updateValue = (value: string): object => {
+    return (previousState: State, currentProps: object) => {
+      return { ...previousState, value: value };
+    };
+  };
 
   getTime = (price: string) => {
     if (this.state.priceHistory.hasOwnProperty(price)) {
@@ -87,15 +99,15 @@ class App extends React.Component<object, State> {
       let sortedKeys = keys.sort(comparisonFunction);
       let nearestIndex = nearestElementBinarySearch(sortedKeys, parseFloat(price));
       let nearestPrice = sortedKeys[nearestIndex];
-      this.updateNearestPrice(nearestPrice);
+      this.setState(this.updateNearestPrice(nearestPrice));
       return this.state.priceHistory[nearestPrice];
     }
   };
 
-  updateNearestPrice = (nearestPrice: string) => {
-    this.setState({
-      nearestPrice: nearestPrice
-    });
+  updateNearestPrice = (price: string): object => {
+    return (previousState: State, currentProps: object) => {
+      return { ...previousState, nearestPrice: price };
+    };
   };
 
   async componentDidMount () {
