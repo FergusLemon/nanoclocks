@@ -14,7 +14,7 @@ const defaultTime: number = 0;
 
 const initialState = {
   value: defaultValue,
-  min: 5,
+  min: 0.00,
   max: 37.62,
   priceHistory: bareObject,
   canGetPriceInformation: false,
