@@ -27,10 +27,23 @@ type Props = {
 class Clock extends React.Component<Props, State> {
   readonly state: State = initialState;
 
+  timer: any;
 
   componentDidMount() {
     this.calculateDifference();
-    setInterval(this.incrementDifference, 1000);
+    this.timer = setInterval(this.incrementDifference, 1000);
+  };
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  };
+
+  componentDidUpdate(previousProps: Props) {
+    if(this.props.userPrice !== previousProps.userPrice) {
+      clearInterval(this.timer);
+      this.calculateDifference();
+      this.timer = setInterval(this.incrementDifference, 1000);
+    }
   };
 
   calculateDifference = () => {
