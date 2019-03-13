@@ -99,21 +99,25 @@ class Clock extends React.Component<Props, State> {
 
   render() {
     const { lastTime, userPrice, nearestPrice, children } = this.props;
-    let { days, hours, minutes, seconds, humanClock } = this.state;
-    const priceToDisplay = (nearestPrice === '' ? userPrice : nearestPrice)
+    const { days, hours, minutes, seconds, humanClock } = this.state;
+    const priceToDisplay = (nearestPrice === '' ? userPrice : nearestPrice);
     return (
       <div className="clock-container">
         { lastTime !== 0 &&
             <div className="clock">
-              <p className="days">{days < doubleDigits ? 0 : ''}{days}</p>
-              <p className="hours">{hours < doubleDigits ? 0 : ''}{hours}</p>
-              <p className="minutes">{minutes < doubleDigits ? 0 : ''}{minutes}</p>
-              <p className="seconds">{seconds < doubleDigits ? 0 : ''}{seconds}</p>
+              <p className={`large unit`}>DD</p>
+              <p className={`small unit`}>HH</p>
+              <p className={`small unit`}>MM</p>
+              <p className={`small unit`}>SS</p>
+              <p className={`large days`}>{days < doubleDigits ? 0 : ''}{days}</p>
+              <p className={`small hours`}>{hours < doubleDigits ? 0 : ''}{hours}</p>
+              <p className={`small minutes`}>{minutes < doubleDigits ? 0 : ''}{minutes}</p>
+              <p className={`small seconds`}>{seconds < doubleDigits ? 0 : ''}{seconds}</p>
             </div>
         }
         { lastTime !== 0 &&
           <div className="humanized-clock">
-            It has been approximately {humanClock} since NANO traded at {priceToDisplay} USD.
+            It has been approximately {humanClock} since NANO traded at ${priceToDisplay} USD.
           </div>
         }
     </div>

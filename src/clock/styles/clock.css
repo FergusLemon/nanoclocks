@@ -1,10 +1,14 @@
 .clock {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
   color: #000034;
   margin-left: 20px;
   position: absolute;
-  top: 62%;
-  left: 7%;
-  display: flex;
+  height: 60px;
+  width: 190px;
+  top: 58%;
+  left: 6%;
 }
 
 .clock > p {
@@ -12,6 +16,16 @@
   font-size: 14px;
   margin: 2px;
 }
+
+.large {
+  flex: 1.5 0 40px;
+}
+
+.small {
+  flex: 1 0 40px;
+}
+
+.unit { font-weight: 600; }
 
 .humanized-clock {
   position: fixed;
