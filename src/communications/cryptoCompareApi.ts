@@ -1,13 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 
 interface PriceData {
-  close: number,
   high: number,
   low: number,
-  open: number,
   time: number,
-  volumefrom: number,
-  volumeto: number,
 };
 
 class CryptoCompareApi {
@@ -29,10 +25,8 @@ class CryptoCompareApi {
           return parsedData.Data.map((priceData: PriceData) => {
             let requiredData = {
               time: priceData["time"],
-              high: priceData["high"].toFixed(2),
-              low: priceData["low"].toFixed(2),
-              open: priceData["open"].toFixed(2),
-              close: priceData["close"].toFixed(2),
+              high: parseFloat(priceData["high"].toFixed(2)),
+              low: parseFloat(priceData["low"].toFixed(2)),
             };
             return requiredData;
           })
