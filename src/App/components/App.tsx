@@ -7,6 +7,7 @@ import Clock from '../../clock/components/Clock';
 import CryptoCompareApi from '../../communications/cryptoCompareApi';
 import nearestElementBinarySearch from '../../common/utils/nearestElementBinarySearch';
 import validNumberRegex from '../../common/utils/validNumberRegex';
+import rangeFiller from '../../common/utils/rangeFiller';
 
 let bareObject: any = {};
 const defaultValue: string = '';
@@ -26,8 +27,6 @@ const initialState = {
 interface PriceData {
   high: number,
   low: number,
-  open: number,
-  close: number,
   time: number,
 };
 
@@ -128,10 +127,14 @@ class App extends React.Component<object, State> {
   createPriceHash = (priceData: Array<PriceData>) => {
     let priceHash: any = {};
     for ( let data of priceData) {
-      priceHash[data["high"]] = data["time"];
-      priceHash[data["low"]] = data["time"];
-      priceHash[data["open"]] = data["time"];
-      priceHash[data["close"]] = data["time"];
+      if(data["low"] === data["high"]) {
+        priceHash[data["low"]] = data["time"];
+      } else {
+        let range: Array<string> = rangeFiller(data["low"], data["high"]);
+        for(let price of range) {
+          priceHash[price] = data["time"];
+        }
+      }
     }
     return priceHash;
   };
