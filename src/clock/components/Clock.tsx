@@ -1,6 +1,8 @@
 import * as React from 'react';
 import moment from 'moment';
 import '../styles/clock.css';
+import decimalsNotRequired from '../../common/utils/decimalsNotRequiredRegex';
+import missingDecimal from '../../common/utils/missingDecimalRegex';
 
 const defaultValue: number = 0,
       doubleDigits: number = 10,
@@ -100,7 +102,13 @@ class Clock extends React.Component<Props, State> {
   render() {
     const { lastTime, userPrice, nearestPrice, children } = this.props;
     const { days, hours, minutes, seconds, humanClock } = this.state;
-    const priceToDisplay = (nearestPrice === '' ? userPrice : nearestPrice);
+    let price: string = (nearestPrice === '' ? userPrice : nearestPrice);
+    let priceToDisplay: string;
+    if (decimalsNotRequired.test(price)) {
+      priceToDisplay = price.match(decimalsNotRequired)![1];
+    } else {
+      priceToDisplay = (missingDecimal.test(price) ? price += '0' : price);
+    }
     return (
       <div className="clock-container">
         { lastTime !== 0 &&
@@ -117,7 +125,8 @@ class Clock extends React.Component<Props, State> {
         }
         { lastTime !== 0 &&
           <div className="humanized-clock">
-            It has been approximately {humanClock} since NANO traded at ${priceToDisplay} USD.
+            It has been approximately {humanClock} since NANO traded at
+            ${priceToDisplay} USD.
           </div>
         }
     </div>

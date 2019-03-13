@@ -12,7 +12,12 @@ const defaultTime = 1550000000,
       maxHours = 23,
       withinRange = 5,
       oneUnitOfTime = `01`,
-      defaultPrice = '';
+      defaultPrice = '',
+      userPrice = '1.00',
+      roundedPrice = '1',
+      oneDecimal = '1.1',
+      twoDecimals = '1.10',
+      nearestPrice = '2.99';
 const setup = (input = {}) => (
   {
     lastTime: input.lastTime || defaultTime,
@@ -155,21 +160,47 @@ describe('Clock', () => {
         jest.advanceTimersByTime(timer);
 
         expect(getElement(wrapper)('p')('days').text()).toEqual(oneUnitOfTime);
-        expect(getElement(wrapper)('div')('humanized-clock').text()).not.toBeEmpty;
+        expect(getElement(wrapper)('div')('humanized-clock')
+          .text()).not.toBeEmpty;
       });
 
-      it(`should include the price entered by the user if no nearestPrice was passed in on props`, () => {
-        testEnv = setup({ userPrice: '2' });
-        wrapper = shallow(<Clock{...testEnv}/>)
+      it(`should include the price entered by the user if no nearestPrice was
+        passed in on props`, () => {
+          testEnv = setup({ userPrice: roundedPrice });
+          wrapper = shallow(<Clock{...testEnv}/>)
 
-        expect(getElement(wrapper)('div')('humanized-clock').text()).toContain(testEnv.userPrice + ' USD');
+          expect(getElement(wrapper)('div')('humanized-clock').text())
+            .toContain(roundedPrice + ' USD');
       });
-      it(`should include the nearest price if nearestPrice was passed in on props`, () => {
-        testEnv = setup({ nearestPrice: '1' });
-        wrapper = shallow(<Clock{...testEnv}/>)
 
-        expect(getElement(wrapper)('div')('humanized-clock').text()).toContain(testEnv.nearestPrice);
+      it(`should include the nearest price if nearestPrice was passed in on
+        props`, () => {
+          testEnv = setup({ nearestPrice: nearestPrice });
+          wrapper = shallow(<Clock{...testEnv}/>)
+
+          expect(getElement(wrapper)('div')('humanized-clock').text())
+            .toContain(nearestPrice);
       });
+
+      it(`should display the price with no decimal places if the price is a
+        rounded dollar amount`, () => {
+          testEnv = setup({ userPrice: userPrice });
+          wrapper = shallow(<Clock{...testEnv}/>)
+
+          expect(getElement(wrapper)('div')('humanized-clock').text())
+            .toContain(roundedPrice);
+          expect(getElement(wrapper)('div')('humanized-clock').text())
+            .not.toContain(userPrice);
+        });
+
+      it(`should display the price with two decimal places if the price has a
+        positive integer in the tens decimal place`, () => {
+          testEnv = setup({ userPrice: oneDecimal });
+          wrapper = shallow(<Clock{...testEnv}/>)
+
+          expect(getElement(wrapper)('div')('humanized-clock').text())
+            .toContain(twoDecimals);
+        });
     });
   });
 });
