@@ -1,6 +1,6 @@
 .clock-container {
   position: relative;
-  top: 105px;
+  top: 95px;
   left: 65px;
   height: 250px;
   width: 250px;
@@ -34,7 +34,10 @@
   flex: 1 0 40px;
 }
 
-.unit { font-weight: 600; }
+.unit {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 600;
+}
 
 .humanized-clock {
   position: absolute;
