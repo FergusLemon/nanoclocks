@@ -30,15 +30,11 @@ const setup = (input = {}) => (
 const data = [{
         "high": ONE_DOLLAR,
         "low": ONE_DOLLAR,
-        "open": ONE_DOLLAR,
-        "close": ONE_DOLLAR,
         "time": defaultTime,
       },
       {
         "high": FIFTY_CENTS,
         "low": FIFTY_CENTS,
-        "open": FIFTY_CENTS,
-        "close": FIFTY_CENTS,
         "time": mockTime,
       }];
 
