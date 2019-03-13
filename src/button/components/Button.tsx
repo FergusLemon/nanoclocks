@@ -8,7 +8,7 @@ type Props = {
 }
 
 const Button: SFC<Props> = ({ id, doSearch, canGetPriceInformation, children }) => (
-  <div className="button">
+  <div className="button-container">
     <button className="price-submit-button" type="button"
       id={id}
       onClick={ev => canGetPriceInformation && doSearch(ev)}

@@ -1,17 +1,26 @@
-.clock {
+.clock-container {
+  position: relative;
+  top: 105px;
+  left: 65px;
+  height: 250px;
+  width: 250px;
+}
+
+.clock-display {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   color: #000034;
-  margin-left: 20px;
+  padding: 5px;
+  margin: 2px;
   position: absolute;
   height: 60px;
   width: 190px;
-  top: 56%;
-  left: 6%;
+  top: 100px;
+  left: 25px;
 }
 
-.clock > p {
+.clock-display > p {
   font-family: 'Orbitron', sans-serif;
   font-size: 14px;
   margin: 2px;
@@ -28,10 +37,11 @@
 .unit { font-weight: 600; }
 
 .humanized-clock {
-  position: fixed;
-  top: 48%;
-  left: 118px;
+  position: absolute;
+  top: 10px;
+  left: 25px;
   width: 190px;
+  padding: 5px;
   font-family: 'Noto Sans', sans-serif;
   font-size: 14px;
   margin: 2px;

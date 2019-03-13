@@ -104,7 +104,7 @@ class Clock extends React.Component<Props, State> {
     return (
       <div className="clock-container">
         { lastTime !== 0 &&
-            <div className="clock">
+            <div className="clock-display">
               <p className={`large unit`}>DD</p>
               <p className={`small unit`}>HH</p>
               <p className={`small unit`}>MM</p>

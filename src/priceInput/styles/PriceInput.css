@@ -5,20 +5,29 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .price-input-field-container {
-  position: absolute;
-  top: 35%;
-  left: 10%;
+  position: relative;
+  top: 100px;
+  left: 65px;
+  height: 65px;
+  width: 200px;
   display: flex;
   flex-direction: column;
 }
 
 input, label {
+  position: absolute;
+  left: 25px;
   display: block;
   margin: 2px;
   font-family: 'Noto Sans', sans-serif;
 }
 
+label {
+  top: 10px;
+}
+
 input {
+  top: 35px;
   background-color: #4a90e2;
   color: #ffffff;
   border: 1px #4a90e2;

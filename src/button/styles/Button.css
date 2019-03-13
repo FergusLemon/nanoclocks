@@ -1,10 +1,14 @@
-.button {
-  position: absolute;
-  top: 43%;
-  left: 10%;
+.button-container {
+  position: relative;
+  top: 100px;
+  left: 65px;
+  height: 40px;
+  width: 200px;
 }
 
 .price-submit-button {
+  position: absolute;
+  left: 25px;
   background-color: #ffffff;
   color: #4a90e2;
   border: 2px solid #4a90e2;
