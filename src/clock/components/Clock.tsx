@@ -137,8 +137,8 @@ class Clock extends React.Component<Props, State> {
         }
         { lastTime !== 0 &&
           <div className="humanized-clock">
-            It has been approximately <b>{humanizedTime}
-            {humanizedTimeExtra !== '' && humanizedTimeExtra} </b>
+            It has been approximately <b>{humanizedTime} </b>
+            <b>{humanizedTimeExtra !== '' && humanizedTimeExtra} </b>
             since NANO traded at ${priceToDisplay} USD.
           </div>
         }
