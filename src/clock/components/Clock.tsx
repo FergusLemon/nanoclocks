@@ -15,8 +15,8 @@ const initialState: any = {
   hours: defaultValue,
   minutes: defaultValue,
   seconds: defaultValue,
-  humanClock: '',
-  currentTime: Date.now(),
+  humanizedTime: '',
+  humanizedTimeExtra: '',
 };
 
 type State = Readonly<typeof initialState>;
@@ -49,19 +49,29 @@ class Clock extends React.Component<Props, State> {
   };
 
   calculateDifference = () => {
-    const now = this.state.currentTime;
-    const then = this.props.lastTime * 1000;
-    const days = moment(now).diff(moment(then), 'd');
+    const now: number = Date.now();
+    const then: number = this.props.lastTime * 1000;
+    const days: number = moment(now).diff(moment(then), 'd');
     const duration: any = moment.duration(moment(now).diff(moment(then)));
     const humanizedDuration: string = duration.humanize();
-    const durationHash = duration._data;
+    const durationHash: any = duration._data;
+    const humanizedMonths: string = this.shouldDisplayMonthsAndYears(durationHash) ? this.humanizeMonths(durationHash): '';
     this.setState({
       days: days,
       hours: durationHash['hours'],
       minutes: durationHash['minutes'],
       seconds: durationHash['seconds'],
-      humanClock: humanizedDuration,
+      humanizedTime: humanizedDuration,
+      humanizedTimeExtra: humanizedMonths,
     });
+  };
+
+  shouldDisplayMonthsAndYears = (durationHash: any): boolean => {
+    return durationHash['years'] > 0 && durationHash['months'] > 0;
+  };
+
+  humanizeMonths = (durationHash: any): string => {
+    return 'and ' + moment.duration(durationHash['months'], 'months').humanize();
   };
 
   incrementDifference = (): void => {
@@ -101,7 +111,7 @@ class Clock extends React.Component<Props, State> {
 
   render() {
     const { lastTime, userPrice, nearestPrice, children } = this.props;
-    const { days, hours, minutes, seconds, humanClock } = this.state;
+    const { days, hours, minutes, seconds, humanizedTime, humanizedTimeExtra } = this.state;
     let price: string = (nearestPrice === '' ? userPrice : nearestPrice);
     let priceToDisplay: string;
     if (decimalsNotRequired.test(price)) {
@@ -125,7 +135,7 @@ class Clock extends React.Component<Props, State> {
         }
         { lastTime !== 0 &&
           <div className="humanized-clock">
-            It has been approximately {humanClock} since NANO traded at
+            It has been approximately {humanizedTime} {humanizedTimeExtra !== '' && humanizedTimeExtra} since NANO traded at
             ${priceToDisplay} USD.
           </div>
         }

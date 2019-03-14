@@ -4,7 +4,8 @@ import '../../setupTests';
 import getElement from '../../common/utils/getElement';
 import Clock from '../components/Clock';
 
-const defaultTime = 1550000000,
+const defaultTimeNow = 1550000000000,
+      oneYearTwoMonthsAgo = 1513036800,
       timer = 1000,
       defaultValue = 0,
       maxSeconds = 59,
@@ -20,7 +21,7 @@ const defaultTime = 1550000000,
       nearestPrice = '2.99';
 const setup = (input = {}) => (
   {
-    lastTime: input.lastTime || defaultTime,
+    lastTime: input.lastTime || defaultTimeNow,
     userPrice: input.userPrice || defaultPrice,
     nearestPrice: input.nearestPrice || defaultPrice
   }
@@ -191,7 +192,7 @@ describe('Clock', () => {
             .toContain(roundedPrice);
           expect(getElement(wrapper)('div')('humanized-clock').text())
             .not.toContain(userPrice);
-        });
+      });
 
       it(`should display the price with two decimal places if the price has a
         positive integer in the tens decimal place`, () => {
@@ -200,7 +201,19 @@ describe('Clock', () => {
 
           expect(getElement(wrapper)('div')('humanized-clock').text())
             .toContain(twoDecimals);
-        });
+      });
+
+      it(`should display the time since in years and months when the
+        durationHash has one or more years and one or more months`, () => {
+          const dateNowSpy = jest.spyOn(Date, 'now')
+            .mockImplementation(() => defaultTimeNow);
+          testEnv = setup({ lastTime: oneYearTwoMonthsAgo, userPrice: userPrice });
+          wrapper = shallow(<Clock{...testEnv}/>)
+
+          expect(getElement(wrapper)('div')('humanized-clock').text())
+            .toContain(`2 months`);
+          dateNowSpy.mockRestore();
+      });
     });
   });
 });
