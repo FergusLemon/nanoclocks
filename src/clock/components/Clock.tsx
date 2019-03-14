@@ -8,7 +8,9 @@ const defaultValue: number = 0,
       doubleDigits: number = 10,
       maxHours: number = 23,
       maxMinutes: number = 59,
-      maxSeconds: number = 59;
+      maxSeconds: number = 59,
+      defaultTimerInterval = 1000,
+      millisecondConversionValue = 1000;
 
 const initialState: any = {
   days: defaultValue,
@@ -33,7 +35,7 @@ class Clock extends React.Component<Props, State> {
 
   componentDidMount() {
     this.calculateDifference();
-    this.timer = setInterval(this.incrementDifference, 1000);
+    this.timer = setInterval(this.incrementDifference, defaultTimerInterval);
   };
 
   componentWillUnmount() {
@@ -44,18 +46,21 @@ class Clock extends React.Component<Props, State> {
     if(this.props.userPrice !== previousProps.userPrice) {
       clearInterval(this.timer);
       this.calculateDifference();
-      this.timer = setInterval(this.incrementDifference, 1000);
+      this.timer = setInterval(this.incrementDifference, defaultTimerInterval);
     }
   };
 
   calculateDifference = () => {
     const now: number = Date.now();
-    const then: number = this.props.lastTime * 1000;
+    const then: number = this.props.lastTime * millisecondConversionValue;
     const days: number = moment(now).diff(moment(then), 'd');
     const duration: any = moment.duration(moment(now).diff(moment(then)));
     const humanizedDuration: string = duration.humanize();
     const durationHash: any = duration._data;
-    const humanizedMonths: string = this.shouldDisplayMonthsAndYears(durationHash) ? this.humanizeMonths(durationHash): '';
+    const humanizedMonths: string =
+      this.shouldDisplayMonthsAndYears(durationHash)
+      ? this.humanizeMonths(durationHash)
+      : '';
     this.setState({
       days: days,
       hours: durationHash['hours'],
@@ -129,10 +134,14 @@ class Clock extends React.Component<Props, State> {
               <p className={`small unit`}>HH</p>
               <p className={`small unit`}>MM</p>
               <p className={`small unit`}>SS</p>
-              <p className={`large days`}>{days < doubleDigits ? 0 : ''}{days}</p>
-              <p className={`small hours`}>{hours < doubleDigits ? 0 : ''}{hours}</p>
-              <p className={`small minutes`}>{minutes < doubleDigits ? 0 : ''}{minutes}</p>
-              <p className={`small seconds`}>{seconds < doubleDigits ? 0 : ''}{seconds}</p>
+              <p className={`large days`}>{days < doubleDigits ? 0 : ''}
+              {days}</p>
+              <p className={`small hours`}>{hours < doubleDigits ? 0 : ''}
+              {hours}</p>
+              <p className={`small minutes`}>{minutes < doubleDigits ? 0 : ''}
+              {minutes}</p>
+              <p className={`small seconds`}>{seconds < doubleDigits ? 0 : ''}
+              {seconds}</p>
             </div>
         }
         { lastTime !== 0 &&
