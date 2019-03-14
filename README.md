@@ -31,6 +31,7 @@ Unit tests for each component are located in the component's directory in the `_
 #### Other
    - CryptoCompare API for Daily Price Data
    - Axios for handling the fetching of data from the CC API
+   - MomentJS for handling dates
    
 ### License
 MIT (c) 2019 Fergus Lemon
