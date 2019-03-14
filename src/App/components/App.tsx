@@ -22,6 +22,7 @@ const initialState = {
   min: 0.00,
   max: 37.62,
   priceHistory: bareObject,
+  canRender: false,
   canGetPriceInformation: false,
   userPrice: defaultValue,
   nearestPrice: defaultValue,
@@ -121,6 +122,7 @@ class App extends React.Component<object, State> {
         let priceHash = this.createPriceHash(priceInformation);
         this.setState({
           priceHistory: priceHash,
+          canRender: true,
         });
       })
       .catch((error) => {
@@ -144,7 +146,8 @@ class App extends React.Component<object, State> {
   };
 
   render() {
-    const { welcomeMessage, value, canGetPriceInformation, lastTime, userPrice, nearestPrice } = this.state;
+    const { welcomeMessage, value, canRender, canGetPriceInformation, lastTime,
+      userPrice, nearestPrice } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -159,7 +162,8 @@ class App extends React.Component<object, State> {
               {welcomeMessage}
             </Message>
           </div>
-          <div className="price">
+          { canRender &&
+            <div className="price">
               <PriceInput
                 id="price-input-field"
                 value={value}
@@ -168,6 +172,8 @@ class App extends React.Component<object, State> {
                 canGetPriceInformation={canGetPriceInformation}
               />
             </div>
+          }
+          { canRender &&
             <div className="button">
               <Button
                 id="price-submit-button"
@@ -177,6 +183,7 @@ class App extends React.Component<object, State> {
                 {"Submit"}
               </Button>
             </div>
+          }
             { lastTime !== 0 &&
               <div className="clock">
                 <Clock

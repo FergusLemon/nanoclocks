@@ -80,8 +80,20 @@ describe("App", () => {
       expect(wrapper.exists('.clock')).toEqual(true);
   });
 
+  it(`does not render the Price Input or Button components if the value of
+    the canRender property on state is set to false`, () => {
+      const wrapper = shallow(<App />);
+
+      wrapper.setState({canRender: false});
+
+      expect(wrapper.exists('.price')).toEqual(false);
+      expect(wrapper.exists('.button')).toEqual(false);
+  });
+
   it('passes the value on state to the PriceInput component', () => {
     const wrapper = shallow(<App/>);
+
+    wrapper.setState({canRender: true});
 
     expect(wrapper.find('PriceInput').props().value).toBe(defaultValue);
   });
@@ -90,6 +102,8 @@ describe("App", () => {
     the Button component`, () => {
     const testEnv = setup({ canGetPriceInformation: false });
     const wrapper = shallow(<App {...testEnv} />);
+
+    wrapper.setState({canRender: true});
 
       expect(wrapper.find('PriceInput').props().canGetPriceInformation)
         .toEqual(false);
