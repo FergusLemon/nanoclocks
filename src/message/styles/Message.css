@@ -1,0 +1,17 @@
+.message-container {
+  position: relative;
+  top: 35px;
+  left: 65px;
+  height: 90px;
+  width: 450px;
+  background-color: rgba(74, 144, 226, .8);
+  border-radius: 9px;
+}
+
+.welcome-message {
+  position: absolute;
+  left: 25px;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 600;
+  color: #ffffff;
+}
