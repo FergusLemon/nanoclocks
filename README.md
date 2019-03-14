@@ -13,7 +13,7 @@ The plan is to keep adding features to NanoClocks so that it will offer better p
 ![NanoClocks Homepage](/public/nanoClocksHomepage.jpg)
 
 ### Tests
-Unit tests can be located in the `test` directory and can be run from the `fairBnB` directory using the command `npm test`. Feature tests can be found in the `test/feature` directory and can be run from the same home directory as the unit tests using the command `npm run featureTest`.  Open issues on this project include improving the code coverage, extending feature tests to Firefox, following up with the TestCafe team with a query on selecting non-visible elements without the need to use the size of the element and its position relative to the viewport and finally improve testing of AJAX calls.
+Unit tests for each component are located in the component's directory in the `_tests_` sub-directory. They can be run usign the command `npm test` from the root directory.
 
 ### Testing
 ##### Tools
