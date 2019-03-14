@@ -3,7 +3,6 @@
 ### Build Status
 [![Build Status](https://travis-ci.org/FergusLemon/nanoclocks.svg?branch=master)](https://travis-ci.org/FergusLemon/nanoclocks)
 
-Travis CI used for continuous integration.
 
 ### Overview
 NanoClocks is a website that allows users to check the last time $NANO was traded at a given price in $USD.  Nano is an innovative cryptocurrency that implements a block lattice to allow users of the network to send transactions without incurring fees and transactions times are very fast, as of v18 of the Nano Protocol transaction times have been in the region of one second. NanoClocks uses price data made available by [CryptoCompare's API](https://min-api.cryptocompare.com/documentation?key=Historical&cat=dataHistoday). The availble high and low prices for each day are retrieved and then the range between those prices created with each $0.01 increment assigned to that day due to more granular price information at lower level time frames being unavailable.
