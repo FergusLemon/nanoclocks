@@ -115,6 +115,8 @@ class Clock extends React.Component<Props, State> {
     let price: string = (nearestPrice === '' ? userPrice : nearestPrice);
     let priceToDisplay: string;
     if (decimalsNotRequired.test(price)) {
+      //exclamation point(!) used to negate the possibility of a null value
+      //being returned from string.match()
       priceToDisplay = price.match(decimalsNotRequired)![1];
     } else {
       priceToDisplay = (missingDecimal.test(price) ? price += '0' : price);
@@ -135,8 +137,9 @@ class Clock extends React.Component<Props, State> {
         }
         { lastTime !== 0 &&
           <div className="humanized-clock">
-            It has been approximately {humanizedTime} {humanizedTimeExtra !== '' && humanizedTimeExtra} since NANO traded at
-            ${priceToDisplay} USD.
+            It has been approximately <b>{humanizedTime}
+            {humanizedTimeExtra !== '' && humanizedTimeExtra}</b>
+            since NANO traded at ${priceToDisplay} USD.
           </div>
         }
     </div>
