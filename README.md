@@ -17,8 +17,9 @@ Unit tests for each component are located in the component's directory in the `_
 
 ### Testing
 ##### Tools
-  - Jest for unit testing, mocks and spies.
-  - Travis CI for continous integration testing.
+  - Jest for unit testing, mocks and spies
+  - Enzyme for DOM testing
+  - Travis CI for continous integration testing
 
 ### Technologies Used
 ##### Languages
@@ -30,6 +31,7 @@ Unit tests for each component are located in the component's directory in the `_
 
 #### Other
    - CryptoCompare API for Daily Price Data
+   - Axios for handling the fetching of data from the CC API
    
 ### License
 MIT (c) 2019 Fergus Lemon
