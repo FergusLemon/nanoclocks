@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import '../../setupTests';
 import { shallow } from 'enzyme';
 import Button from '../components/Button';
@@ -14,8 +13,7 @@ const setup = (input = {}) => (
 );
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Button />, div);
+  shallow(<Button />);
 });
 
 describe('Button', () => {
