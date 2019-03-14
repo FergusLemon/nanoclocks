@@ -1,6 +1,7 @@
 import * as React from 'react';
 import logo from '../../logo.svg';
 import '../styles/App.css';
+import Message from '../../message/components/Message';
 import PriceInput from '../../priceInput/components/PriceInput';
 import Button from '../../button/components/Button';
 import Clock from '../../clock/components/Clock';
@@ -12,8 +13,11 @@ import rangeFiller from '../../common/utils/rangeFiller';
 let bareObject: any = {};
 const defaultValue: string = '';
 const defaultTime: number = 0;
+const defaultMessage: string = `Welcome to NanoClocks, the site that lets you
+see how long it has been since NANO traded at a given price in $USD.`;
 
 const initialState = {
+  welcomeMessage: defaultMessage,
   value: defaultValue,
   min: 0.00,
   max: 37.62,
@@ -140,7 +144,7 @@ class App extends React.Component<object, State> {
   };
 
   render() {
-    const { value, canGetPriceInformation, lastTime, userPrice, nearestPrice } = this.state;
+    const { welcomeMessage, value, canGetPriceInformation, lastTime, userPrice, nearestPrice } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -150,6 +154,11 @@ class App extends React.Component<object, State> {
           </p>
         </header>
         <div className="main-container">
+          <div className="message">
+            <Message>
+              {welcomeMessage}
+            </Message>
+          </div>
           <div className="price">
               <PriceInput
                 id="price-input-field"

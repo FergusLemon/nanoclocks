@@ -19,6 +19,10 @@ const defaultValue = "",
       FIFTY_CENTS = "0.50",
       defaultTime = 1550880000,
       mockTime = 1660990000;
+
+const welcomeMessage: string = `Welcome to NanoClocks, the site that lets you
+see how long it has been since NANO traded at a given price in $USD.`;
+
 const setup = (input = {}) => (
   {
     value: input.value || defaultValue,
@@ -27,6 +31,7 @@ const setup = (input = {}) => (
     nearestPrice: input.nearestPrice || defaultValue
   }
 );
+
 const data = [{
         "high": ONE_DOLLAR,
         "low": ONE_DOLLAR,
@@ -53,18 +58,26 @@ describe("App", () => {
     shallow(<App />);
   });
 
-  it('does not render the Clock component if the value of lastTime on state is zero', () => {
-    const wrapper = shallow(<App />);
+  it('passes the message on state to the Message component', () => {
+    const wrapper = shallow(<App/>);
 
-    expect(wrapper.exists('.clock')).toEqual(false);
+    expect(wrapper.find('Message').props().children).toBe(welcomeMessage);
   });
 
-  it('renders the Clock component if the value of lastTime on state is not zero', () => {
-    const wrapper = shallow(<App />);
+  it(`does not render the Clock component if the value of lastTime on state is
+    zero`, () => {
+      const wrapper = shallow(<App />);
 
-    wrapper.setState({ lastTime: defaultTime });
+      expect(wrapper.exists('.clock')).toEqual(false);
+  });
 
-    expect(wrapper.exists('.clock')).toEqual(true);
+  it(`renders the Clock component if the value of lastTime on state is not
+    zero`, () => {
+      const wrapper = shallow(<App />);
+
+      wrapper.setState({ lastTime: defaultTime });
+
+      expect(wrapper.exists('.clock')).toEqual(true);
   });
 
   it('passes the value on state to the PriceInput component', () => {
@@ -78,8 +91,10 @@ describe("App", () => {
     const testEnv = setup({ canGetPriceInformation: false });
     const wrapper = shallow(<App {...testEnv} />);
 
-    expect(wrapper.find('PriceInput').props().canGetPriceInformation).toEqual(false);
-    expect(wrapper.find('Button').props().canGetPriceInformation).toEqual(false);
+      expect(wrapper.find('PriceInput').props().canGetPriceInformation)
+        .toEqual(false);
+      expect(wrapper.find('Button').props().canGetPriceInformation)
+        .toEqual(false);
   });
 
   it('passes the userPrice on state to the Clock component', () => {
@@ -93,7 +108,8 @@ describe("App", () => {
     const wrapper = shallow(<App/>);
     wrapper.setState({ lastTime: defaultTime, nearestPrice: MIN.toString() });
 
-    expect(wrapper.find('Clock').props().nearestPrice).toBe(wrapper.state().nearestPrice);
+    expect(wrapper.find('Clock').props().nearestPrice)
+      .toBe(wrapper.state().nearestPrice);
   });
 
   it('passes the lastTime on state to the Clock component', () => {
@@ -137,13 +153,14 @@ describe("App", () => {
         expect(wrapper.state().value).toBe(TWO_DECIMAL.toFixed(2));
       });
 
-      it('sets the value on state of a two digit number where the first digit is less than the minimum', () => {
-        let validAmount = (MIN + 30).toString();
-        event.currentTarget.value = validAmount;
+      it(`sets the value on state of a two digit number where the first digit
+        is less than the minimum`, () => {
+          let validAmount = (MIN + 30).toString();
+          event.currentTarget.value = validAmount;
 
-        wrapper.find("PriceInput").props().handleChange(event);
+          wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(validAmount);
+          expect(wrapper.state().value).toBe(validAmount);
       });
 
       it('sets the value on state of a number with one decimal place', () => {
@@ -166,55 +183,61 @@ describe("App", () => {
     });
 
     describe('when the price entered by the user is invalid', () => {
-      it('does not set the value on state when a number has more than two decimal places', () => {
-        let validAmountThreeDecimal = THREE_DECIMAL.toString();
-        event.currentTarget.value = validAmountThreeDecimal;
+      it(`does not set the value on state when a number has more than two
+        decimal places`, () => {
+          let validAmountThreeDecimal = THREE_DECIMAL.toString();
+          event.currentTarget.value = validAmountThreeDecimal;
 
-        wrapper.find("PriceInput").props().handleChange(event);
+          wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(defaultValue);
+          expect(wrapper.state().value).toBe(defaultValue);
       });
 
-      it('does not set the value on state when the leading digit is a zero', () => {
-        event.currentTarget.value = ZERO_NUMBER;
+      it(`does not set the value on state when the leading digit is
+        a zero`, () => {
+          event.currentTarget.value = ZERO_NUMBER;
 
-        wrapper.find("PriceInput").props().handleChange(event);
+          wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(defaultValue);
+          expect(wrapper.state().value).toBe(defaultValue);
       });
 
-      it('does not set the value on state when the leading character is a minus sign', () => {
-        event.currentTarget.value = MINUS;
+      it(`does not set the value on state when the leading character is a
+        minus sign`, () => {
+          event.currentTarget.value = MINUS;
 
-        wrapper.find("PriceInput").props().handleChange(event);
+          wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(defaultValue);
+          expect(wrapper.state().value).toBe(defaultValue);
       });
 
-      it('does not set the value on state when there is a non-numeric character', () => {
-        event.currentTarget.value = INVALID;
+      it(`does not set the value on state when there is a non-numeric
+        character`, () => {
+          event.currentTarget.value = INVALID;
 
-        wrapper.find("PriceInput").props().handleChange(event);
+          wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(defaultValue);
+          expect(wrapper.state().value).toBe(defaultValue);
       });
 
-      it('does not set the value on state when a number is less than the minimum', () => {
-        let underLimit = MIN - 1;
-        event.currentTarget.value = underLimit.toString();
+      it(`does not set the value on state when a number is less than
+        the minimum`, () => {
+          let underLimit = MIN - 1;
+          event.currentTarget.value = underLimit.toString();
 
-        wrapper.find("PriceInput").props().handleChange(event);
+          wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(defaultValue);
+          expect(wrapper.state().value).toBe(defaultValue);
       });
 
-      it('does not set the value on state when a number is more than the maximum', () => {
-        let overLimit = MAX + 1;
-        event.currentTarget.value = overLimit.toString();
+      it(`does not set the value on state when a number is more than
+        the maximum`, () => {
+          let overLimit = MAX + 1;
+          event.currentTarget.value = overLimit.toString();
 
-        wrapper.find("PriceInput").props().handleChange(event);
+          wrapper.find("PriceInput").props().handleChange(event);
 
-        expect(wrapper.state().value).toBe(defaultValue);
+          expect(wrapper.state().value).toBe(defaultValue);
       });
     });
   });
@@ -234,10 +257,6 @@ describe("App", () => {
       wrapper.find('PriceInput').props().doSearch();
       expect(mockCryptoCompareApi.getPriceInformation).not.toHaveBeenCalledOnce;
     });
-
-
-
-
   });
 
   describe('Searching for a price', () => {
@@ -261,12 +280,13 @@ describe("App", () => {
       expect(wrapper.state().lastTime).toEqual(mockTime);
     });
 
-    it(`should set the userPrice on state to the value entered by the user`, () => {
-      wrapper.setState({ value: ONE_DOLLAR });
+    it(`should set the userPrice on state to the value entered by
+      the user`, () => {
+        wrapper.setState({ value: ONE_DOLLAR });
 
-      wrapper.find('PriceInput').props().doSearch();
+        wrapper.find('PriceInput').props().doSearch();
 
-      expect(wrapper.state().userPrice).toEqual(ONE_DOLLAR);
+        expect(wrapper.state().userPrice).toEqual(ONE_DOLLAR);
     });
 
     it(`should reset the value on state back to the default value`, () => {
@@ -343,27 +363,29 @@ describe("App", () => {
       };
     });
 
-    describe('when the price entered by the user is in the priceHistory hash', () => {
-      it('returns the value of that price as Unix time', () => {
-        wrapper.find('PriceInput').props().handleChange(event);
-        wrapper.find('PriceInput').props().doSearch();
+    describe(`when the price entered by the user is in the priceHistory
+      hash`, () => {
+        it('returns the value of that price as Unix time', () => {
+          wrapper.find('PriceInput').props().handleChange(event);
+          wrapper.find('PriceInput').props().doSearch();
 
-        expect(wrapper.state().lastTime).toEqual(defaultTime);
-        expect(wrapper.state().nearestPrice).toEqual(defaultValue);
+          expect(wrapper.state().lastTime).toEqual(defaultTime);
+          expect(wrapper.state().nearestPrice).toEqual(defaultValue);
       });
     });
 
-    describe('when the price entered by the user is not in the priceHistory hash', () => {
-      it('returns the value of the next highest price as Unix time', () => {
-        const userPrice = "0.99";
-        event.currentTarget.value = userPrice;
+    describe(`when the price entered by the user is not in the priceHistory
+      hash`, () => {
+        it('returns the value of the next highest price as Unix time', () => {
+          const userPrice = "0.99";
+          event.currentTarget.value = userPrice;
 
-        wrapper.find('PriceInput').props().handleChange(event);
-        wrapper.find('PriceInput').props().doSearch();
+          wrapper.find('PriceInput').props().handleChange(event);
+          wrapper.find('PriceInput').props().doSearch();
 
-        expect(wrapper.state().lastTime).toEqual(defaultTime);
-        expect(wrapper.state().lastTime).not.toEqual(mockTime);
-        expect(wrapper.state().nearestPrice).toEqual(ONE_DOLLAR);
+          expect(wrapper.state().lastTime).toEqual(defaultTime);
+          expect(wrapper.state().lastTime).not.toEqual(mockTime);
+          expect(wrapper.state().nearestPrice).toEqual(ONE_DOLLAR);
       });
     });
   });
