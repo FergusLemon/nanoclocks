@@ -4,14 +4,24 @@
   left: 65px;
   height: 90px;
   width: 450px;
-  background-color: rgba(74, 144, 226, .8);
-  border-radius: 9px;
+  background-color: rgba(74, 144, 226);
+  border-radius: 5px;
+  border-left: 10px solid #000034;
 }
 
 .welcome-message {
   position: absolute;
-  left: 25px;
+  top: -3px;
+  left: 21px;
   font-family: 'Noto Sans', sans-serif;
   font-weight: 600;
   color: #ffffff;
+}
+
+.nano-logo {
+  position: absolute;
+  bottom: -32px;
+  right: -20px;
+  height: 100px;
+  width: 100px;
 }
