@@ -19,6 +19,7 @@ Unit tests for each component are located in the component's directory in the `_
 ##### Tools
   - Jest for unit testing, mocks and spies
   - Enzyme for DOM testing
+  - Cyrpress for integration testing
   - Travis CI for continous integration testing
 
 ### Technologies Used
