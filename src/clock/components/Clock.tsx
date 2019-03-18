@@ -148,7 +148,7 @@ class Clock extends React.Component<Props, State> {
           <div className="clock-summary">
             It has been approximately <b>{summarizedTime} </b>
             <b>{summarizedTimeExtra !== '' && summarizedTimeExtra} </b>
-            since NANO traded at ${priceToDisplay} USD.
+            since NANO traded at <b>${priceToDisplay} USD</b>.
           </div>
         }
     </div>
