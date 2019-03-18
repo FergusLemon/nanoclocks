@@ -161,7 +161,7 @@ describe('Clock', () => {
         jest.advanceTimersByTime(timer);
 
         expect(getElement(wrapper)('p')('days').text()).toEqual(oneUnitOfTime);
-        expect(getElement(wrapper)('div')('humanized-clock')
+        expect(getElement(wrapper)('div')('clock-summary')
           .text()).not.toBeEmpty;
       });
 
@@ -170,7 +170,7 @@ describe('Clock', () => {
           testEnv = setup({ userPrice: roundedPrice });
           wrapper = shallow(<Clock{...testEnv}/>)
 
-          expect(getElement(wrapper)('div')('humanized-clock').text())
+          expect(getElement(wrapper)('div')('clock-summary').text())
             .toContain(roundedPrice + ' USD');
       });
 
@@ -179,7 +179,7 @@ describe('Clock', () => {
           testEnv = setup({ nearestPrice: nearestPrice });
           wrapper = shallow(<Clock{...testEnv}/>)
 
-          expect(getElement(wrapper)('div')('humanized-clock').text())
+          expect(getElement(wrapper)('div')('clock-summary').text())
             .toContain(nearestPrice);
       });
 
@@ -188,9 +188,9 @@ describe('Clock', () => {
           testEnv = setup({ userPrice: userPrice });
           wrapper = shallow(<Clock{...testEnv}/>)
 
-          expect(getElement(wrapper)('div')('humanized-clock').text())
+          expect(getElement(wrapper)('div')('clock-summary').text())
             .toContain(roundedPrice);
-          expect(getElement(wrapper)('div')('humanized-clock').text())
+          expect(getElement(wrapper)('div')('clock-summary').text())
             .not.toContain(userPrice);
       });
 
@@ -199,7 +199,7 @@ describe('Clock', () => {
           testEnv = setup({ userPrice: oneDecimal });
           wrapper = shallow(<Clock{...testEnv}/>)
 
-          expect(getElement(wrapper)('div')('humanized-clock').text())
+          expect(getElement(wrapper)('div')('clock-summary').text())
             .toContain(twoDecimals);
       });
 
@@ -210,7 +210,7 @@ describe('Clock', () => {
           testEnv = setup({ lastTime: oneYearTwoMonthsAgo, userPrice: userPrice });
           wrapper = shallow(<Clock{...testEnv}/>)
 
-          expect(getElement(wrapper)('div')('humanized-clock').text())
+          expect(getElement(wrapper)('div')('clock-summary').text())
             .toContain(`2 months`);
           dateNowSpy.mockRestore();
       });

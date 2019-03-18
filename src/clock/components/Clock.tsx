@@ -17,8 +17,8 @@ const initialState: any = {
   hours: defaultValue,
   minutes: defaultValue,
   seconds: defaultValue,
-  humanizedTime: '',
-  humanizedTimeExtra: '',
+  summarizedTime: '',
+  summarizedTimeExtra: '',
 };
 
 type State = Readonly<typeof initialState>;
@@ -66,8 +66,8 @@ class Clock extends React.Component<Props, State> {
       hours: durationHash['hours'],
       minutes: durationHash['minutes'],
       seconds: durationHash['seconds'],
-      humanizedTime: humanizedDuration,
-      humanizedTimeExtra: humanizedMonths,
+      summarizedTime: humanizedDuration,
+      summarizedTimeExtra: humanizedMonths,
     });
   };
 
@@ -116,7 +116,7 @@ class Clock extends React.Component<Props, State> {
 
   render() {
     const { lastTime, userPrice, nearestPrice, children } = this.props;
-    const { days, hours, minutes, seconds, humanizedTime, humanizedTimeExtra } = this.state;
+    const { days, hours, minutes, seconds, summarizedTime, summarizedTimeExtra } = this.state;
     let price: string = (nearestPrice === '' ? userPrice : nearestPrice);
     let priceToDisplay: string;
     if (decimalsNotRequired.test(price)) {
@@ -145,9 +145,9 @@ class Clock extends React.Component<Props, State> {
             </div>
         }
         { lastTime !== 0 &&
-          <div className="humanized-clock">
-            It has been approximately <b>{humanizedTime} </b>
-            <b>{humanizedTimeExtra !== '' && humanizedTimeExtra} </b>
+          <div className="clock-summary">
+            It has been approximately <b>{summarizedTime} </b>
+            <b>{summarizedTimeExtra !== '' && summarizedTimeExtra} </b>
             since NANO traded at ${priceToDisplay} USD.
           </div>
         }
