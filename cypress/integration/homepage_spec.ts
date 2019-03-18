@@ -25,4 +25,38 @@ describe('The Home Page', () => {
   it('has a button for submitting a price', () => {
     cy.get('button').should('have.id', 'price-submit-button')
   })
+
+  it('captures the price entered by the user', () => {
+    cy.get('input').type('10.00')
+    cy.get('input').should('have.value', '10.00')
+  })
+
+  it('clears the input value when the user hits enter', () => {
+    cy.get('input').type('10.00{enter}')
+    cy.get('input').should('have.value', '')
+  })
+
+  it('clears the input value when the user clicks the submit button', () => {
+    cy.get('input').type('10.00')
+    cy.get('button').click()
+    cy.get('input').should('have.value', '')
+  })
+
+  it('displays the clock summary when the user submits a price', () => {
+    cy.get('input').type('10.00{enter}')
+    cy.get('.clock-summary').contains(`It has been approximately`)
+    cy.get('.clock-summary').contains(`$10`)
+    cy.get('input').type('21.10')
+    cy.get('button').click()
+    cy.get('.clock-summary').contains(`It has been approximately`)
+    cy.get('.clock-summary').contains(`$21.10`)
+  })
+
+  it('displays the clock when the user submits a price', () => {
+    cy.get('input').type('10.00{enter}')
+    cy.get('.clock-display').contains(/[0-9]/)
+    cy.get('input').type('21.10')
+    cy.get('button').click()
+    cy.get('.clock-display').contains(/[0-9]/)
+  })
 })
