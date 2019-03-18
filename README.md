@@ -2,6 +2,7 @@
 
 ### Build Status
 [![Build Status](https://travis-ci.org/FergusLemon/nanoclocks.svg?branch=master)](https://travis-ci.org/FergusLemon/nanoclocks)
+[![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg?style=flat-square)](https://cypress.io)
 
 
 ### Overview
