@@ -4,6 +4,7 @@ interface PriceData {
   high: number,
   low: number,
   time: number,
+  volumefrom: number,
 };
 
 class CryptoCompareApi {
@@ -22,7 +23,11 @@ class CryptoCompareApi {
         },
         transformResponse: [(data: string) => {
           let parsedData = JSON.parse(data);
-          return parsedData.Data.map((priceData: PriceData) => {
+          const hasSufficientVolume = (priceData: PriceData) => {
+           return priceData["volumefrom"] > 1000;
+          };
+          let filteredData = parsedData.Data.filter(hasSufficientVolume);
+          return filteredData.map((priceData: PriceData) => {
             let requiredData = {
               time: priceData["time"],
               high: parseFloat(priceData["high"].toFixed(2)),
