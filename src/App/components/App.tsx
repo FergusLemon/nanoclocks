@@ -9,6 +9,7 @@ import CryptoCompareApi from '../../communications/cryptoCompareApi';
 import nearestElementBinarySearch from '../../common/utils/nearestElementBinarySearch';
 import validNumberRegex from '../../common/utils/validNumberRegex';
 import rangeFiller from '../../common/utils/rangeFiller';
+import priceData2017 from '../../common/utils/nano-price-data.json';
 
 let bareObject: any = {};
 const defaultValue: string = '';
@@ -116,12 +117,22 @@ class App extends React.Component<object, State> {
   };
 
   async componentDidMount () {
+    let formattedData = priceData2017.map((data: any) => {
+      let requiredData = {
+        time: parseInt(data["time"]),
+        high: parseFloat(data["high"]),
+        low: parseFloat(data["low"]),
+      }
+      return requiredData;
+    });
+    let priceHash2017 = this.createPriceHash(formattedData);
     await CryptoCompareApi
       .getPriceInformation()
       .then(priceInformation => {
-        let priceHash = this.createPriceHash(priceInformation);
+        let priceHashToNow = this.createPriceHash(priceInformation);
+        let combinedPriceHash = Object.assign(priceHash2017, priceHashToNow)
         this.setState({
-          priceHistory: priceHash,
+          priceHistory: combinedPriceHash,
           canRender: true,
         });
       })
