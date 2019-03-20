@@ -15,6 +15,7 @@ const defaultTimeNow = 1550000000000,
       oneUnitOfTime = `01`,
       defaultPrice = '',
       userPrice = '1.00',
+      userPriceDecimalPoint = '1.',
       roundedPrice = '1',
       oneDecimal = '1.1',
       twoDecimals = '1.10',
@@ -192,6 +193,17 @@ describe('Clock', () => {
             .toContain(roundedPrice);
           expect(getElement(wrapper)('div')('clock-summary').text())
             .not.toContain(userPrice);
+      });
+
+      it(`should display the price with no decimal places if the price is a
+        rounded dollar amount with a decimal point after it`, () => {
+          testEnv = setup({ userPrice: userPriceDecimalPoint });
+          wrapper = shallow(<Clock{...testEnv}/>)
+
+          expect(getElement(wrapper)('div')('clock-summary').text())
+            .toContain(roundedPrice);
+          expect(getElement(wrapper)('div')('clock-summary').text())
+            .not.toContain(userPriceDecimalPoint);
       });
 
       it(`should display the price with two decimal places if the price has a
