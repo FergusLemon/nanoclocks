@@ -1,0 +1,8 @@
+.footer-container {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: #4a90e2;
+  min-height: 10vh;
+}

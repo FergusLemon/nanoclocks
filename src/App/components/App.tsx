@@ -5,6 +5,7 @@ import Message from '../../message/components/Message';
 import PriceInput from '../../priceInput/components/PriceInput';
 import Button from '../../button/components/Button';
 import Clock from '../../clock/components/Clock';
+import Footer from '../../footer/components/Footer';
 import CryptoCompareApi from '../../communications/cryptoCompareApi';
 import nearestElementBinarySearch from '../../common/utils/nearestElementBinarySearch';
 import validNumberRegex from '../../common/utils/validNumberRegex';
@@ -202,6 +203,9 @@ class App extends React.Component<object, State> {
               </div>
             }
           </div>
+        <div className="footer">
+          <Footer />
+        </div>
       </div>
     );
   }
