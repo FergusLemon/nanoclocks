@@ -1,5 +1,7 @@
 import * as React from 'react';
 import '../styles/App.css';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 import Header from '../../header/components/Header';
 import Message from '../../message/components/Message';
 import PriceInput from '../../priceInput/components/PriceInput';
@@ -12,6 +14,7 @@ import validNumberRegex from '../../common/utils/validNumberRegex';
 import rangeFiller from '../../common/utils/rangeFiller';
 import priceData2017 from '../../common/utils/nano-price-data.json';
 
+library.add(fab);
 let bareObject: any = {};
 const defaultValue: string = '';
 const defaultTime: number = 0;
