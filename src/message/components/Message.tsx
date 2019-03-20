@@ -1,5 +1,5 @@
 import React, { SFC } from 'react';
-import logo from '../../logo.svg';
+import logo from '../../logos/logo.svg';
 import '../styles/Message.css';
 
 type Props = {
