@@ -1,6 +1,6 @@
 import React, { SFC } from 'react';
 import '../styles/Header.css';
-import logo from '../../logo.svg';
+import logo from '../../logos/logo.svg';
 
 const Header: SFC = ({ children }) => (
   <header className="App-header">
