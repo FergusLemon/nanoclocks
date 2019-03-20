@@ -399,7 +399,6 @@ describe("App", () => {
           wrapper.find('PriceInput').props().handleChange(event);
           wrapper.find('PriceInput').props().doSearch();
 
-          console.log(wrapper.state().priceHistory);
           expect(wrapper.state().lastTime).toEqual(defaultTime);
           expect(wrapper.state().lastTime).not.toEqual(mockTime);
           expect(wrapper.state().nearestPrice).toEqual(ONE_DOLLAR);
