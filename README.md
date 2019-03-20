@@ -36,6 +36,8 @@ Integration tests can be run using the command `npm run cypress:open` from the r
    - CryptoCompare API for Daily Price Data
    - Axios for handling the fetching of data from the CC API
    - MomentJS for handling dates
+   - Font Awesome for social media brand logos
+   - [CSVTOJSON](https://csv.keyangxiang.com/) for converting historical price data into JSON, a very useful and easy to use tool
    
 ### License
 MIT (c) 2019 Fergus Lemon
