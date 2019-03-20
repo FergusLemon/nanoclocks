@@ -4,5 +4,31 @@
   left: 0px;
   right: 0px;
   background-color: #4a90e2;
-  min-height: 10vh;
+  min-height: 11vh;
+}
+
+.footer-message {
+  position: relative;
+  top: -8px;
+  left: 20px;
+  font-family: 'Noto Sans', sans-serif;
+  color: #ffffff;
+}
+
+.social-media-container {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  left: 28px;
+  bottom: 10px;
+  width: 150px;
+}
+
+a {
+  flex: 1 0 15px;
+}
+
+.icon {
+  font-size: 20px;
+  color: #ffffff;
 }
