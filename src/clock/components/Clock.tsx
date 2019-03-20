@@ -18,7 +18,6 @@ const initialState: any = {
   minutes: defaultValue,
   seconds: defaultValue,
   summarizedTime: '',
-  summarizedTimeExtra: '',
 };
 
 type State = Readonly<typeof initialState>;
@@ -55,19 +54,18 @@ class Clock extends React.Component<Props, State> {
     const then: number = this.props.lastTime * millisecondConversionValue;
     const days: number = moment(now).diff(moment(then), 'd');
     const duration: any = moment.duration(moment(now).diff(moment(then)));
-    const humanizedDuration: string = duration.humanize();
+    const summarizedDuration: string = duration.humanize();
     const durationHash: any = duration._data;
-    const humanizedMonths: string =
+    const summaryToDisplay: string =
       this.shouldDisplayMonthsAndYears(durationHash)
-      ? this.humanizeMonths(durationHash)
-      : '';
+      ? this.summarizeYearsAndMonths(durationHash)
+      : summarizedDuration;
     this.setState({
       days: days,
       hours: durationHash['hours'],
       minutes: durationHash['minutes'],
       seconds: durationHash['seconds'],
-      summarizedTime: humanizedDuration,
-      summarizedTimeExtra: humanizedMonths,
+      summarizedTime: summaryToDisplay,
     });
   };
 
@@ -75,8 +73,11 @@ class Clock extends React.Component<Props, State> {
     return durationHash['years'] > 0 && durationHash['months'] > 0;
   };
 
-  humanizeMonths = (durationHash: any): string => {
-    return 'and ' + moment.duration(durationHash['months'], 'months').humanize();
+  summarizeYearsAndMonths = (durationHash: any): string => {
+    const { years, months } = durationHash;
+    const yearlyDisplay = years > 1 ? 'years' : 'year';
+    const monthlyDisplay = months > 1 ? 'months' : 'month';
+    return years + ' ' + yearlyDisplay + ' and ' + months + ' ' + monthlyDisplay;
   };
 
   incrementDifference = (): void => {
@@ -116,7 +117,7 @@ class Clock extends React.Component<Props, State> {
 
   render() {
     const { lastTime, userPrice, nearestPrice, children } = this.props;
-    const { days, hours, minutes, seconds, summarizedTime, summarizedTimeExtra } = this.state;
+    const { days, hours, minutes, seconds, summarizedTime } = this.state;
     let price: string = (nearestPrice === '' ? userPrice : nearestPrice);
     let priceToDisplay: string;
     if (decimalsNotRequired.test(price)) {
@@ -147,7 +148,6 @@ class Clock extends React.Component<Props, State> {
         { lastTime !== 0 &&
           <div className="clock-summary">
             It has been approximately <b>{summarizedTime} </b>
-            <b>{summarizedTimeExtra !== '' && summarizedTimeExtra} </b>
             since NANO traded at <b>${priceToDisplay} USD</b>.
           </div>
         }
