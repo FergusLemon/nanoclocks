@@ -4,7 +4,9 @@ import '../../setupTests';
 import { shallow } from 'enzyme';
 import getElement from '../../common/utils/getElement';
 jest.mock('../../communications/cryptoCompareApi');
+jest.mock('../../common/utils/nano-price-data.json');
 import mockCryptoCompareApi from '../../communications/cryptoCompareApi';
+
 
 const defaultValue = "",
       MINUS = "-",
@@ -397,6 +399,7 @@ describe("App", () => {
           wrapper.find('PriceInput').props().handleChange(event);
           wrapper.find('PriceInput').props().doSearch();
 
+          console.log(wrapper.state().priceHistory);
           expect(wrapper.state().lastTime).toEqual(defaultTime);
           expect(wrapper.state().lastTime).not.toEqual(mockTime);
           expect(wrapper.state().nearestPrice).toEqual(ONE_DOLLAR);
