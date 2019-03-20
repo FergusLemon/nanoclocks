@@ -4,6 +4,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import Header from '../../header/components/Header'
 import Message from '../../message/components/Message'
+import PriceDisplay from '../../priceDisplay/components/PriceDisplay'
 import PriceInput from '../../priceInput/components/PriceInput'
 import Button from '../../button/components/Button'
 import Clock from '../../clock/components/Clock'
@@ -26,6 +27,7 @@ const initialState = {
   value: defaultValue,
   min: 0.00,
   max: 37.62,
+  currentPrices: bareObject,
   priceHistory: bareObject,
   canRender: false,
   canGetPriceInformation: false,
@@ -148,7 +150,9 @@ class App extends React.Component<object, State> {
     await CryptoCompareApi
       .getCurrentPrice()
       .then(currentPrices => {
-        console.log(currentPrices);
+        this.setState({
+          currentPrices: currentPrices
+        });
       })
       .catch((error) => {
         throw new Error("Something went wrong" + "........" + error);
@@ -172,11 +176,16 @@ class App extends React.Component<object, State> {
 
   render() {
     const { welcomeMessage, value, canRender, canGetPriceInformation, lastTime,
-      userPrice, nearestPrice } = this.state;
+      userPrice, nearestPrice, currentPrices } = this.state;
     return (
       <div className="App">
         <div className="header">
           <Header />
+        </div>
+        <div className="current-price-container">
+          <PriceDisplay>
+            {currentPrices}
+          </PriceDisplay>
         </div>
         <div className="main-container">
           <div className="message">

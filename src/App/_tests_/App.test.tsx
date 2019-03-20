@@ -22,6 +22,13 @@ const defaultValue = "",
       defaultTime = 1550880000,
       mockTime = 1660990000;
 
+const defaultPrices = {
+  BTC: MIN,
+  USD: MIN,
+  EUR: MIN,
+  GBP: MIN,
+};
+
 const welcomeMessage: string = `Welcome to NanoClocks, the site that lets you
 see how long it has been since NANO traded at a given price in $USD.`;
 
@@ -44,18 +51,12 @@ const data = [{
         "low": FIFTY_CENTS,
         "time": mockTime,
       }];
-const currentPrice = [{
-        "BTC": ONE_DOLLAR,
-        "USD": ONE_DOLLAR,
-        "EUR": ONE_DOLLAR,
-        "GBP": ONE_DOLLAR,
-      }];
 
 describe("App", () => {
 
   beforeAll(() => {
     mockCryptoCompareApi.getCurrentPrice.mockImplementation(() =>
-        new Promise(resolve => resolve(currentPrice)));
+        new Promise(resolve => resolve(defaultPrices)));
     mockCryptoCompareApi.getPriceInformation.mockImplementation(() =>
         new Promise(resolve => resolve(data)));
   });
@@ -143,6 +144,14 @@ describe("App", () => {
     wrapper.setState({lastTime: defaultTime});
 
     expect(wrapper.find('Clock').props().lastTime).toEqual(defaultTime);
+  });
+
+  it('passes the currentPrices on state to the PriceDisplay component', () => {
+    const wrapper = shallow(<App />);
+
+    wrapper.setState({currentPrices: defaultPrices});
+
+    expect(wrapper.find('PriceDisplay').props().children).toEqual(defaultPrices);
   });
 
   describe('Setting the value property on state', () => {
@@ -278,6 +287,12 @@ describe("App", () => {
     it(`getCurrentPrice should have been called in componentDidMount`,
       () => {
         expect(mockCryptoCompareApi.getCurrentPrice).toHaveBeenCalledTimes(1);
+    });
+
+    it(`sets currentPrices on state to the resolved promise from calling
+      getCurrentPrices`, async () => {
+        await wrapper.instance().componentDidMount();
+        expect(wrapper.state().currentPrices).toBe(defaultPrices);
     });
 
     it(`getPriceInformation should have been called in componentDidMount`,
