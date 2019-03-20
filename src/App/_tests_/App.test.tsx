@@ -44,15 +44,24 @@ const data = [{
         "low": FIFTY_CENTS,
         "time": mockTime,
       }];
+const currentPrice = [{
+        "BTC": ONE_DOLLAR,
+        "USD": ONE_DOLLAR,
+        "EUR": ONE_DOLLAR,
+        "GBP": ONE_DOLLAR,
+      }];
 
 describe("App", () => {
 
   beforeAll(() => {
+    mockCryptoCompareApi.getCurrentPrice.mockImplementation(() =>
+        new Promise(resolve => resolve(currentPrice)));
     mockCryptoCompareApi.getPriceInformation.mockImplementation(() =>
         new Promise(resolve => resolve(data)));
   });
 
   afterAll(() => {
+    mockCryptoCompareApi.getCurrentPrice.mockClear();
     mockCryptoCompareApi.getPriceInformation.mockClear();
   });
 
@@ -261,12 +270,19 @@ describe("App", () => {
   describe("Calling the CryptoCompare API", () => {
     let wrapper;
     beforeEach(() => {
-      wrapper = shallow(<App />);
+      mockCryptoCompareApi.getCurrentPrice.mockClear();
       mockCryptoCompareApi.getPriceInformation.mockClear();
+      wrapper = shallow(<App />);
     });
 
-    it(`should have been called in componentDidMount`, () => {
-      expect(mockCryptoCompareApi.getPriceInformation).toHaveBeenCalledOnce;
+    it(`getCurrentPrice should have been called in componentDidMount`,
+      () => {
+        expect(mockCryptoCompareApi.getCurrentPrice).toHaveBeenCalledTimes(1);
+    });
+
+    it(`getPriceInformation should have been called in componentDidMount`,
+      () => {
+        expect(mockCryptoCompareApi.getPriceInformation).toHaveBeenCalledTimes(1);
     });
 
     it(`should not be called when a user searches for a price`, () => {

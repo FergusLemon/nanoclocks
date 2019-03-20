@@ -130,6 +130,7 @@ class App extends React.Component<object, State> {
       return requiredData;
     });
     let priceHash2017 = this.createPriceHash(formattedData);
+
     await CryptoCompareApi
       .getPriceInformation()
       .then(priceInformation => {
@@ -139,6 +140,15 @@ class App extends React.Component<object, State> {
           priceHistory: combinedPriceHash,
           canRender: true,
         });
+      })
+      .catch((error) => {
+        throw new Error("Something went wrong" + "........" + error);
+      });
+
+    await CryptoCompareApi
+      .getCurrentPrice()
+      .then(currentPrices => {
+        console.log(currentPrices);
       })
       .catch((error) => {
         throw new Error("Something went wrong" + "........" + error);
