@@ -1,6 +1,6 @@
 import * as React from 'react';
-import logo from '../../logo.svg';
 import '../styles/App.css';
+import Header from '../../header/components/Header';
 import Message from '../../message/components/Message';
 import PriceInput from '../../priceInput/components/PriceInput';
 import Button from '../../button/components/Button';
@@ -161,12 +161,9 @@ class App extends React.Component<object, State> {
       userPrice, nearestPrice } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p className="App-name">
-            NanoClocks
-          </p>
-        </header>
+        <div className="header">
+          <Header />
+        </div>
         <div className="main-container">
           <div className="message">
             <Message>

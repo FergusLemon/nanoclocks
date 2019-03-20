@@ -1,0 +1,40 @@
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 12vmin;
+  pointer-events: none;
+  position: absolute;
+  top: -5px;
+  left: 85px;
+}
+
+.App-header {
+  background-color: #4a90e2;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.App-name {
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  font-size: calc(10px + 2vmin);
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
