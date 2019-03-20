@@ -1,5 +1,5 @@
-import React, { SFC, MouseEvent} from 'react';
-import '../styles/Button.css';
+import React, { SFC, MouseEvent} from 'react'
+import '../styles/Button.css'
 
 type Props = {
   id: string
@@ -18,4 +18,4 @@ const Button: SFC<Props> = ({ id, doSearch, canGetPriceInformation, children }) 
   </div>
 )
 
-export default Button;
+export default Button

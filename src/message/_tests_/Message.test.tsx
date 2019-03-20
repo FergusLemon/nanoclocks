@@ -1,9 +1,8 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import '../../setupTests';
-import { shallow } from 'enzyme';
-import Message from '../components/Message';
-import getElement from '../../common/utils/getElement';
+import * as React from 'react'
+import '../../setupTests'
+import { shallow } from 'enzyme'
+import Message from '../components/Message'
+import getElement from '../../common/utils/getElement'
 
 const defaultMessage = `Welcome to NanoClocks, the site that lets you see how
 long it has been since NANO traded at a given price in $USD.`;

@@ -1,8 +1,8 @@
-import * as React from 'react';
-import '../../setupTests';
-import { shallow } from 'enzyme';
-import PriceInput from '../components/PriceInput';
-import getElement from '../../common/utils/getElement';
+import * as React from 'react'
+import '../../setupTests'
+import { shallow } from 'enzyme'
+import PriceInput from '../components/PriceInput'
+import getElement from '../../common/utils/getElement'
 
 const DEFAULT = "";
 const setup = (input = {}) => (

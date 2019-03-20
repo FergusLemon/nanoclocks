@@ -1,11 +1,11 @@
-import React from 'react';
-import App from '../components/App';
-import '../../setupTests';
-import { shallow } from 'enzyme';
-import getElement from '../../common/utils/getElement';
-jest.mock('../../communications/cryptoCompareApi');
-jest.mock('../../common/utils/nano-price-data.json');
-import mockCryptoCompareApi from '../../communications/cryptoCompareApi';
+import React from 'react'
+import App from '../components/App'
+import '../../setupTests'
+import { shallow } from 'enzyme'
+import getElement from '../../common/utils/getElement'
+jest.mock('../../communications/cryptoCompareApi')
+jest.mock('../../common/utils/nano-price-data.json')
+import mockCryptoCompareApi from '../../communications/cryptoCompareApi'
 
 
 const defaultValue = "",

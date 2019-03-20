@@ -1,6 +1,6 @@
-import React, { SFC } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import '../styles/Footer.css';
+import React, { SFC } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import '../styles/Footer.css'
 
 const Footer: SFC = ({ children }) => (
   <footer className="footer-container">
@@ -27,4 +27,4 @@ const Footer: SFC = ({ children }) => (
   </footer>
 )
 
-export default Footer;
+export default Footer

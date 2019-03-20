@@ -1,18 +1,18 @@
-import * as React from 'react';
-import '../styles/App.css';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import Header from '../../header/components/Header';
-import Message from '../../message/components/Message';
-import PriceInput from '../../priceInput/components/PriceInput';
-import Button from '../../button/components/Button';
-import Clock from '../../clock/components/Clock';
-import Footer from '../../footer/components/Footer';
-import CryptoCompareApi from '../../communications/cryptoCompareApi';
-import nearestElementBinarySearch from '../../common/utils/nearestElementBinarySearch';
-import validNumberRegex from '../../common/utils/validNumberRegex';
-import rangeFiller from '../../common/utils/rangeFiller';
-import priceData2017 from '../../common/utils/nano-price-data.json';
+import * as React from 'react'
+import '../styles/App.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import Header from '../../header/components/Header'
+import Message from '../../message/components/Message'
+import PriceInput from '../../priceInput/components/PriceInput'
+import Button from '../../button/components/Button'
+import Clock from '../../clock/components/Clock'
+import Footer from '../../footer/components/Footer'
+import CryptoCompareApi from '../../communications/cryptoCompareApi'
+import nearestElementBinarySearch from '../../common/utils/nearestElementBinarySearch'
+import validNumberRegex from '../../common/utils/validNumberRegex'
+import rangeFiller from '../../common/utils/rangeFiller'
+import priceData2017 from '../../common/utils/nano-price-data.json'
 
 library.add(fab);
 let bareObject: any = {};
@@ -214,4 +214,4 @@ class App extends React.Component<object, State> {
   }
 }
 
-export default App;
+export default App

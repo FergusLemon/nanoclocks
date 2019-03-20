@@ -1,5 +1,5 @@
-import React, { SFC, ChangeEvent, KeyboardEvent } from 'react';
-import '../styles/PriceInput.css';
+import React, { SFC, ChangeEvent, KeyboardEvent } from 'react'
+import '../styles/PriceInput.css'
 
 type Props = {
   id: string
@@ -21,4 +21,4 @@ const PriceInput: SFC<Props> = ({ id, value, handleChange, doSearch, canGetPrice
   </div>
 )
 
-export default PriceInput;
+export default PriceInput

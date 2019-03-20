@@ -1,8 +1,8 @@
-import * as React from 'react';
-import '../../setupTests';
-import { shallow } from 'enzyme';
-import Button from '../components/Button';
-import getElement from '../../common/utils/getElement';
+import * as React from 'react'
+import '../../setupTests'
+import { shallow } from 'enzyme'
+import Button from '../components/Button'
+import getElement from '../../common/utils/getElement'
 
 const DEFAULT = "Submit";
 const setup = (input = {}) => (

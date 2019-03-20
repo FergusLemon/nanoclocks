@@ -1,6 +1,6 @@
-import React, { SFC } from 'react';
-import '../styles/Header.css';
-import logo from '../../logos/logo.svg';
+import React, { SFC } from 'react'
+import '../styles/Header.css'
+import logo from '../../logos/logo.svg'
 
 const Header: SFC = ({ children }) => (
   <header className="App-header">
@@ -11,4 +11,4 @@ const Header: SFC = ({ children }) => (
   </header>
 )
 
-export default Header;
+export default Header

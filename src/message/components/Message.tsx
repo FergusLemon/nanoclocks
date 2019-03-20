@@ -1,6 +1,6 @@
-import React, { SFC } from 'react';
-import logo from '../../logos/logo.svg';
-import '../styles/Message.css';
+import React, { SFC } from 'react'
+import logo from '../../logos/logo.svg'
+import '../styles/Message.css'
 
 type Props = {
 }
@@ -14,4 +14,4 @@ const Message: SFC<Props> = ({ children }) => (
   </div>
 )
 
-export default Message;
+export default Message
