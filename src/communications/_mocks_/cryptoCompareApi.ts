@@ -1,4 +1,11 @@
-export const priceSpec: object = {
+export const currentPriceSpec: object = {
+  BTC: 0.00025000,
+  USD: 1.05,
+  EUR: 0.95,
+  GBP: 0.9,
+};
+
+export const priceHistorySpec: object = {
   close: 0.9228,
   high: 0.9351,
   low: 0.9093,
@@ -8,11 +15,14 @@ export const priceSpec: object = {
   volumeto: 1245639.76
 };
 
-export const getPriceInformationMock = jest.fn().mockImplementation(() => new Promise((resolve, reject) => resolve([priceSpec])));
+export const getCurrentPriceMock = jest.fn().mockImplementation(() => new Promise((resolve, reject) => resolve([currentPriceSpec])));
+
+export const getPriceInformationMock = jest.fn().mockImplementation(() => new Promise((resolve, reject) => resolve([priceHistorySpec])));
 
 const mock = jest.fn().mockImplementation(() => {
   return {
-    getPriceInformation: getPriceInformationMock
+    getCurrentPrice: getCurrentPriceMock,
+    getPriceInformation: getPriceInformationMock,
   }
 });
 

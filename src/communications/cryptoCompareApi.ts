@@ -10,6 +10,24 @@ interface PriceData {
 class CryptoCompareApi {
   apiKey = process.env.REACT_APP_CRYPTO_COMPARE_KEY;
 
+  getCurrentPrice = (): Promise<any> => {
+    return axios.get('https://min-api.cryptocompare.com/data/price',
+      {
+        params: {
+          fsym: "NANO",
+          tsyms: "BTC,USD,EUR,GBP",
+        },
+        headers: {
+          authorization: "Apikey " + this.apiKey,
+        }
+      }
+    )
+    .then((res: AxiosResponse<object>) => res.data)
+    .catch(error => {
+      throw new Error("Bad response from API" + ".........." + error);
+    });
+  };
+
   getPriceInformation = (): Promise<any> => {
     return axios.get('https://min-api.cryptocompare.com/data/histoday',
       {
