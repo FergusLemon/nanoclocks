@@ -1,3 +1,24 @@
+.price-display-container {
+  position: relative;
+}
+
 .price-display {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: -45px;
+  right: 20px;
+  width: 250px;
+  height: 20px;
+  background-color: #4a90e2;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
   color: #ffffff;
+}
+
+
+li {
+  list-style-type: none;
+  flex: 1 0 10px;
 }
