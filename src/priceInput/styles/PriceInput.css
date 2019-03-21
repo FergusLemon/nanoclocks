@@ -32,12 +32,23 @@ input {
   background-color: #4a90e2;
   color: #ffffff;
   border: 1px #4a90e2;
-  height: 16px;
-  font-size: 14px;
+  height: 18px;
+  font-size: 16px;
   font-weight: 500;
   padding-left: 4px;
 }
 
 input:focus {
   outline: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .price-input-field-container {
+    top: 50px;
+  }
+
+  input, label {
+    position: absolute;
+    left: -40px;
+  }
 }

@@ -1,38 +1,50 @@
-@media only screen and (min-width: 992px) {
-  .footer-container {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    background-color: #4a90e2;
-    min-height: 11vh;
-  }
+.footer-container {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: #4a90e2;
+  min-height: 11vh;
+}
 
-  .footer-message {
-    position: relative;
-    top: -8px;
-    left: 20px;
-    font-family: 'Noto Sans', sans-serif;
-    color: #ffffff;
+.footer-message {
+  position: relative;
+  top: -8px;
+  left: 20px;
+  font-family: 'Noto Sans', sans-serif;
+  color: #ffffff;
+}
+
+.social-media-container {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  left: 28px;
+  bottom: 10px;
+  width: 150px;
+}
+
+a {
+  flex: 1 0 15px;
+}
+
+.icon {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+@media only screen and (max-width: 600px) {
+  .footer-container {
+    min-height: 9vh;
   }
 
   .social-media-container {
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    left: 28px;
-    bottom: 10px;
-    width: 150px;
+    position: relative;
+    bottom: 15px;
   }
+}
 
-  a {
-    flex: 1 0 15px;
-  }
-
-  .icon {
-    font-size: 20px;
-    color: #ffffff;
-  }
+@media only screen and (min-width: 992px) {
 }
 
 @media only screen and (min-width: 1200px) {
@@ -44,14 +56,9 @@
 
   .social-media-container {
     position: relative;
-    left: 28px;
     bottom: 10px;
     max-height: 5vh;
     width: 200px;
-  }
-
-  a {
-    flex: 1 0 15px;
   }
 
   .icon {

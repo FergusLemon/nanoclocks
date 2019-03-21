@@ -38,3 +38,11 @@
     transform: rotate(360deg);
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .App-logo {
+    position: absolute;
+    top: 5px;
+    left: 95px;
+  }
+}

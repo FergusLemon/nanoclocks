@@ -4,7 +4,7 @@
   left: 65px;
   height: 90px;
   width: 450px;
-  background-color: rgba(74, 144, 226);
+  background-color: #4a90e2;
   border-radius: 5px;
   border-left: 10px solid #000034;
 }
@@ -24,4 +24,25 @@
   right: -20px;
   height: 100px;
   width: 100px;
+}
+
+@media only screen and (max-width: 600px) {
+  .message-container {
+    position: relative;
+    left: 24px;
+    height: 100px;
+    width: 330px;
+  }
+
+  .welcome-message {
+    font-size: 14px;
+    padding: 2px;
+    left: 15px;
+    z-index: 10;
+  }
+
+  .nano-logo {
+    bottom: -34px;
+    right: -30px;
+  }
 }

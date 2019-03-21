@@ -1,13 +1,23 @@
+.App {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  background-image: url("../../logos/nano.jpg");
+  overflow: hidden;
+  overscroll-behavior: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .App {
+    background-size: cover;
+  }
+}
+
 @media only screen and (min-width: 992px) {
   .App {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    left: 0px;
-    bottom: 0px;
-    background-image: url("../../logos/nano.jpg");
-    overflow-x: hidden;
-    overscroll-behavior: auto;
+    background-size: auto;
   }
 }
 

@@ -37,3 +37,40 @@ li {
   list-style-type: none;
   flex: 1 0 10px;
 }
+
+@media only screen and (max-width: 600px) {
+  .current-prices {
+    display: none;
+  }
+
+  .price-display {
+    background-color: transparent;
+  }
+
+  .btc {
+    display: none;
+  }
+
+  .usd {
+    position: absolute;
+    top: -3px;
+    right: 5px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .current-prices {
+    position: absolute;
+    top: -90px;
+    right: 150px;
+    font-size: 18px;
+  }
+
+  .price-display {
+    position: absolute;
+    top: -55px;
+    right: 20px;
+    width: 300px;
+    font-size: 18px;
+  }
+}
