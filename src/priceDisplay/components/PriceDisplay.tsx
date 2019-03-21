@@ -10,13 +10,11 @@ type Props = {
   }
 }
 
-const PriceDisplay: SFC<Props> = ({ children: {BTC, USD, EUR, GBP} }) => (
+const PriceDisplay: SFC<Props> = ({ children: {BTC, USD} }) => (
   <div className="price-display-container">
     <ul className="price-display">
-      <li className="btc">BTC: {BTC}</li>
-      <li className="usd">USD: {USD}</li>
-      <li className="eur">EUR: {EUR}</li>
-      <li className="gbp">GBP: {GBP}</li>
+      <li className="btc">₿ {BTC} btc</li>
+      <li className="usd">${USD} USD</li>
     </ul>
   </div>
 )
