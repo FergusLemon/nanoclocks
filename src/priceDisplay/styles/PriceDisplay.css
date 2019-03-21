@@ -2,6 +2,16 @@
   position: relative;
 }
 
+.current-prices {
+  position: absolute;
+  top: -68px;
+  right: 130px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
 .price-display {
   display: flex;
   flex-direction: row;
@@ -13,10 +23,15 @@
   background-color: #4a90e2;
   font-family: 'Noto Sans', sans-serif;
   font-size: 14px;
-  font-weight: 600;
-  color: #ffffff;
 }
 
+.btc {
+  color: #000034;
+}
+
+.usd {
+  color: #ffffff;
+}
 
 li {
   list-style-type: none;
