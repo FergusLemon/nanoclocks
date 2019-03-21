@@ -33,7 +33,7 @@ a {
   color: #ffffff;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 600px), only screen and (min-width: 600px) and (min-height: 768px)  {
   .footer-container {
     min-height: 9vh;
   }
@@ -44,10 +44,7 @@ a {
   }
 }
 
-@media only screen and (min-width: 992px) {
-}
-
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1200px), only screen and (min-width: 970px) and (min-height: 768px) {
   .footer-message {
     left: 28px;
     font-size: 18px;

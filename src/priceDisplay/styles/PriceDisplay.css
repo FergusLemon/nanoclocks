@@ -58,7 +58,31 @@ li {
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (max-width: 600px) and (min-height: 768px)  {
+  .current-prices {
+    display: none;
+  }
+
+  .btc {
+    display: none;
+  }
+
+  .usd {
+    top: -30px;
+  }
+}
+
+@media only screen and (min-width: 600px) and (min-height: 768px)  {
+  .current-prices {
+    top: -80px;
+  }
+
+  .price-display {
+    top: -55px;
+  }
+}
+
+@media only screen and (min-width: 1200px), only screen and (min-width: 970px) and (min-height: 768px) {
   .current-prices {
     position: absolute;
     top: -90px;
