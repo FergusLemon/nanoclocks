@@ -19,7 +19,17 @@ class CryptoCompareApi {
         },
         headers: {
           authorization: "Apikey " + this.apiKey,
-        }
+        },
+        transformResponse: [(data: string) => {
+          let parsedData = JSON.parse(data);
+          let formattedPrices = {
+            BTC: parsedData["BTC"],
+            USD: parseFloat(parsedData["USD"].toFixed(2)),
+            EUR: parseFloat(parsedData["EUR"].toFixed(2)),
+            GBP: parseFloat(parsedData["GBP"].toFixed(2)),
+          };
+          return formattedPrices;
+        }]
       }
     )
     .then((res: AxiosResponse<object>) => res.data)
