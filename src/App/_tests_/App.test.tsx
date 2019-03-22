@@ -92,14 +92,15 @@ describe("App", () => {
       expect(wrapper.exists('.clock')).toEqual(true);
   });
 
-  it(`does not render the Price Input or Button components if the value of
-    the canRender property on state is set to false`, () => {
+  it(`does not render the Price Input, Button or Price Display components if
+    the value of the canRender property on state is set to false`, () => {
       const wrapper = shallow(<App />);
 
       wrapper.setState({canRender: false});
 
       expect(wrapper.exists('.price')).toEqual(false);
       expect(wrapper.exists('.button')).toEqual(false);
+      expect(wrapper.exists('.current-price-container')).toEqual(false);
   });
 
   it('passes the value on state to the PriceInput component', () => {
@@ -149,7 +150,7 @@ describe("App", () => {
   it('passes the currentPrices on state to the PriceDisplay component', () => {
     const wrapper = shallow(<App />);
 
-    wrapper.setState({currentPrices: defaultPrices});
+    wrapper.setState({currentPrices: defaultPrices, canRender: true});
 
     expect(wrapper.find('PriceDisplay').props().children).toEqual(defaultPrices);
   });
@@ -159,7 +160,8 @@ describe("App", () => {
     beforeEach(() => {
       wrapper = shallow(<App />);
       wrapper.setState({
-        value: defaultValue
+        value: defaultValue,
+        canRender: true,
       });
       event = {
         currentTarget: {
@@ -282,6 +284,7 @@ describe("App", () => {
       mockCryptoCompareApi.getCurrentPrice.mockClear();
       mockCryptoCompareApi.getPriceInformation.mockClear();
       wrapper = shallow(<App />);
+      wrapper.setState({ canRender: true });
     });
 
     it(`getCurrentPrice should have been called in componentDidMount`,
@@ -310,6 +313,7 @@ describe("App", () => {
     let wrapper, event;
     beforeEach(() => {
       wrapper = shallow(<App />);
+      wrapper.setState({ canRender: true });
       event = {
         currentTarget: {
           value: defaultValue,
@@ -349,6 +353,7 @@ describe("App", () => {
     let wrapper, event, validAmount;
     beforeEach(() => {
       wrapper = shallow(<App />);
+      wrapper.setState({ canRender: true });
       event = {
         currentTarget: {
           value: defaultValue
@@ -403,6 +408,7 @@ describe("App", () => {
     let wrapper, event
     beforeEach(() => {
       wrapper = shallow(<App />);
+      wrapper.setState({ canRender: true });
       event = {
         currentTarget: {
           value: ONE_DOLLAR
