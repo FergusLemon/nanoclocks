@@ -78,7 +78,7 @@ a {
   }
 }
 
-@media only screen and (max-height: 270px) {
+@media only screen and (max-height: 300px) {
   .social-media-container, .footer-message {
     display: none;
   }
@@ -87,5 +87,11 @@ a {
 @media only screen and (max-height: 580px) and (min-height: 300px) and (min-width: 600px) {
   .footer-message {
     display: none;
+  }
+
+  .social-media-container {
+    position: absolute;
+    top: 2vh;
+    padding: 1px;
   }
 }

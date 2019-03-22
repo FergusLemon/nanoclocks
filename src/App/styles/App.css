@@ -7,7 +7,12 @@
   background-image: url("../../logos/nano.jpg");
   overflow: hidden;
   overscroll-behavior: auto;
-  z-index: -10;
+}
+
+@media only screen and (max-width: 555px) and (max-height: 535px) {
+  .App {
+    background-image: none;
+  }
 }
 
 @media only screen and (max-width: 600px) {
