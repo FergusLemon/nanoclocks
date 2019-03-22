@@ -58,6 +58,12 @@ li {
   }
 }
 
+@media only screen and (max-width: 450px) {
+  .usd {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 600px) and (min-height: 768px)  {
   .current-prices {
     display: none;
@@ -96,5 +102,17 @@ li {
     right: 20px;
     width: 300px;
     font-size: 18px;
+  }
+}
+
+@media only screen and (max-height: 580px) {
+  .current-prices {
+    display: none;
+  }
+}
+
+@media only screen and (max-height: 350px) {
+  .btc, .usd {
+    display: none;
   }
 }

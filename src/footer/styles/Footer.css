@@ -63,3 +63,21 @@ a {
     color: #ffffff;
   }
 }
+
+@media only screen and (max-height: 580px) {
+  .footer-message {
+    display: none;
+  }
+}
+
+@media only screen and (max-height: 350px) {
+  .social-media-container {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) and (max-height: 580px) {
+  .social-media-container {
+    bottom: -8px;
+  }
+}

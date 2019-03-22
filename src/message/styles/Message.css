@@ -47,7 +47,11 @@
   }
 }
 
-@media only screen and (max-width: 600px) and (min-height: 768px)  {
+@media only screen and (max-width: 600px) and (min-height: 420px)  {
+  .welcome-message {
+    padding: 4px;
+  }
+
   .nano-logo {
     bottom: -30px;
   }
