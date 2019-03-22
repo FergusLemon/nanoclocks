@@ -64,20 +64,28 @@ a {
   }
 }
 
-@media only screen and (max-height: 580px) {
+@media only screen and (max-height: 375px) {
+  .footer-container {
+    min-height: 13vh;
+  }
+
   .footer-message {
     display: none;
   }
+
+  .social-media-container {
+    bottom: 10px;
+  }
 }
 
-@media only screen and (max-height: 350px) {
-  .social-media-container {
+@media only screen and (max-height: 270px) {
+  .social-media-container, .footer-message {
     display: none;
   }
 }
 
-@media only screen and (max-width: 600px) and (max-height: 580px) {
-  .social-media-container {
-    bottom: -8px;
+@media only screen and (max-height: 580px) and (min-height: 300px) and (min-width: 600px) {
+  .footer-message {
+    display: none;
   }
 }
