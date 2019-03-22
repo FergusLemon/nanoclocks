@@ -140,7 +140,6 @@ class App extends React.Component<object, State> {
         let combinedPriceHash = Object.assign(priceHash2017, priceHashToNow)
         this.setState({
           priceHistory: combinedPriceHash,
-          canRender: true,
         });
       })
       .catch((error) => {
@@ -151,7 +150,8 @@ class App extends React.Component<object, State> {
       .getCurrentPrice()
       .then(currentPrices => {
         this.setState({
-          currentPrices: currentPrices
+          currentPrices: currentPrices,
+          canRender: true,
         });
       })
       .catch((error) => {
@@ -182,11 +182,13 @@ class App extends React.Component<object, State> {
         <div className="header">
           <Header />
         </div>
-        <div className="current-price-container">
-          <PriceDisplay>
-            {currentPrices}
-          </PriceDisplay>
-        </div>
+        { canRender &&
+          <div className="current-price-container">
+            <PriceDisplay>
+              {currentPrices}
+            </PriceDisplay>
+          </div>
+        }
         <div className="main-container">
           <div className="message">
             <Message>
