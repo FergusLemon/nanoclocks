@@ -1,12 +1,12 @@
 .message-container {
   position: relative;
-  top: 35px;
+  top: 75px;
   left: 65px;
   height: 90px;
   width: 450px;
-  background-color: #4a90e2;
   border-radius: 5px;
   border-left: 10px solid #000034;
+  background-color: #4a90e2;
 }
 
 .welcome-message {
@@ -28,31 +28,18 @@
 
 @media only screen and (max-width: 600px) {
   .message-container {
-    position: relative;
-    left: 24px;
-    height: 100px;
-    width: 330px;
+    left: 28px;
+    width: 320px;
   }
-
   .welcome-message {
+    left: 10px;
     font-size: 14px;
-    padding: 2px;
-    left: 15px;
-    z-index: 10;
+    padding-right: 2px;
   }
-
   .nano-logo {
-    bottom: -34px;
-    right: -30px;
-  }
-}
-
-@media only screen and (max-width: 600px) and (min-height: 420px)  {
-  .welcome-message {
-    padding: 4px;
-  }
-
-  .nano-logo {
-    bottom: -30px;
+    bottom: -26px;
+    right: -25px;
+    height: 80px;
+    width: 80px;
   }
 }

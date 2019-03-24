@@ -6,7 +6,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .price-input-field-container {
   position: relative;
-  top: 60px;
+  top: 85px;
   left: 65px;
   height: 65px;
   width: 200px;
@@ -44,11 +44,10 @@ input:focus {
 
 @media only screen and (max-width: 600px) {
   .price-input-field-container {
-    top: 50px;
+    top: 80px;
   }
 
   input, label {
-    position: absolute;
-    left: -40px;
+    left: -20px;
   }
 }

@@ -1,6 +1,6 @@
 .clock-container {
   position: relative;
-  top: 55px;
+  top: 75px;
   left: 65px;
   height: 250px;
   width: 250px;
@@ -52,14 +52,14 @@
 
 @media only screen and (max-width: 600px) {
   .clock-container {
-    top: 35px;
+    top: 65px;
   }
 
   .clock-summary {
-    left: -40px;
+    left: -20px;
   }
 
   .clock-display {
-    left: -40px;
+    left: -20px;
   }
 }
