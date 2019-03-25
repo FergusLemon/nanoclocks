@@ -31,7 +31,7 @@ button:hover {
 
 @media only screen and (max-width: 600px) {
   .button-container {
-    top: 80px;
+    top: 82px;
   }
 
   .price-submit-button {
