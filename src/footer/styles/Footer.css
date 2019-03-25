@@ -1,8 +1,4 @@
 .footer-container {
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
   width: 100%;
   min-height: 65px;
   max-height: 65px;
@@ -10,16 +6,15 @@
 }
 
 .footer-message {
-  position: absolute;
-  bottom: 20px;
-  left: 10px;
+  position: sticky;
+  margin-left: 10px;
   padding: 2px;
   font-family: 'Noto Sans', sans-serif;
   color: #ffffff;
 }
 
 .social-media-container {
-  position: absolute;
+  position: sticky;
   bottom: 10px;
   left: 20px;
   width: 150px;

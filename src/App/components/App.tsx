@@ -179,17 +179,17 @@ class App extends React.Component<object, State> {
       userPrice, nearestPrice, currentPrices } = this.state;
     return (
       <div className="App">
-        <div className="header">
-          <Header />
-        </div>
-        { canRender &&
-          <div className="current-price-container">
-            <PriceDisplay>
-              {currentPrices}
-            </PriceDisplay>
-          </div>
-        }
         <div className="main-container">
+          <div className="header">
+            <Header />
+          </div>
+          { canRender &&
+            <div className="current-price-container">
+              <PriceDisplay>
+                {currentPrices}
+              </PriceDisplay>
+            </div>
+          }
           <div className="message">
             <Message>
               {welcomeMessage}
