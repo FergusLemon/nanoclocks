@@ -52,6 +52,23 @@
   }
 }
 
+/* iPhone 6 */
+@media only screen and (max-width: 380px) and (max-height: 680px) {
+  .message-container {
+    right: 30px;
+    width: 320px;
+  }
+  .welcome-message {
+    padding-right: 8px;
+  }
+  .nano-logo {
+    bottom: -22px;
+    right: -20px;
+    height: 70px;
+    width: 70px;
+  }
+}
+
 /* iPhone 5 */
 @media only screen and (max-width: 350px) and (max-height: 600px) {
   .message-container {
