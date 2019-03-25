@@ -1,32 +1,33 @@
+/*solution for a sticky footer taken from Philip Walton, available at
+ * https://github.com/philipwalton/solved-by-flexbox/blob/master/assets/css/components/site.css*/
 .App {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  left: 0px;
-  bottom: 0px;
   background-image: url("../../logos/nano.jpg");
   overflow: hidden;
   overscroll-behavior: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.main-container {
+    flex: 1 0 auto;
+    width: 100%;
 }
 
-@media only screen and (max-width: 555px) and (max-height: 535px) {
+@media only screen and (max-width: 570px) and (max-height: 535px) {
   .App {
     background-image: none;
   }
 }
-
 @media only screen and (max-width: 600px) {
   .App {
     background-size: cover;
   }
 }
-
 @media only screen and (min-width: 992px) {
   .App {
     background-size: auto;
   }
 }
-
 @media only screen and (min-width: 1200px) {
   .App {
     background-size: cover;
