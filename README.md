@@ -12,6 +12,24 @@ The plan is to keep adding features to NanoClocks so that it will offer better p
 
 ![NanoClocks Homepage](/public/nanoClocksHomepage.jpg)
 
+### Installation
+
+`git clone git@github.com:FergusLemon/nanoclocks.git`
+
+`cd` into the `nanoclocks` dir.
+
+Run `npm install` to install dependencies.
+
+Visit [CryptoCompare](https://www.cryptocompare.com/cryptopian/api-keys) and generate an API key.
+
+Create a `.env` file in the root directory and add an environment variable called `REACT_APP_CRYPTO_COMPARE_KEY=<YOUR-API-KEY-FROM-CRYPTO-COMPARE-GOES-HERE>`
+
+Run `npm run build` to create an optimised production build.
+
+Run `npm start` to start serving the app on port 3000.
+
+Visit `http:\\localhost:3000` in your favourite browser if it hasn't already opened for you.
+
 ### Tests
 Unit tests for each component are located in the component's directory in the `_tests_` sub-directory. They can be run using the command `npm test` from the root directory.
 
