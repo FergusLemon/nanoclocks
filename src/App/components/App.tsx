@@ -25,7 +25,7 @@ see how long it has been since NANO traded at a given price in $USD.`;
 const initialState = {
   welcomeMessage: defaultMessage,
   value: defaultValue,
-  min: 0.00,
+  min: 0.01,
   max: 37.62,
   currentPrices: bareObject,
   priceHistory: bareObject,
