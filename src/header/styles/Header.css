@@ -49,20 +49,3 @@
     top: -6px;
   }
 }
-
-@media only screen and (min-height: 1000px) {
-  .App-header {
-    min-height: 100px;
-    max-height: 100px;
-  }
-  .App-logo {
-    top: 40px;
-    left: 90px;
-    height: 75px;
-  }
-  .App-name {
-    top: 35px;
-    left: 20px;
-    font-size: 24px;
-  }
-}
