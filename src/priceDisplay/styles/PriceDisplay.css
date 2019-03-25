@@ -1,118 +1,48 @@
 .price-display-container {
-  position: relative;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50%;
+  z-index: 10000;
 }
 
-.current-prices {
+.title {
   position: absolute;
-  top: -68px;
-  right: 130px;
+  top: 10px;
+  right: 150px;
   font-family: 'Noto Sans', sans-serif;
   font-size: 14px;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.price-display {
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  top: -45px;
-  right: 20px;
-  width: 250px;
-  height: 20px;
-  background-color: #4a90e2;
-  font-family: 'Noto Sans', sans-serif;
-  font-size: 14px;
-}
-
-.btc {
-  color: #000034;
-}
-
-.usd {
   color: #ffffff;
 }
 
 li {
+  color: #ffffff;
   list-style-type: none;
-  flex: 1 0 10px;
 }
 
-@media only screen and (max-width: 600px) {
-  .current-prices {
-    display: none;
-  }
-
-  .price-display {
-    background-color: transparent;
-  }
-
-  .btc {
-    display: none;
-  }
-
-  .usd {
-    position: absolute;
-    top: -3px;
-    right: 5px;
-  }
+.display {
+  position: absolute;
+  top: 24px;
+  right: -110px;
+  height: 20px;
+  width: 250px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 14px;
+  display: inline;
 }
 
-@media only screen and (max-width: 450px) {
-  .usd {
+.hide {
+  display: none;
+}
+
+@media only screen and (max-width: 500px) {
+  .title {
     display: none;
   }
 }
 
-@media only screen and (max-width: 600px) and (min-height: 768px)  {
-  .current-prices {
-    display: none;
-  }
-
-  .btc {
-    display: none;
-  }
-
-  .usd {
-    top: -30px;
-  }
-}
-
-@media only screen and (min-width: 600px) and (min-height: 768px)  {
-  .current-prices {
-    top: -80px;
-  }
-
-  .price-display {
-    top: -55px;
-  }
-}
-
-@media only screen and (min-width: 1200px), only screen and (min-width: 970px) and (min-height: 768px) {
-  .current-prices {
-    position: absolute;
-    top: -90px;
-    right: 150px;
-    font-size: 18px;
-  }
-
-  .price-display {
-    position: absolute;
-    top: -55px;
-    right: 20px;
-    width: 300px;
-    font-size: 18px;
-  }
-}
-
-@media only screen and (max-height: 580px) {
-  .current-prices {
-    display: none;
-  }
-}
-
-@media only screen and (max-height: 350px) {
-  .btc, .usd {
+@media only screen and (max-width: 350px) {
+  .display {
     display: none;
   }
 }
