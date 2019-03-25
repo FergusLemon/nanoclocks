@@ -180,15 +180,6 @@ describe("App", () => {
         expect(wrapper.state().value).toBe(validAmount);
       });
 
-      xit('sets the value on state to two decimal places', () => {
-        let validAmount = ONE_DECIMAL.toString();
-        event.currentTarget.value = validAmount;
-
-        wrapper.find("PriceInput").props().handleChange(event);
-
-        expect(wrapper.state().value).toBe(TWO_DECIMAL.toFixed(2));
-      });
-
       it(`sets the value on state of a two digit number where the first digit
         is less than the minimum`, () => {
           let validAmount = (MIN + 30).toString();
@@ -376,16 +367,6 @@ describe("App", () => {
         wrapper.find('PriceInput').props().handleChange(event);
 
         expect(wrapper.state().canGetPriceInformation).toEqual(true);
-    });
-
-    xit(`sets canGetPriceInformation to false before the doSearch Promise fires`,
-      () => {
-        event.currentTarget.value = validAmount;
-
-        wrapper.find('PriceInput').props().handleChange(event);
-        wrapper.find('PriceInput').props().doSearch();
-
-        expect(wrapper.state().canGetPriceInformation).toEqual(false);
     });
 
     it(`should allow a user to continue searching for new prices`, () => {
