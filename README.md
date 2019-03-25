@@ -22,7 +22,7 @@ Run `npm install` to install dependencies.
 
 Visit [CryptoCompare](https://www.cryptocompare.com/cryptopian/api-keys) and generate an API key.
 
-Create a `.env` file in the root directory and add an environment variable called `REACT_APP_CRYPTO_COMPARE_KEY=<YOUR-API-KEY-FROM-CRYPTO-COMPARE-GOES-HERE>`
+Create a `.env` file in the root directory and add an environment variable called `REACT_APP_CRYPTO_COMPARE_KEY=<YOUR-API-KEY-FROM-CRYPTO-COMPARE-GOES-HERE>`.  If you are going to check the repo into a version management tool such as GitHub then don't forget to add the `.env` file to a [`.gitignore`](https://help.github.com/en/articles/ignoring-files) file or similar to prevent exposing your API KEY to the world.
 
 Run `npm run build` to create an optimised production build.
 
