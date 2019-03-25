@@ -10,7 +10,7 @@ NanoClocks is a website that allows users to check the last time $NANO was trade
 
 The plan is to keep adding features to NanoClocks so that it will offer better price clocks but also extend beyond price to other popular hubs of information on Nano such as Twitter, the Nano network itself.
 
-![NanoClocks Homepage](/public/nanoClocksHomepage.jpg)
+![NanoClocks Homepage](/public/nanoClocksHome.jpg)
 
 ### Installation
 
