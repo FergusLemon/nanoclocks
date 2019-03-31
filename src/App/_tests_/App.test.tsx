@@ -29,7 +29,7 @@ const defaultPrices = {
   GBP: MIN,
 };
 
-const welcomeMessage: string = `Welcome to NanoClocks, the site that lets you
+const message: string = `Welcome to NanoClocks, the site that lets you
 see how long it has been since NANO traded at a given price in $USD.`;
 
 const setup = (input = {}) => (
@@ -54,14 +54,14 @@ const data = [{
 
 describe("App", () => {
 
-  beforeAll(() => {
+  beforeEach(() => {
     mockCryptoCompareApi.getCurrentPrice.mockImplementation(() =>
         new Promise(resolve => resolve(defaultPrices)));
     mockCryptoCompareApi.getPriceInformation.mockImplementation(() =>
         new Promise(resolve => resolve(data)));
   });
 
-  afterAll(() => {
+  afterEach(() => {
     mockCryptoCompareApi.getCurrentPrice.mockClear();
     mockCryptoCompareApi.getPriceInformation.mockClear();
   });
@@ -73,7 +73,7 @@ describe("App", () => {
   it('passes the message on state to the Message component', () => {
     const wrapper = shallow(<App/>);
 
-    expect(wrapper.find('Message').props().children).toBe(welcomeMessage);
+    expect(wrapper.find('Message').props().children).toBe(message);
   });
 
   it(`does not render the Clock component if the value of lastTime on state is
@@ -297,6 +297,21 @@ describe("App", () => {
     it(`should not be called when a user searches for a price`, () => {
       wrapper.find('PriceInput').props().doSearch();
       expect(mockCryptoCompareApi.getPriceInformation).not.toHaveBeenCalledOnce;
+    });
+
+    it(`replaces the welcome message with an error message when the promise
+      is rejected`, async () => {
+        const err = 'No response from API service.';
+        mockCryptoCompareApi.getCurrentPrice.mockImplementation(() =>
+          { return Promise.reject(err) });
+        mockCryptoCompareApi.getPriceInformation.mockImplementation(() =>
+          { return Promise.reject(err) });
+          const errorMessage = `Sorry, it seems the service we use`;
+        await wrapper.instance().componentDidMount();
+
+        expect(wrapper.find('Message').props().children).toContain(errorMessage);
+        expect(wrapper.find('Message').props().children).not
+          .toBe(message);
     });
   });
 

@@ -19,11 +19,14 @@ library.add(fab);
 let bareObject: any = {};
 const defaultValue: string = '';
 const defaultTime: number = 0;
-const defaultMessage: string = `Welcome to NanoClocks, the site that lets you
+const welcomeMessage: string = `Welcome to NanoClocks, the site that lets you
 see how long it has been since NANO traded at a given price in $USD.`;
+const errorMessage: string = `Sorry, it seems the service we use for price
+information is down or your internet isn't working properly. Please try again
+later.`
 
 const initialState = {
-  welcomeMessage: defaultMessage,
+  message: welcomeMessage,
   value: defaultValue,
   min: 0.01,
   max: 37.62,
@@ -143,7 +146,11 @@ class App extends React.Component<object, State> {
         });
       })
       .catch((error) => {
-        throw new Error("Something went wrong" + "........" + error);
+        this.setState({
+          message: errorMessage,
+          canRender: false,
+        });
+        console.log("Something went wrong" + "........" + error);
       });
 
     await CryptoCompareApi
@@ -155,7 +162,11 @@ class App extends React.Component<object, State> {
         });
       })
       .catch((error) => {
-        throw new Error("Something went wrong" + "........" + error);
+        this.setState({
+          message: errorMessage,
+          canRender: false,
+        });
+        console.log("Something went wrong" + "........" + error);
       });
   };
 
@@ -175,7 +186,7 @@ class App extends React.Component<object, State> {
   };
 
   render() {
-    const { welcomeMessage, value, canRender, canGetPriceInformation, lastTime,
+    const { message, value, canRender, canGetPriceInformation, lastTime,
       userPrice, nearestPrice, currentPrices } = this.state;
     return (
       <div className="App">
@@ -192,7 +203,7 @@ class App extends React.Component<object, State> {
           }
           <div className="message">
             <Message>
-              {welcomeMessage}
+              {message}
             </Message>
           </div>
           { canRender &&
