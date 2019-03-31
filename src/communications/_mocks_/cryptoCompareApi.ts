@@ -12,9 +12,9 @@ export const priceHistorySpec: object = {
   volumefrom: 1349848.03,
 };
 
-export const getCurrentPriceMock = jest.fn().mockImplementation(() => return new Promise((resolve, reject) => resolve([currentPriceSpec])));
+export const getCurrentPriceMock = jest.fn().mockImplementation(() => new Promise((resolve, reject) => resolve([currentPriceSpec])));
 
-export const getPriceInformationMock = jest.fn().mockImplementation(() => return new Promise((resolve, reject) => resolve([priceHistorySpec])));
+export const getPriceInformationMock = jest.fn().mockImplementation(() => new Promise((resolve, reject) => resolve([priceHistorySpec])));
 
 const mock = jest.fn().mockImplementation(() => {
   return {
